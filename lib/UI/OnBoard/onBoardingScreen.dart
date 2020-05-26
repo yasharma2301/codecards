@@ -55,14 +55,32 @@ class _OnBoardState extends State<OnBoard> {
       backgroundColor: Grey,
       body: Stack(
         children: [
-          Align(
-            alignment: Alignment.bottomRight,
+          Container(
+            color: Grey,
+          ),
+          Positioned(
+            left: -(screenHeight / 2 - screenWidth / 1.98),
+            bottom: screenHeight * 0.25,
             child: Container(
               height: screenHeight,
-              width: 60,
-              color: Colors.white12,
+              width: screenHeight,
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey[700]),
             ),
           ),
+          Positioned(
+            left: -screenWidth * 0.3,
+            top: -screenWidth * 0.95,
+            child: Container(
+              height: screenWidth * 1.6,
+              width: screenWidth * 1.6,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Grey,
+              ),
+            ),
+          ),
+
           Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -123,7 +141,7 @@ class _OnBoardState extends State<OnBoard> {
                   height: 50,
                   width: 400,
                   decoration: BoxDecoration(
-                      color: Colors.blueGrey[300],
+                      color: Colors.blueGrey[600],
                       borderRadius: BorderRadius.circular(5),
                       shape: BoxShape.rectangle),
                   child: FlatButton(
@@ -132,7 +150,7 @@ class _OnBoardState extends State<OnBoard> {
                       'Let\'s Get Started',
                       style: TextStyle(
                           fontSize: 18,
-                          color: Black,
+                          color: White,
                           fontWeight: FontWeight.w400),
                     ),
                   ),
