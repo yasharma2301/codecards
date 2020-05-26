@@ -59,18 +59,18 @@ class _OnBoardState extends State<OnBoard> {
             alignment: Alignment.bottomRight,
             child: Container(
               height: screenHeight,
-              width: 70,
+              width: 60,
               color: Colors.white12,
             ),
           ),
           Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Center(
                   child: Container(
-                    height: screenHeight * 0.45,
+                    height: screenHeight * 0.75,
                     width: screenWidth * 0.9,
                     child: PageView.builder(
                       pageSnapping: true,
@@ -123,7 +123,7 @@ class _OnBoardState extends State<OnBoard> {
                   height: 50,
                   width: 400,
                   decoration: BoxDecoration(
-                      color: White,
+                      color: Colors.blueGrey[300],
                       borderRadius: BorderRadius.circular(5),
                       shape: BoxShape.rectangle),
                   child: FlatButton(
