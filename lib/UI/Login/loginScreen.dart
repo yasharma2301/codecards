@@ -1,60 +1,52 @@
+import 'package:codecards/UI/Login/SignUpStack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'SignUpStack.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
+class _LoginScreenState extends State<LoginScreen>{
+	
+	double screenHeight;
+	
+    @override
     Widget build(BuildContext context) {
+	    screenHeight = MediaQuery.of(context).size.height;
 		return Scaffold(
-		  backgroundColor: Grey,
+		    backgroundColor: Grey,
 		    body: SafeArea(
-		        child: Center(
-		            child:
-		            Row(
-//			            alignment: Alignment.center,
-		                children: [
-		                    Container(
-				                height: 50,
-				                width: 300,
-				                margin: EdgeInsets.fromLTRB(0, 0, 0, 200),
-				                child: ClipRRect(
-		                            borderRadius: BorderRadius.all(Radius.circular(50)),
-		                            child: RaisedButton(
-		                                splashColor: Grey,
-		                                onPressed: () {},
-		                                child: Text(
-		                                    'Sign Up',
-		                                    style: TextStyle(
-		                                        fontSize: 24, color: Grey, fontWeight: FontWeight.w400),
-		                                ),
-		                            ),
-		                        ),
-		                    ),
-			                Container(
-				                color: White,
-			                    child: Column(
-				                    children: [
-				                    	IconButton(
-						                    onPressed: () {} ,
-						                    icon: FaIcon(FontAwesomeIcons.facebook),
-					                    )
-				                    ],
-			                    ),
-			                ),
-		                ],
-		            ),
+		        child: Column(
+			        mainAxisAlignment: MainAxisAlignment.spaceAround,
+			        crossAxisAlignment: CrossAxisAlignment.stretch,
+		            children: [
+		            	Container(
+				            height: screenHeight * 0.4,
+				            child: Center(
+				              child: Container(
+					              height: 300,
+					              width: 400,
+					              child: SvgPicture.asset("assets/loginPage.svg")
+				              ),
+				            ),
+			            ),
+		                Expanded(
+		                  child: Container(
+			                  padding: EdgeInsets.fromLTRB(0, 120, 0, 0),
+			                  decoration: BoxDecoration(
+				                  color: Colors.white70.withOpacity(0.4),
+				                  borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))
+			                  ),
+			                  height: screenHeight * 0.4,
+			                  child: SignUpStack()
+		                  ),
+		                ),
+		            ],
 		        ),
 		    ),
 		);
