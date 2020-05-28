@@ -65,7 +65,7 @@ class _OnBoardState extends State<OnBoard> {
               height: screenHeight,
               width: screenHeight,
               decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey[700]),
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey[600]),
             ),
           ),
           Positioned(

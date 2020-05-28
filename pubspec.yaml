@@ -9,9 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flare_flutter:
-
+  flare_flutter: ^2.0.3
   cupertino_icons: ^0.1.3
+  font_awesome_flutter: ^8.8.1
+  flutter_svg: ^0.17.4
+  http: ^0.12.1
 
 dev_dependencies:
   flutter_test:
@@ -21,11 +23,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/mobile.flr
-    - assets/robot.flr
-    - assets/OAuth.flr
-    - assets/coding.flr
-    - assets/code.flr
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # fonts:
