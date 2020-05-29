@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'SignUpStack.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -26,23 +27,29 @@ class _LoginScreenState extends State<LoginScreen>{
 			        crossAxisAlignment: CrossAxisAlignment.stretch,
 		            children: [
 		            	Container(
-				            height: screenHeight * 0.4,
+				            height: screenHeight * 0.55,
 				            child: Center(
-				              child: Container(
-					              height: 300,
-					              width: 400,
-					              child: SvgPicture.asset("assets/loginPage.svg")
-				              ),
+				                child: Container(
+					                height: 300,
+					                width: 500,
+					                child: FlareActor(
+						                "assets/login_animation1.flr",
+//					                    "assets/login_animation2.flr",
+						                fit: BoxFit.contain,
+						                animation: 'Scale',
+//					                    animation: 'Jump',
+					                )
+				                ),
 				            ),
 			            ),
 		                Expanded(
 		                  child: Container(
-			                  padding: EdgeInsets.fromLTRB(0, 120, 0, 0),
+			                  padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
 			                  decoration: BoxDecoration(
-				                  color: Colors.white70.withOpacity(0.4),
-				                  borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))
+				                  color: Colors.grey[600],
+				                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
 			                  ),
-			                  height: screenHeight * 0.4,
+			                  height: screenHeight * 0.3,
 			                  child: SignUpStack()
 		                  ),
 		                ),
