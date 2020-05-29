@@ -18,8 +18,7 @@ class Items extends StatelessWidget {
         child: Container(
           height: 500,
           width: 500,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Stack(
             children: [
               Padding(
@@ -36,7 +35,7 @@ class Items extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30,left: 10,right: 10),
+                padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
                 child: FlareActor(
                   SlideList[index].flare,
                   alignment: Alignment.bottomCenter,
@@ -51,4 +50,3 @@ class Items extends StatelessWidget {
     );
   }
 }
-

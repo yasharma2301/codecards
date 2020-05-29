@@ -11,113 +11,122 @@ class SignUpStack extends StatefulWidget {
   _SignUpStackState createState() => _SignUpStackState();
 }
 
-class _SignUpStackState extends State<SignUpStack> with SingleTickerProviderStateMixin {
-	
-	AnimationController controller;
-	Animation moveSocial;
-	
-	bool _opened = false;
-	
-	@override
-	void initState() {
-		super.initState();
-		
-		controller = AnimationController(duration: Duration(seconds: 1), vsync: this);
-		
-		moveSocial =
-			Tween<double>(begin: 0.0, end: 1.0)
-				.animate(
-				CurvedAnimation(
-					parent: controller,
-					curve: Curves.fastOutSlowIn
-				)
-			);
-		
-		controller.addListener(() { setState(() {
-			_opened = controller.isCompleted;
-		});});
-		
-		Future.delayed(Duration(milliseconds: 500), () => controller.forward());
-	}
-	
-	@override
-	void dispose() {
-		super.dispose();
-		controller.dispose();
-	}
-	
-	double initPosition = 70;
-	
-    @override
-    Widget build(BuildContext context) {
-	    return Stack(
-		    alignment: Alignment.topCenter,
-		    children: [
-			    Social(
-				    opened: _opened,
-				    moveSocial: moveSocial,
-				    icon: Icon(FontAwesomeIcons.google, color: White),
-				    color: Colors.redAccent,
-				    title: "Login With Google",
-				    position: initPosition,
-			    ),
-			    Social(
-				    opened: _opened,
-				    moveSocial: moveSocial,
-				    icon: Icon(FontAwesomeIcons.github, color: White),
-				    color: Colors.black.withAlpha(150),
-				    title: "Login With Github",
-				    position: initPosition * 2,
-			    ),
-			    Social(
-				    opened: _opened,
-				    moveSocial: moveSocial,
-				    icon: Icon(FontAwesomeIcons.facebook, color: White),
-				    color: Colors.blueAccent,
-				    title: "Login With Facebook",
-				    position: initPosition * 3,
-			    ),
-			    Container(
-				    height: 50,
-				    width: 350,
-				    child: GestureDetector(
-					    onTap: () {
-					    	!controller.isCompleted ?
-							    controller.forward()
-							:
-								controller.reverse();
-					    },
-					    child: Container(
-						    color: Colors.grey[600],
-						    child: Row(
-							    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-							    children: [
-								    RichText(
-									    text: TextSpan(
-										    text: "Let's",
-										    style: TextStyle(
-											    color: White,
-											    fontSize: 25
-										    ),
-										    children: <TextSpan>[
-											    TextSpan(text: " Connect ", style: TextStyle(color: Colors.orange)),
-											    TextSpan(text: "to the Server")
-										    ]
-									    ),
-								    ),
-								    Transform.rotate(
-									    angle: math.pi * moveSocial.value,
-									    child: Icon(
-										    Icons.keyboard_arrow_up,
-										    color: Colors.orange,
-									    ),
-								    )
-							    ],
-						    ),
-					    ),
-				    )
-			    ),
-		    ],
-	    );
+class _SignUpStackState extends State<SignUpStack>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation moveSocial;
+
+  bool _opened = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
+
+    moveSocial = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn));
+
+    controller.addListener(() {
+      setState(() {
+        _opened = controller.isCompleted;
+      });
+    });
+
+    Future.delayed(Duration(milliseconds: 500), () => controller.forward());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  double initPosition = 70;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Social(
+          opened: _opened,
+          moveSocial: moveSocial,
+          icon: Icon(FontAwesomeIcons.google, color: White),
+          color: Colors.redAccent,
+          title: "Login With Google",
+          position: initPosition,
+        ),
+        Social(
+          opened: _opened,
+          moveSocial: moveSocial,
+          icon: Icon(FontAwesomeIcons.github, color: White),
+          color: Colors.blueGrey[800],
+          title: "Login With Github",
+          position: initPosition * 2,
+        ),
+        Social(
+          opened: _opened,
+          moveSocial: moveSocial,
+          icon: Icon(FontAwesomeIcons.facebook, color: White),
+          color: Colors.blue[400],
+          title: "Login With Facebook",
+          position: initPosition * 3,
+        ),
+        Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            child: GestureDetector(
+              onTap: () {
+                !controller.isCompleted
+                    ? controller.forward()
+                    : controller.reverse();
+              },
+              child: Container(
+                padding: EdgeInsets.only(top: 4),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.blueGrey[600], Colors.blueGrey[400]],
+                        stops: [0.03, 0.7],
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter,
+                        tileMode: TileMode.repeated),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: "Let's",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 22),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: " Connect ",
+                                style: TextStyle(fontWeight: FontWeight.w400)),
+                            TextSpan(text: "to the Server")
+                          ]),
+                    ),
+                    Transform.rotate(
+                      angle: math.pi * moveSocial.value,
+                      child: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: Grey.withOpacity(0.7),
+                        size: 35,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )),
+      ],
+    );
   }
 }

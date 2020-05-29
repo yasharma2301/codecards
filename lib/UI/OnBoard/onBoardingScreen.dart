@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'SlideList.dart';
 import 'dotIndicator.dart';
 import 'items.dart';
@@ -145,7 +143,9 @@ class _OnBoardState extends State<OnBoard> {
                       borderRadius: BorderRadius.circular(5),
                       shape: BoxShape.rectangle),
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'login');
+                    },
                     child: Text(
                       'Let\'s Get Started',
                       style: TextStyle(
