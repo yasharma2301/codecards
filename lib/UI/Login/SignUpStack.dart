@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'SocialButton.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'Social.dart';
+import 'dart:math' as math;
 
 class SignUpStack extends StatefulWidget {
   @override
@@ -27,7 +29,7 @@ class _SignUpStackState extends State<SignUpStack> with SingleTickerProviderStat
 				.animate(
 				CurvedAnimation(
 					parent: controller,
-					curve: Curves.bounceOut
+					curve: Curves.fastOutSlowIn
 				)
 			);
 		
@@ -77,26 +79,43 @@ class _SignUpStackState extends State<SignUpStack> with SingleTickerProviderStat
 			    ),
 			    Container(
 				    height: 50,
-				    width: 300,
-	//				                margin: EdgeInsets.fromLTRB(0, 0, 0, 500),
-				    child: RaisedButton(
-					    shape: RoundedRectangleBorder(
-						    borderRadius: BorderRadius.circular(10)
-					    ),
-					    splashColor: Grey,
-					    color: Colors.blueGrey[300],
-					    onPressed: () {
-						    !controller.isCompleted ?
-						    controller.forward()
-							    :
-						    controller.reverse();
+				    width: 350,
+				    child: GestureDetector(
+					    onTap: () {
+					    	!controller.isCompleted ?
+							    controller.forward()
+							:
+								controller.reverse();
 					    },
-					    child: Text(
-						    'Sign Up',
-						    style: TextStyle(
-							    fontSize: 24, color: Black, fontWeight: FontWeight.w400),
+					    child: Container(
+						    color: Colors.grey[600],
+						    child: Row(
+							    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+							    children: [
+								    RichText(
+									    text: TextSpan(
+										    text: "Let's",
+										    style: TextStyle(
+											    color: White,
+											    fontSize: 25
+										    ),
+										    children: <TextSpan>[
+											    TextSpan(text: " Connect ", style: TextStyle(color: Colors.orange)),
+											    TextSpan(text: "to the Server")
+										    ]
+									    ),
+								    ),
+								    Transform.rotate(
+									    angle: math.pi * moveSocial.value,
+									    child: Icon(
+										    Icons.keyboard_arrow_up,
+										    color: Colors.orange,
+									    ),
+								    )
+							    ],
+						    ),
 					    ),
-				    ),
+				    )
 			    ),
 		    ],
 	    );

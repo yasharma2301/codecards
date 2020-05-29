@@ -31,7 +31,7 @@ class _SocialState extends State<Social> {
 		    decoration: BoxDecoration(
 			    borderRadius: BorderRadius.circular(50)
 		    ),
-		    curve: Curves.bounceOut,
+		    curve: Curves.bounceInOut,
 		    child: SocialButton(
 			    button: widget.opened,
 			    title: widget.title,
