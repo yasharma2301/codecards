@@ -1,3 +1,4 @@
+import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'UI/OnBoard/onBoardingScreen.dart';
 import 'UI/Login/loginScreen.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
 			initialRoute: '/',
 			routes: {
 				'/': (context) => OnBoard(),
-				'login': (context) => LoginScreen()
+				'login': (context) => LoginScreen(),
+				'menuDashBoard': (context) => MenuDashboardPage()
 			},
 		);
 	}

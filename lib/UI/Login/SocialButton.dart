@@ -14,13 +14,14 @@ class SocialButton extends StatelessWidget {
     return button
         ? GestureDetector(
             onTap: () {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(title),
-                action: SnackBarAction(
-                    label: 'UNDO',
-                    onPressed: () =>
-                        Scaffold.of(context).hideCurrentSnackBar()),
-              ));
+//              Scaffold.of(context).showSnackBar(SnackBar(
+//                content: Text(title),
+//                action: SnackBarAction(
+//                    label: 'UNDO',
+//                    onPressed: () =>
+//                        Scaffold.of(context).hideCurrentSnackBar()),
+//              ));
+            Navigator.of(context).pushNamed('menuDashBoard');
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -30,17 +31,14 @@ class SocialButton extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Positioned(left: 0, child: icon),
-                  Flexible(
-                    flex: 1,
-                    child: FractionallySizedBox(
-                        child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        title,
-                        style: TextStyle(color: White, fontSize: 17),
-                      ),
-                    )),
-                  ),
+                  FractionallySizedBox(
+                      child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      title,
+                      style: TextStyle(color: White, fontSize: 17),
+                    ),
+                  )),
                   Positioned(
                     right: 0,
                     child: Padding(
