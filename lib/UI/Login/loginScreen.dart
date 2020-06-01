@@ -42,14 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [
-                            Colors.blueGrey[300],
-                            Grey.withOpacity(0.95)
-                          ],
-                          stops: [
-                            0.05,
-                            0.95
-                          ],
+                          colors: [LightPopBlue,PopBlue],
+                          stops: [0.52, 0.9],
                           begin: FractionalOffset.topCenter,
                           end: FractionalOffset.bottomCenter,
                           tileMode: TileMode.repeated),

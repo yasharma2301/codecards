@@ -14,13 +14,6 @@ class SocialButton extends StatelessWidget {
     return button
         ? GestureDetector(
             onTap: () {
-//              Scaffold.of(context).showSnackBar(SnackBar(
-//                content: Text(title),
-//                action: SnackBarAction(
-//                    label: 'UNDO',
-//                    onPressed: () =>
-//                        Scaffold.of(context).hideCurrentSnackBar()),
-//              ));
             Navigator.of(context).pushNamed('menuDashBoard');
             },
             child: Container(

@@ -39,8 +39,8 @@ class _SignUpStackState extends State<SignUpStack>
 
   @override
   void dispose() {
-    super.dispose();
     controller.dispose();
+    super.dispose();
   }
 
   double initPosition = 70;
@@ -70,7 +70,7 @@ class _SignUpStackState extends State<SignUpStack>
           opened: _opened,
           moveSocial: moveSocial,
           icon: Icon(FontAwesomeIcons.facebook, color: White),
-          color: Colors.blue[400],
+          color: Colors.blue[300],
           title: "Login With Facebook",
           position: initPosition * 3,
         ),
@@ -86,12 +86,7 @@ class _SignUpStackState extends State<SignUpStack>
               child: Container(
                 padding: EdgeInsets.only(top: 4),
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.blueGrey[600], Colors.blueGrey[400]],
-                        stops: [0.03, 0.7],
-                        begin: FractionalOffset.topCenter,
-                        end: FractionalOffset.bottomCenter,
-                        tileMode: TileMode.repeated),
+                    color: PopBlue,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30))),

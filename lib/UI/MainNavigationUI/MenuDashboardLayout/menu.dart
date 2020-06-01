@@ -1,3 +1,4 @@
+import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,7 @@ class Menu extends StatelessWidget {
                         child: Text(
                           "Code Cards",
                           style: TextStyle(
-                            color: Colors.orange,
+                            color: PopBlue,
                             fontSize: isSelected == 0 ? 22 : 20,
                             fontWeight: isSelected == 0
                                 ? FontWeight.bold
@@ -64,7 +65,7 @@ class Menu extends StatelessWidget {
                         child: Text(
                           "Bookmarks",
                           style: TextStyle(
-                            color: Colors.orange,
+                            color: PopBlue,
                             fontSize: isSelected == 1 ? 22 : 20,
                             fontWeight: isSelected == 1
                                 ? FontWeight.bold
@@ -84,7 +85,7 @@ class Menu extends StatelessWidget {
                         child: Text(
                           "Community",
                           style: TextStyle(
-                            color: Colors.orange,
+                            color: PopBlue,
                             fontSize: isSelected == 2 ? 22 : 20,
                             fontWeight: isSelected == 2
                                 ? FontWeight.bold
@@ -104,7 +105,7 @@ class Menu extends StatelessWidget {
                         child: Text(
                           "Rate Us",
                           style: TextStyle(
-                            color: Colors.orange,
+                            color: PopBlue,
                             fontSize: isSelected == 3 ? 22 : 20,
                             fontWeight: isSelected == 3
                                 ? FontWeight.bold
@@ -124,7 +125,7 @@ class Menu extends StatelessWidget {
                         child: Text(
                           "Developer Story",
                           style: TextStyle(
-                            color: Colors.orange,
+                            color: PopBlue,
                             fontSize: isSelected == 4 ? 22 : 20,
                             fontWeight: isSelected == 4
                                 ? FontWeight.bold
@@ -148,12 +149,12 @@ class Menu extends StatelessWidget {
                       children: <Widget>[
                         Icon(
                           Icons.arrow_back_ios,
-                          color: Colors.orange,
+                          color: PopBlue,
                           size: 15,
                         ),
                         Text(
                           "Logout",
-                          style: TextStyle(color: Colors.orange, fontSize: 20),
+                          style: TextStyle(color: PopBlue, fontSize: 20),
                         ),
                       ],
                     ),

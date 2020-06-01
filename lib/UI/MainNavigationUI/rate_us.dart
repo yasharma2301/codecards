@@ -1,3 +1,5 @@
+import 'package:codecards/Shared/Colors.dart';
+
 import 'Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 final Color backGroundColor = Color(0xFF1c2129);
@@ -21,7 +23,7 @@ class RateUs extends StatelessWidget with NavigationStates{
         return Container(
           padding: EdgeInsets.only(left: 16, right: 16, top: 40),
           decoration: BoxDecoration(
-              boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.5),blurRadius: 8,spreadRadius: 1)],
+              boxShadow: [BoxShadow(color: PopBlue.withOpacity(0.5),blurRadius: 8,spreadRadius: 1)],
               borderRadius: border? BorderRadius.circular(40):BorderRadius.circular(0),
               color: backGroundColor
           ),
@@ -35,12 +37,15 @@ class RateUs extends StatelessWidget with NavigationStates{
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      InkWell(
-                          child: Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                          ),
-                          onTap: onMenuTap
+                      IconButton(
+                        splashColor: LightPopBlue.withOpacity(0.8),
+                        hoverColor: LightPopBlue,
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: onMenuTap,
                       ),
                       Text(
                         "Rate Us",

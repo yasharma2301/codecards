@@ -62,8 +62,15 @@ class _OnBoardState extends State<OnBoard> {
             child: Container(
               height: screenHeight,
               width: screenHeight,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.blueGrey[600]),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                    colors: [Colors.blue.shade500.withOpacity(0.8), PopBlue],
+                    stops: [0.46, 0.86],
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    tileMode: TileMode.repeated),
+              ),
             ),
           ),
           Positioned(
@@ -78,7 +85,6 @@ class _OnBoardState extends State<OnBoard> {
               ),
             ),
           ),
-
           Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -139,7 +145,15 @@ class _OnBoardState extends State<OnBoard> {
                   height: 50,
                   width: 400,
                   decoration: BoxDecoration(
-                      color: Colors.blueGrey[600],
+                      gradient: LinearGradient(
+                          colors: [
+                            PopBlue,
+                            Colors.blue.shade400.withOpacity(0.8),
+                          ],
+                          stops: [0.6,0.9],
+                          begin: FractionalOffset.bottomRight,
+                          end: FractionalOffset.bottomLeft,
+                          tileMode: TileMode.repeated),
                       borderRadius: BorderRadius.circular(5),
                       shape: BoxShape.rectangle),
                   child: FlatButton(
