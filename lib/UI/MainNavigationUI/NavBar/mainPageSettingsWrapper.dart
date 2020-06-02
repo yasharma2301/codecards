@@ -1,8 +1,7 @@
-import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/UI/MainNavigationUI/Settings.dart';
 import 'package:flutter/material.dart';
 import '../mainPage.dart';
 import 'animatedBottomBar.dart';
+import 'package:codecards/UI/Settings/Settings.dart';
 
 class BottomBarAndScaffold extends StatefulWidget {
   final Function onMenuTap;
@@ -11,7 +10,7 @@ class BottomBarAndScaffold extends StatefulWidget {
   BottomBarAndScaffold({Key key, this.border, this.onMenuTap})
       : super(key: key);
 
-  List<BarItem> barItems = [
+  final List<BarItem> barItems = [
     BarItem(title: 'Home', iconData: Icons.home, color: Colors.blueAccent[100]),
     BarItem(
         title: 'Settings',
@@ -24,7 +23,7 @@ class BottomBarAndScaffold extends StatefulWidget {
 }
 
 class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
-  int SelectedBar = 0;
+  int selectedBar = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
               : BorderRadius.circular(0)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SelectedBar == 0
+        body: selectedBar == 0
             ? MainPage(
               onMenuTap: widget.onMenuTap,
             )
@@ -46,7 +45,7 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
           animationDuration: Duration(milliseconds: 150),
           onBarTap: (index) {
             setState(() {
-              SelectedBar = index;
+              selectedBar = index;
             });
           },
         ),

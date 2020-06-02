@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'SignUpStack.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 class LoginScreen extends StatefulWidget {

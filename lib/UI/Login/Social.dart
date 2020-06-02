@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'SocialButton.dart';
 
 class Social extends StatefulWidget {
-  bool opened;
-  Animation moveSocial;
-  String title;
-  Color color;
-  Icon icon;
-  double position;
+  final bool opened;
+  final Animation moveSocial;
+  final String title;
+  final Color color;
+  final Icon icon;
+  final double position;
 
   Social(
       {@required this.opened,

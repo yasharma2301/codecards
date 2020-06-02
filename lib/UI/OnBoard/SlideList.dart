@@ -13,7 +13,7 @@ class Slide {
 final SlideList = [
   Slide(
       flare: 'assets/code.flr',
-      title: 'Swipe as you Code',
+      title: 'Swipe as you Cde',
       description:
           'We introduce the all new method of coding.\n Read a question. Write an Algorithm. Get Stuck? Get some hints.',
       animation: 'coding'),
