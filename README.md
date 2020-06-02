@@ -11,3 +11,5 @@ Commit 20 - Added Gradients in 2 places, Replaced Row with Stack in button layou
 Commit 23 - Main App Navigation Added and removed Flexible from Login Page Stack widget beacuse of an error.
 
 Commit 26 - Navigation Complete. Main Page is where we code swipe cards and settings, Ishit is doing.
+
+Commit 29 - Notes Page in progress.
