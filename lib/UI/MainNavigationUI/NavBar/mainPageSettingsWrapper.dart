@@ -1,6 +1,7 @@
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/UI/MainNavigationUI/Settings.dart';
+import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/UI/MainNavigationUI/Notes/Notes.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../mainPage.dart';
 import 'animatedBottomBar.dart';
 
@@ -14,8 +15,8 @@ class BottomBarAndScaffold extends StatefulWidget {
   List<BarItem> barItems = [
     BarItem(title: 'Home', iconData: Icons.home, color: Colors.blueAccent[100]),
     BarItem(
-        title: 'Settings',
-        iconData: Icons.settings,
+        title: 'Notes',
+        iconData: Icons.assignment,
         color: Colors.blueAccent[100])
   ];
 
@@ -39,7 +40,7 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
             ? MainPage(
               onMenuTap: widget.onMenuTap,
             )
-            : SettingsPage(),
+            : Notes(),
         bottomNavigationBar: AnimatedBottomBar(
           border: widget.border,
           barItems: widget.barItems,
