@@ -16,10 +16,10 @@ class _CodeCardsState extends State<CodeCards> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double CurrentWidth = constraints.constrainWidth();
-        double MaxWidth = MediaQuery.of(context).size.width;
+        double currentWidth = constraints.constrainWidth();
+        double maxWidth = MediaQuery.of(context).size.width;
         bool border;
-        if (MaxWidth == CurrentWidth) {
+        if (maxWidth == currentWidth) {
           border = false;
         } else {
           border = true;

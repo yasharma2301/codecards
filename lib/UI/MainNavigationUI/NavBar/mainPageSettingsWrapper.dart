@@ -1,9 +1,10 @@
 import 'package:codecards/Shared/Colors.dart';
-import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/UI/MainNavigationUI/Notes/Notes.dart';
+import 'package:codecards/UI/MainNavigationUI/Notes/Notes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../mainPage.dart';
 import 'animatedBottomBar.dart';
+import 'package:codecards/UI/Settings/Settings.dart';
 
 class BottomBarAndScaffold extends StatefulWidget {
   final Function onMenuTap;
@@ -12,7 +13,7 @@ class BottomBarAndScaffold extends StatefulWidget {
   BottomBarAndScaffold({Key key, this.border, this.onMenuTap})
       : super(key: key);
 
-  List<BarItem> barItems = [
+  final List<BarItem> barItems = [
     BarItem(title: 'Home', iconData: Icons.home, color: Colors.blueAccent[100]),
     BarItem(
         title: 'Notes',
@@ -25,7 +26,7 @@ class BottomBarAndScaffold extends StatefulWidget {
 }
 
 class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
-  int SelectedBar = 0;
+  int selectedBar = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
               : BorderRadius.circular(0)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SelectedBar == 0
+        body: selectedBar == 0
             ? MainPage(
               onMenuTap: widget.onMenuTap,
             )
@@ -47,7 +48,7 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
           animationDuration: Duration(milliseconds: 150),
           onBarTap: (index) {
             setState(() {
-              SelectedBar = index;
+              selectedBar = index;
             });
           },
         ),
