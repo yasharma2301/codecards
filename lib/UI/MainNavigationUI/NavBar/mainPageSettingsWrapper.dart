@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 import 'package:codecards/Shared/Colors.dart';
-import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/UI/MainNavigationUI/Notes/Notes.dart';
->>>>>>> 97df3942b8e690076a80e6cbf64d46996ef2928e
+import 'package:codecards/UI/MainNavigationUI/Notes/Notes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../mainPage.dart';
