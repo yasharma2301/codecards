@@ -136,6 +136,27 @@ class Menu extends StatelessWidget {
                       SizedBox(
                         height: 20.0,
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          // BlocProvider.of<NavigationBloc>(context)
+                          //     .add(NavigationEvents.DeveloperStoryClickEvent);
+                          Navigator.popAndPushNamed(context, "/settings");
+                          onMenuItemClicked();
+                        },
+                        child: Text(
+                          "Settings",
+                          style: TextStyle(
+                            color: PopBlue,
+                            fontSize: isSelected == 4 ? 22 : 20,
+                            fontWeight: isSelected == 4
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                     ],
                   ),
                 ),

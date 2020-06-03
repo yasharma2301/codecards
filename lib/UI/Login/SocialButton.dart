@@ -32,19 +32,19 @@ class SocialButton extends StatelessWidget {
                       style: TextStyle(color: White, fontSize: 17),
                     ),
                   )),
-                  Positioned(
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Container(
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   right: 0,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(right: 10),
+                  //     child: Container(
+                  //       child: Icon(
+                  //         Icons.arrow_forward_ios,
+                  //         color: Colors.white,
+                  //         size: 15,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -12,6 +12,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Grey,
       body: Stack(
         children: [
@@ -31,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
             child: Align(
               alignment: Alignment.topCenter,
               // left: MediaQuery.of(context).size.width/2,

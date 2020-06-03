@@ -1,6 +1,6 @@
 name: codecards
 description: Code Cards
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
@@ -16,6 +16,7 @@ dependencies:
   http: ^0.12.1
   provider:
   flutter_bloc: ^3.2.0
+  flutter_local_notifications: ^1.4.4
 
 dev_dependencies:
   flutter_test:

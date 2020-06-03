@@ -10,4 +10,9 @@
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
+// Flutter Notifications
+if (@available(iOS 10.0, *)) {
+  [UNUserNotificationCenter currentNotificationCenter].delegate = (id<UNUserNotificationCenterDelegate>) self;
+}
+
 @end
