@@ -10,6 +10,19 @@ class MainSettings extends StatefulWidget {
 }
 
 class _MainSettingsState extends State<MainSettings> {
+  // Time Picker
+  TimeOfDay time = TimeOfDay(hour: 19, minute: 0);
+
+  Future<void> _showTimePicker() async {
+    final TimeOfDay pickedTime =
+        await showTimePicker(context: context, initialTime: time);
+    if (pickedTime != null && pickedTime != time) {
+      setState(() {
+        time = pickedTime;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +32,24 @@ class _MainSettingsState extends State<MainSettings> {
         child: ListView(
           children: [
             UserInfo(),
-            SettingsTile(icon: Icons.book, title: "Bookmarks", onTap: (){print("=========================================");},),
-            SettingsTile(icon: FontAwesomeIcons.palette, title: "Change Theme", onTap: () => print("Theme changed yay"),)
+            SettingsTile(
+              icon: Icons.book,
+              title: "Bookmarks",
+              onTap: () {
+                print("=========================================");
+              },
+            ),
+            SettingsTile(
+              icon: FontAwesomeIcons.palette,
+              title: "Change Theme",
+              onTap: () => print("Theme changed yay"),
+            ),
+            SettingsTile(
+              icon: Icons.access_time,
+              title: time.format(context),
+              subtitle: "Change daily reminder time",
+              onTap: _showTimePicker 
+            )
           ],
         ),
       ),
