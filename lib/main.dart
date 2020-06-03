@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
 
     // we can set navigator to navigate another screen
   }
-
+  
   Future onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
     return CupertinoAlertDialog(
@@ -90,7 +90,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return 
+    // MaterialApp(
+    //   home: Trials(),
+    // );
+    MaterialApp(
       title: 'Code Cards',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -104,6 +108,35 @@ class _MyAppState extends State<MyApp> {
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings': (context) => SettingsPage()
       },
+    );
+  }
+}
+
+class Trials extends StatefulWidget {
+  @override
+  _TrialsState createState() => _TrialsState();
+}
+
+class _TrialsState extends State<Trials> {
+
+  TimeOfDay time = TimeOfDay(hour: 11, minute: 20);
+  // TimeOfDay picked;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: RaisedButton(
+        onPressed: () async {
+          // showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2040));
+          TimeOfDay picked = await showTimePicker(context: context, initialTime: time);
+          setState(() {
+            time = picked;
+          });
+        },
+        color: Colors.deepPurpleAccent,
+        splashColor: Colors.purpleAccent,
+        child: Text(time.format(context), style: TextStyle(color: Colors.white, fontSize: 30),),
+      ),
     );
   }
 }

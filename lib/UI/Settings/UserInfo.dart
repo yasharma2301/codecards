@@ -50,6 +50,7 @@ class _UserInfoState extends State<UserInfo> {
               button: true,
               icon: Icon(FontAwesomeIcons.facebook, color: White,),
               color: Colors.blue[300],
+              loggedIn: true,
             ),
           )
         ],

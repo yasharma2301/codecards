@@ -34,10 +34,12 @@ class _SocialState extends State<Social> {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
           curve: Curves.bounceOut,
           child: SocialButton(
-              button: widget.opened,
-              title: widget.title,
-              color: widget.color,
-              icon: widget.icon),
+            button: widget.opened,
+            title: widget.title,
+            color: widget.color,
+            icon: widget.icon,
+            loggedIn: false,
+          ),
         ));
   }
 }

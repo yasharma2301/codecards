@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
 
 class SettingsTile extends StatefulWidget {
-
   final IconData icon;
   final String title;
-  Function onTap;
+  String subtitle;
+  final Function onTap;
 
-  SettingsTile({@required this.icon, @required this.title, this.onTap});
+  SettingsTile(
+      {@required this.icon, @required this.title, this.onTap, this.subtitle});
 
   @override
   _SettingsTileState createState() => _SettingsTileState();
@@ -41,9 +42,21 @@ class _SettingsTileState extends State<SettingsTile> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                widget.title,
-                style: TextStyle(color: White, fontSize: 25),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.title,
+                    style: TextStyle(color: White, fontSize: 25),
+                  ),
+                  widget.subtitle != null
+                      ? Text(
+                          widget.subtitle,
+                          style: TextStyle(fontSize: 20),
+                        )
+                      : Container()
+                ],
               )
             ],
           ),
