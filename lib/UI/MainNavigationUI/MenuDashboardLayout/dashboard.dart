@@ -27,7 +27,6 @@ class Dashboard extends StatelessWidget {
       child: ScaleTransition(
         scale: scaleAnimation,
         child: Material(
-     //     shadowColor: Colors.orange,
           color: Colors.transparent,
           animationDuration: duration,
           borderRadius: isCollapsed ? BorderRadius.circular(0) : BorderRadius.circular(40),

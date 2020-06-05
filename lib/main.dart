@@ -1,8 +1,8 @@
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
+import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
 import 'UI/OnBoard/onBoardingScreen.dart';
 import 'UI/Login/loginScreen.dart';
-import 'package:codecards/UI/Settings/Settings.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,7 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // Automatic notification
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   AndroidInitializationSettings androidInitializationSettings;
@@ -47,12 +46,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> notification() async {
     var time = Time(19, 36, 50);
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'id',
-      'CodeCards',
-      'Reminder to code daily',
-      priority: Priority.High,
-      importance: Importance.Max
-    );
+        'id', 'CodeCards', 'Reminder to code daily',
+        priority: Priority.High, importance: Importance.Max);
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
@@ -71,7 +66,7 @@ class _MyAppState extends State<MyApp> {
 
     // we can set navigator to navigate another screen
   }
-  
+
   Future onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
     return CupertinoAlertDialog(
@@ -90,11 +85,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    // MaterialApp(
-    //   home: Trials(),
-    // );
-    MaterialApp(
+    return MaterialApp(
       title: 'Code Cards',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -107,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => OnBoard(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
-        '/settings': (context) => SettingsPage()
+        '/settings2': (context) => Settings(),
       },
     );
   }
@@ -119,8 +110,8 @@ class Trials extends StatefulWidget {
 }
 
 class _TrialsState extends State<Trials> {
-
   TimeOfDay time = TimeOfDay(hour: 11, minute: 20);
+
   // TimeOfDay picked;
 
   @override
@@ -129,14 +120,18 @@ class _TrialsState extends State<Trials> {
       child: RaisedButton(
         onPressed: () async {
           // showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2040));
-          TimeOfDay picked = await showTimePicker(context: context, initialTime: time);
+          TimeOfDay picked =
+              await showTimePicker(context: context, initialTime: time);
           setState(() {
             time = picked;
           });
         },
         color: Colors.deepPurpleAccent,
         splashColor: Colors.purpleAccent,
-        child: Text(time.format(context), style: TextStyle(color: Colors.white, fontSize: 30),),
+        child: Text(
+          time.format(context),
+          style: TextStyle(color: Colors.white, fontSize: 30),
+        ),
       ),
     );
   }

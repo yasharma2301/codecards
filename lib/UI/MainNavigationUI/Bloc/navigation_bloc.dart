@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-
 import '../bookmarks.dart';
 import '../code_cards.dart';
 import '../community.dart';

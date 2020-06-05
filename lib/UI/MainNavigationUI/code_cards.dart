@@ -5,6 +5,7 @@ import 'NavBar/mainPageSettingsWrapper.dart';
 
 class CodeCards extends StatefulWidget with NavigationStates {
   final Function onMenuTap;
+
   const CodeCards({Key key, this.onMenuTap}) : super(key: key);
 
   @override
@@ -36,8 +37,10 @@ class _CodeCardsState extends State<CodeCards> {
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(0),
                 color: Grey),
-            child: BottomBarAndScaffold(onMenuTap: widget.onMenuTap,border: border,)
-        );
+            child: BottomBarAndScaffold(
+              onMenuTap: widget.onMenuTap,
+              border: border,
+            ));
       },
     );
   }
