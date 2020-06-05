@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/Login/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'SlideList.dart';
@@ -150,7 +151,10 @@ class _OnBoardState extends State<OnBoard> {
                             PopBlue,
                             Colors.blue.shade400.withOpacity(0.8),
                           ],
-                          stops: [0.6,0.9],
+                          stops: [
+                            0.6,
+                            0.9
+                          ],
                           begin: FractionalOffset.bottomRight,
                           end: FractionalOffset.bottomLeft,
                           tileMode: TileMode.repeated),
@@ -158,7 +162,17 @@ class _OnBoardState extends State<OnBoard> {
                       shape: BoxShape.rectangle),
                   child: FlatButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'login');
+                      // Navigator.pushNamed(context, 'login');
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Login(); 
+                            // Container(
+                            //   height: 80,
+                            //   // color: Black,
+                            //   child: Text("hellow"),
+                            // );
+                          });
                     },
                     child: Text(
                       'Let\'s Get Started',

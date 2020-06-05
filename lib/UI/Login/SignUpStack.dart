@@ -77,18 +77,19 @@ class _SignUpStackState extends State<SignUpStack>
 					height: 50,
 					width: MediaQuery.of(context).size.width,
 					child: GestureDetector(
-						onTap: () {
-							!controller.isCompleted
-								? controller.forward()
-								: controller.reverse();
+						onTap: () async {
+							if(controller.isCompleted) {
+                await controller.reverse();
+                Navigator.pop(context);
+              }
 						},
 						child: Container(
 							padding: EdgeInsets.only(top: 4),
 							decoration: BoxDecoration(
 								color: PopBlue,
 								borderRadius: BorderRadius.only(
-									topLeft: Radius.circular(30),
-									topRight: Radius.circular(30))),
+									topLeft: Radius.circular(15),
+									topRight: Radius.circular(15))),
 							child: Row(
 								mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 								children: [

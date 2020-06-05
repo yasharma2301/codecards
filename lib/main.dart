@@ -91,6 +91,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        canvasColor: Colors.transparent
       ),
       initialRoute: '/',
       routes: {
