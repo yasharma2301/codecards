@@ -3,7 +3,7 @@ import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
   final Animation<Offset> slideAnimation;
   final Animation<double> menuScaleAnimation;
   final Function onMenuItemClicked;
@@ -18,11 +18,16 @@ class Menu extends StatelessWidget {
       : super(key: key);
 
   @override
+  _MenuState createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  @override
   Widget build(BuildContext context) {
     return SlideTransition(
-      position: slideAnimation,
+      position: widget.slideAnimation,
       child: ScaleTransition(
-        scale: menuScaleAnimation,
+        scale: widget.menuScaleAnimation,
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: Align(
@@ -40,14 +45,14 @@ class Menu extends StatelessWidget {
                         onTap: () {
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.CodeCardsClickEvent);
-                          onMenuItemClicked();
+                          widget.onMenuItemClicked();
                         },
                         child: Text(
                           "Code Cards",
                           style: TextStyle(
                             color: PopBlue,
-                            fontSize: isSelected == 0 ? 22 : 20,
-                            fontWeight: isSelected == 0
+                            fontSize: widget.isSelected == 0 ? 22 : 20,
+                            fontWeight: widget.isSelected == 0
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -60,14 +65,14 @@ class Menu extends StatelessWidget {
                         onTap: () {
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.BookmarksClickEvent);
-                          onMenuItemClicked();
+                          widget.onMenuItemClicked();
                         },
                         child: Text(
                           "Bookmarks",
                           style: TextStyle(
                             color: PopBlue,
-                            fontSize: isSelected == 1 ? 22 : 20,
-                            fontWeight: isSelected == 1
+                            fontSize: widget.isSelected == 1 ? 22 : 20,
+                            fontWeight: widget.isSelected == 1
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -80,14 +85,14 @@ class Menu extends StatelessWidget {
                         onTap: () {
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.CommunityClickEvent);
-                          onMenuItemClicked();
+                          widget.onMenuItemClicked();
                         },
                         child: Text(
                           "Community",
                           style: TextStyle(
                             color: PopBlue,
-                            fontSize: isSelected == 2 ? 22 : 20,
-                            fontWeight: isSelected == 2
+                            fontSize: widget.isSelected == 2 ? 22 : 20,
+                            fontWeight: widget.isSelected == 2
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -100,14 +105,14 @@ class Menu extends StatelessWidget {
                         onTap: () {
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.RateUsClickEvent);
-                          onMenuItemClicked();
+                          widget.onMenuItemClicked();
                         },
                         child: Text(
                           "Rate Us",
                           style: TextStyle(
                             color: PopBlue,
-                            fontSize: isSelected == 3 ? 22 : 20,
-                            fontWeight: isSelected == 3
+                            fontSize: widget.isSelected == 3 ? 22 : 20,
+                            fontWeight: widget.isSelected == 3
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -120,35 +125,14 @@ class Menu extends StatelessWidget {
                         onTap: () {
                           BlocProvider.of<NavigationBloc>(context)
                               .add(NavigationEvents.DeveloperStoryClickEvent);
-                          onMenuItemClicked();
+                          widget.onMenuItemClicked();
                         },
                         child: Text(
                           "Developer Story",
                           style: TextStyle(
                             color: PopBlue,
-                            fontSize: isSelected == 4 ? 22 : 20,
-                            fontWeight: isSelected == 4
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          // BlocProvider.of<NavigationBloc>(context)
-                          //     .add(NavigationEvents.DeveloperStoryClickEvent);
-                          Navigator.popAndPushNamed(context, "/settings");
-                          onMenuItemClicked();
-                        },
-                        child: Text(
-                          "Settings",
-                          style: TextStyle(
-                            color: PopBlue,
-                            fontSize: isSelected == 4 ? 22 : 20,
-                            fontWeight: isSelected == 4
+                            fontSize: widget.isSelected == 4 ? 22 : 20,
+                            fontWeight: widget.isSelected == 4
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),
@@ -187,5 +171,25 @@ class Menu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Yes'),
+          ),
+        ],
+      ),
+    )) ?? false;
   }
 }

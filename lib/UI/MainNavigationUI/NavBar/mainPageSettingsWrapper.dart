@@ -1,10 +1,7 @@
-import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/Notes/Notes.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../mainPage.dart';
 import 'animatedBottomBar.dart';
-import 'package:codecards/UI/Settings/Settings.dart';
 
 class BottomBarAndScaffold extends StatefulWidget {
   final Function onMenuTap;
