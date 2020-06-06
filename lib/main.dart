@@ -1,3 +1,4 @@
+import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'UI/OnBoard/onBoardingScreen.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -85,14 +87,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeChanger>(
+      create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
+      child: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       title: 'Code Cards',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        canvasColor: Colors.transparent
-      ),
+      theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
         '/': (context) => OnBoard(),

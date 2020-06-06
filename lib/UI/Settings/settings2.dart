@@ -1,4 +1,6 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/Settings/setTheme.dart';
+import 'package:codecards/UI/Settings/setUsername.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,94 +76,17 @@ class _SettingsState extends State<Settings> {
                         height: 170,
                         width: 170,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Grey),
-                        child: Center(
-                          child: FlareActor(
-                            'assets/minion.flr',
-                            alignment: Alignment.bottomCenter,
-                            fit: BoxFit.cover,
-                            animation: 'Stand',
-                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Grey,
                         ),
+                        child: Center(),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    child: Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                          color: Grey, borderRadius: BorderRadius.circular(8)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20, right: 15, left: 15),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Grey,
-                                  size: 30,
-                                ),
-                                hintStyle: TextStyle(),
-                                fillColor: LightGrey.withOpacity(0.6),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            width: width,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8),
-                              ),
-                              gradient: LinearGradient(
-                                  colors: [PopBlue, Colors.blueAccent[100]],
-                                  stops: [0.1, 0.99],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.topRight,
-                                  tileMode: TileMode.repeated),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'SIGNED IN WITH GOOGLE',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  SetUsername(width:width,height: height,),
                   GestureDetector(
                     onTap: () {},
                     child: Settings2Tile(
@@ -190,7 +115,7 @@ class _SettingsState extends State<Settings> {
                       title: 'MORE INFO',
                     ),
                   ),
-
+                  SetTheme(width:width),
                   AdTile(),
                 ],
               ),
@@ -223,11 +148,12 @@ class _SettingsState extends State<Settings> {
       ),
     );
   }
+
   TimeOfDay time = TimeOfDay(hour: 19, minute: 0);
 
   Future<void> _showTimePicker() async {
     final TimeOfDay pickedTime =
-    await showTimePicker(context: context, initialTime: time);
+        await showTimePicker(context: context, initialTime: time);
     if (pickedTime != null && pickedTime != time) {
       setState(() {
         time = pickedTime;

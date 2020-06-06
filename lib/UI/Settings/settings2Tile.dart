@@ -27,7 +27,7 @@ class Settings2Tile extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [PopBlue, Colors.blueAccent[100]],
+                          colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColorLight],
                           stops: [0.3, 0.95],
                           begin: FractionalOffset.topLeft,
                           end: FractionalOffset.topRight,
@@ -84,10 +84,7 @@ class RadiantGradientMask extends StatelessWidget {
       shaderCallback: (bounds) => RadialGradient(
         center: Alignment.bottomCenter,
         radius: 0.999,
-        colors: [
-          Colors.blueAccent[100],
-          PopBlue,
-        ],
+        colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColorLight],
         tileMode: TileMode.clamp,
       ).createShader(bounds),
       child: child,

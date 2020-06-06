@@ -11,3 +11,5 @@ const Color Black = const Color(0xFF000000);
 const Color PopBlue = const Color(0xFF7e7dd2);
 const Color LightPopBlue = const Color(0xFF9797cf);
 const Color DarkBlue = const Color(0xFF3b3a9b);
+const Color SeaGreen = const Color(0xFF20b2aa);
+

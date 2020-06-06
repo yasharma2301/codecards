@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Color(0xFF737373).withOpacity(0.9).withAlpha(70),
+      color: Colors.transparent,
       child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15))),
-          height: screenHeight * 0.3,
+          height: 280,
           child: SignUpStack()),
     );
   }
