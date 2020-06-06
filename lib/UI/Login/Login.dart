@@ -17,7 +17,6 @@ class _LoginState extends State<Login> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.transparent,
       child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(

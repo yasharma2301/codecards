@@ -2,10 +2,12 @@ import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/Settings/setTheme.dart';
 import 'package:codecards/UI/Settings/setUsername.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'ColorPicker.dart';
 import 'adTile.dart';
 
 class Settings extends StatefulWidget {
@@ -94,28 +96,25 @@ class _SettingsState extends State<Settings> {
                       title: 'BOOKMARKS',
                     ),
                   ),
-                  GestureDetector(
+                  Settings2Tile(
                     onTap: _showTimePicker,
-                    child: Settings2Tile(
-                      iconData: Icons.timer,
-                      title: 'CHANGE DAILY\nREMINDER TIME',
-                    ),
+                    iconData: Icons.timer,
+                    title: 'CHANGE DAILY\nREMINDER TIME',
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Settings2Tile(
-                      iconData: Icons.call,
-                      title: 'CONTACT US',
-                    ),
+                  Settings2Tile(
+                    iconData: Icons.call,
+                    title: 'CONTACT US',
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Settings2Tile(
-                      iconData: Icons.info,
-                      title: 'MORE INFO',
-                    ),
+                  Settings2Tile(
+                    iconData: FontAwesomeIcons.fill,
+                    title: "Change Accent Color",
+                    onTap: _showColorPicker,
                   ),
-                  SetTheme(width:width),
+                  Settings2Tile(
+                    iconData: Icons.info,
+                    title: 'MORE INFO',
+                  ),
+                  // SetTheme(width:width),
                   AdTile(),
                 ],
               ),
@@ -159,5 +158,24 @@ class _SettingsState extends State<Settings> {
         time = pickedTime;
       });
     }
+  }
+
+  // Color Picker
+
+  Color accentColor = PopBlue;
+
+  Future<void> _showColorPicker() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog (
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          backgroundColor: Grey,
+          child: ColorPicker(),
+        );
+      }
+    );
   }
 }
