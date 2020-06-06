@@ -66,8 +66,8 @@ class _OnBoardState extends State<OnBoard> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
-                    colors: [Colors.blue.shade500.withOpacity(0.8), PopBlue],
-                    stops: [0.46, 0.86],
+                    colors: [PopBlue, Colors.blueAccent[100]],
+                    stops: [0.55, 0.8],
                     begin: FractionalOffset.topCenter,
                     end: FractionalOffset.bottomCenter,
                     tileMode: TileMode.repeated),
@@ -147,31 +147,19 @@ class _OnBoardState extends State<OnBoard> {
                   width: 400,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [
-                            PopBlue,
-                            Colors.blue.shade400.withOpacity(0.8),
-                          ],
-                          stops: [
-                            0.6,
-                            0.9
-                          ],
-                          begin: FractionalOffset.bottomRight,
-                          end: FractionalOffset.bottomLeft,
+                          colors: [PopBlue, Colors.blueAccent[100]],
+                          stops: [0.1, 0.99],
+                          begin: FractionalOffset.topLeft,
+                          end: FractionalOffset.topRight,
                           tileMode: TileMode.repeated),
                       borderRadius: BorderRadius.circular(5),
                       shape: BoxShape.rectangle),
                   child: FlatButton(
                     onPressed: () {
-                      // Navigator.pushNamed(context, 'login');
                       showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return Login(); 
-                            // Container(
-                            //   height: 80,
-                            //   // color: Black,
-                            //   child: Text("hellow"),
-                            // );
+                            return Login();
                           });
                     },
                     child: Text(

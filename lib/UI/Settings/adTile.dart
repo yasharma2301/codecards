@@ -7,7 +7,7 @@ class AdTile extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(top: 60),
+      padding: const EdgeInsets.only(top: 50),
       child: Container(
         height: 220,
         width: width,

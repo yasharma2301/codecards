@@ -1,12 +1,13 @@
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/UI/Settings/ColorPicker.dart';
+import 'package:codecards/UI/Settings/setTheme.dart';
+import 'package:codecards/UI/Settings/setUsername.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
+import 'ColorPicker.dart';
 import 'adTile.dart';
 
 class Settings extends StatefulWidget {
@@ -77,107 +78,23 @@ class _SettingsState extends State<Settings> {
                         height: 170,
                         width: 170,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Grey),
-                        child: Center(
-                          child: FlareActor(
-                            'assets/minion.flr',
-                            alignment: Alignment.bottomCenter,
-                            fit: BoxFit.cover,
-                            animation: 'Stand',
-                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Grey,
                         ),
+                        child: Center(),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    child: Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                          color: Grey, borderRadius: BorderRadius.circular(8)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20, right: 15, left: 15),
-                            child: TextFormField(
-                              initialValue: "User69",
-                              style: TextStyle(
-                                color: Colors.blueAccent[100],
-                                fontSize: 25
-                              ),
-                              cursorColor: Colors.orange,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Grey,
-                                  size: 30,
-                                ),
-                                labelText: "Username",
-                                labelStyle: TextStyle(
-                                  color: Grey,
-                                  fontSize: 20
-                                ),
-                                fillColor: LightGrey,
-                                filled: true,
-                                // enabledBorder: OutlineInputBorder(
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(5)),
-                                //   borderSide:
-                                //       BorderSide(color: Colors.transparent),
-                                // ),
-                                // focusedBorder: OutlineInputBorder(
-                                //   borderRadius:
-                                //       BorderRadius.all(Radius.circular(5)),
-                                //   borderSide:
-                                //       BorderSide(color: Colors.transparent),
-                                // ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            width: width,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8),
-                              ),
-                              gradient: LinearGradient(
-                                  colors: [PopBlue, Colors.blueAccent[100]],
-                                  stops: [0.1, 0.99],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.topRight,
-                                  tileMode: TileMode.repeated),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'SIGNED IN WITH GOOGLE',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                  SetUsername(width:width,height: height,),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Settings2Tile(
+                      iconData: Icons.bookmark,
+                      title: 'BOOKMARKS',
                     ),
-                  ),
-                  Settings2Tile(
-                    iconData: Icons.bookmark,
-                    title: 'BOOKMARKS',
                   ),
                   Settings2Tile(
                     onTap: _showTimePicker,
@@ -197,6 +114,7 @@ class _SettingsState extends State<Settings> {
                     iconData: Icons.info,
                     title: 'MORE INFO',
                   ),
+                  // SetTheme(width:width),
                   AdTile(),
                 ],
               ),
