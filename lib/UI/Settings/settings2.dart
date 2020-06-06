@@ -1,8 +1,11 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/Settings/ColorPicker.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 import 'adTile.dart';
 
@@ -103,28 +106,38 @@ class _SettingsState extends State<Settings> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 20, right: 15, left: 15),
-                            child: TextField(
+                            child: TextFormField(
+                              initialValue: "User69",
+                              style: TextStyle(
+                                color: Colors.blueAccent[100],
+                                fontSize: 25
+                              ),
+                              cursorColor: Colors.orange,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.person,
                                   color: Grey,
                                   size: 30,
                                 ),
-                                hintStyle: TextStyle(),
-                                fillColor: LightGrey.withOpacity(0.6),
+                                labelText: "Username",
+                                labelStyle: TextStyle(
+                                  color: Grey,
+                                  fontSize: 20
+                                ),
+                                fillColor: LightGrey,
                                 filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                ),
+                                // enabledBorder: OutlineInputBorder(
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(5)),
+                                //   borderSide:
+                                //       BorderSide(color: Colors.transparent),
+                                // ),
+                                // focusedBorder: OutlineInputBorder(
+                                //   borderRadius:
+                                //       BorderRadius.all(Radius.circular(5)),
+                                //   borderSide:
+                                //       BorderSide(color: Colors.transparent),
+                                // ),
                               ),
                             ),
                           ),
@@ -162,35 +175,28 @@ class _SettingsState extends State<Settings> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Settings2Tile(
-                      iconData: Icons.bookmark,
-                      title: 'BOOKMARKS',
-                    ),
+                  Settings2Tile(
+                    iconData: Icons.bookmark,
+                    title: 'BOOKMARKS',
                   ),
-                  GestureDetector(
+                  Settings2Tile(
                     onTap: _showTimePicker,
-                    child: Settings2Tile(
-                      iconData: Icons.timer,
-                      title: 'CHANGE DAILY\nREMINDER TIME',
-                    ),
+                    iconData: Icons.timer,
+                    title: 'CHANGE DAILY\nREMINDER TIME',
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Settings2Tile(
-                      iconData: Icons.call,
-                      title: 'CONTACT US',
-                    ),
+                  Settings2Tile(
+                    iconData: Icons.call,
+                    title: 'CONTACT US',
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Settings2Tile(
-                      iconData: Icons.info,
-                      title: 'MORE INFO',
-                    ),
+                  Settings2Tile(
+                    iconData: FontAwesomeIcons.fill,
+                    title: "Change Accent Color",
+                    onTap: _showColorPicker,
                   ),
-
+                  Settings2Tile(
+                    iconData: Icons.info,
+                    title: 'MORE INFO',
+                  ),
                   AdTile(),
                 ],
               ),
@@ -223,15 +229,35 @@ class _SettingsState extends State<Settings> {
       ),
     );
   }
+
   TimeOfDay time = TimeOfDay(hour: 19, minute: 0);
 
   Future<void> _showTimePicker() async {
     final TimeOfDay pickedTime =
-    await showTimePicker(context: context, initialTime: time);
+        await showTimePicker(context: context, initialTime: time);
     if (pickedTime != null && pickedTime != time) {
       setState(() {
         time = pickedTime;
       });
     }
+  }
+
+  // Color Picker
+
+  Color accentColor = PopBlue;
+
+  Future<void> _showColorPicker() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog (
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          backgroundColor: Grey,
+          child: ColorPicker(),
+        );
+      }
+    );
   }
 }

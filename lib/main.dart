@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     if (payLoad != null) {
       print(payLoad);
     }
-
+    return null;
     // we can set navigator to navigate another screen
   }
 
