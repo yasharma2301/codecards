@@ -1,6 +1,5 @@
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 class ColorPicker extends StatefulWidget {
   @override
