@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
       child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [LightPopBlue, PopBlue],
+                  colors: [PopBlue, LightPopBlue],
                   stops: [0.52, 0.9],
                   begin: FractionalOffset.topCenter,
                   end: FractionalOffset.bottomCenter,

@@ -1,9 +1,8 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/Settings/UserInfo.dart';
 import 'package:codecards/UI/Settings/setTheme.dart';
-import 'package:codecards/UI/Settings/setUsername.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -64,10 +63,12 @@ class _SettingsState extends State<Settings> {
           Container(
             width: width,
             height: height,
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding:
@@ -88,13 +89,11 @@ class _SettingsState extends State<Settings> {
                   SizedBox(
                     height: 10,
                   ),
-                  SetUsername(width:width,height: height,),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Settings2Tile(
-                      iconData: Icons.bookmark,
-                      title: 'BOOKMARKS',
-                    ),
+                  // SetUsername(width:width,height: height,),
+                  UserInfo(width: width),
+                  Settings2Tile(
+                    iconData: Icons.bookmark,
+                    title: 'BOOKMARKS',
                   ),
                   Settings2Tile(
                     onTap: _showTimePicker,
@@ -108,7 +107,7 @@ class _SettingsState extends State<Settings> {
                   Settings2Tile(
                     iconData: FontAwesomeIcons.fill,
                     title: "Change Accent Color",
-                    onTap: _showColorPicker,
+                    onTap: _showColorPicker
                   ),
                   Settings2Tile(
                     iconData: Icons.info,

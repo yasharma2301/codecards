@@ -16,16 +16,17 @@ class _ColorPickerState extends State<ColorPicker> {
     Colors.brown,
     Colors.yellow,
     Colors.purple,
-    PopBlue
+    PopBlue,
   ];
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
+    double noOfColors = colors.length % 4 == 0 ? colors.length / 4 : ( colors.length / 4 ).ceilToDouble();
+    double height = 55.0 + 95 * noOfColors;
 
     return Container(
-      height: size.height / 2.5,
-      width: size.width,
+      height: height,
       child: Scaffold(
         appBar: AppBar(
           shape: RoundedRectangleBorder(
@@ -37,7 +38,6 @@ class _ColorPickerState extends State<ColorPicker> {
           elevation: 0,
         ),
         body: GridView.builder(
-            padding: const EdgeInsets.all(10),
             itemCount: colors.length,
             gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4),
