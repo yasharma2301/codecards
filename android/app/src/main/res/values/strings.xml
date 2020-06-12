@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CodeCards</string>
+    <string name="facebook_app_id">261593871754875</string>
+    <string name="fb_login_protocol_scheme">fb261593871754875</string>
+</resources>

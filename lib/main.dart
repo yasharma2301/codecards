@@ -1,4 +1,5 @@
 import 'package:codecards/Shared/themes.dart';
+import 'package:codecards/Trials/facebookauth.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'Trials/facebookauth.dart';
 
 void main() {
   runApp(MyApp());
@@ -104,7 +106,8 @@ class MyHomePage extends StatelessWidget {
       theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
-        '/': (context) => OnBoard(),
+        // '/': (context) => OnBoard(),
+        '/': (context) => FBAuth(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),
