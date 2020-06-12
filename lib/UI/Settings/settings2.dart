@@ -60,63 +60,57 @@ class _SettingsState extends State<Settings> {
               ),
             ),
           ),
-          Container(
-            width: width,
-            height: height,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 50, left: 200, right: 20),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 170,
-                        width: 170,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Grey,
-                        ),
-                        child: Center(),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 50, right: 20),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 170,
+                      width: 170,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Grey,
                       ),
+                      child: Center(),
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  // SetUsername(width:width,height: height,),
-                  UserInfo(width: width),
-                  Settings2Tile(
-                    iconData: Icons.bookmark,
-                    title: 'BOOKMARKS',
-                  ),
-                  Settings2Tile(
-                    onTap: _showTimePicker,
-                    iconData: Icons.timer,
-                    title: 'CHANGE DAILY\nREMINDER TIME',
-                  ),
-                  Settings2Tile(
-                    iconData: Icons.call,
-                    title: 'CONTACT US',
-                  ),
-                  Settings2Tile(
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                // SetUsername(width:width,height: height,),
+                UserInfo(width: width),
+                Settings2Tile(
+                  iconData: Icons.bookmark,
+                  title: 'BOOKMARKS',
+                ),
+                Settings2Tile(
+                  onTap: _showTimePicker,
+                  iconData: Icons.timer,
+                  title: 'CHANGE DAILY\nREMINDER TIME',
+                ),
+                Settings2Tile(
                     iconData: FontAwesomeIcons.fill,
-                    title: "Change Accent Color",
-                    onTap: _showColorPicker
-                  ),
-                  Settings2Tile(
-                    iconData: Icons.info,
-                    title: 'MORE INFO',
-                  ),
-                  // SetTheme(width:width),
-                  AdTile(),
-                ],
-              ),
+                    title: "CHANGE\nACCENT COLOR",
+                    onTap: _showColorPicker),
+                Settings2Tile(
+                  iconData: Icons.call,
+                  title: 'CONTACT US',
+                ),
+                Settings2Tile(
+                  iconData: Icons.info,
+                  title: 'MORE INFO',
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                AdTile(),
+              ],
             ),
           ),
           Positioned(
@@ -165,16 +159,14 @@ class _SettingsState extends State<Settings> {
 
   Future<void> _showColorPicker() async {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog (
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10)
-          ),
-          backgroundColor: Grey,
-          child: ColorPicker(),
-        );
-      }
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Grey,
+            child: ColorPicker(),
+          );
+        });
   }
 }

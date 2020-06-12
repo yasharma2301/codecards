@@ -8,7 +8,7 @@ final appThemeData = {
     primaryColorLight: Colors.blueAccent[100],
     primaryColor: PopBlue,
     primarySwatch: Colors.blueGrey,
-    canvasColor: Colors.transparent
+    canvasColor: Colors.transparent,
   ),
   AppThemes.MintGreen: ThemeData(
     primaryColorLight: Colors.lightGreen[500],

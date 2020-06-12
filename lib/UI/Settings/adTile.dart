@@ -37,10 +37,10 @@ class AdTile extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '3',
+                      '2',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 36,
+                          fontSize: 40,
                           fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),
@@ -48,33 +48,36 @@ class AdTile extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () {},
-                    child: Container(
-                      height: 120,
-                      width: 140,
-                      decoration: BoxDecoration(
-                        color: LightGrey,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                              right: -40,
-                              top: -20,
-                              child: Icon(
-                                Icons.lightbulb_outline,
-                                size: 130,
-                                color: Colors.white12,
-                              )),
-                          Center(
-                            child: Text(
-                              'Watch an Ad',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                    child: Material(
+                      elevation: 20,
+                      child: Container(
+                        height: 120,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          color: LightGrey,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                                right: -40,
+                                top: -20,
+                                child: Icon(
+                                  Icons.lightbulb_outline,
+                                  size: 130,
+                                  color: Colors.white12,
+                                )),
+                            Center(
+                              child: Text(
+                                'Watch an\nAd',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     )),
               ],

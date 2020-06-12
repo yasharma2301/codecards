@@ -14,7 +14,7 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
       child: Container(
         width: widget.width,
         decoration:
@@ -25,20 +25,15 @@ class _UserInfoState extends State<UserInfo> {
             Padding(
               padding: const EdgeInsets.only(top: 20, right: 15, left: 15),
               child: TextFormField(
-                // initialValue: "User69",
                 style: TextStyle(
-                  color: Orange,
-                  fontSize: 25,
+                  color: White.withOpacity(0.9),
+                  fontSize: 20,
                 ),
                 decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.person,
-                    color: White.withOpacity(0.7),
-                    size: 30,
-                  ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                   labelText: "USERNAME",
                   labelStyle: TextStyle(
-                    color: White,
+                    color: White.withOpacity(0.5),
                     fontSize: 15
                   ),
                   fillColor: LightGrey.withOpacity(0.6),
@@ -66,7 +61,7 @@ class _UserInfoState extends State<UserInfo> {
                   bottomRight: Radius.circular(8),
                 ),
                 gradient: LinearGradient(
-                    colors: [PopBlue, Colors.blueAccent[100]],
+                    colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColorLight],
                     stops: [0.1, 0.99],
                     begin: FractionalOffset.topLeft,
                     end: FractionalOffset.topRight,
@@ -77,7 +72,7 @@ class _UserInfoState extends State<UserInfo> {
                   'SIGNED IN WITH GOOGLE',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 17,
+                    fontSize: 16,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 2,
