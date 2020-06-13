@@ -1,5 +1,5 @@
+import 'package:codecards/Services/googleAuth.dart';
 import 'package:codecards/Shared/themes.dart';
-import 'package:codecards/Trials/facebookauth.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
@@ -107,12 +107,8 @@ class MyHomePage extends StatelessWidget {
       theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
-<<<<<<< HEAD
         // '/': (context) => OnBoard(),
-        '/': (context) => FBAuth(),
-=======
-        '/': (context) => FBApp(),
->>>>>>> 735927c64e226ea897d9e4080d1a2c8f2d43e7ca
+        '/': (context) => GoogleAuth(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),

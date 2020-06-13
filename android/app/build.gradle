@@ -40,10 +40,23 @@ android {
         versionName flutterVersionName
     }
 
+    // Google Sign IN
+    signingConfigs {
+        debug {
+            storeFile file('key.jks')
+            storePassword 'cards@stack'
+            keyAlias 'androiddebugkey'
+            keyPassword 'cards@stack'
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.debug
+        }
+        debug {
             signingConfig signingConfigs.debug
         }
     }

@@ -3,20 +3,13 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 
-class FBApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _FBAppState();
-  }
-}
-
-class _FBAppState extends State<FBApp> {
+class FacebookAuth {
   bool _isLoggedIn = false;
-  Map userProfile;
-  final facebookLogin = FacebookLogin();
+  Map userProfile = {};
+  final fbLogin = FacebookLogin();
 
-  _loginWithFB() async {
-    final result = await facebookLogin.logIn(['email']);
+  Future<void> _login() async {
+    final result = await fbLogin.logIn(['email']);
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
@@ -24,61 +17,26 @@ class _FBAppState extends State<FBApp> {
         final graphResponse = await http.get(
             'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
         final profile = JSON.jsonDecode(graphResponse.body);
+        print('\x1B[94m');
         print(profile);
-        setState(() {
-          userProfile = profile;
-          _isLoggedIn = true;
-        });
+        print('\x1B[0m');
+        userProfile = profile;
+        _isLoggedIn = true;
         break;
 
       case FacebookLoginStatus.cancelledByUser:
-        setState(() => _isLoggedIn = false);
+        _isLoggedIn = false;
         break;
+
       case FacebookLoginStatus.error:
-        setState(() => _isLoggedIn = false);
+        print(result.errorMessage);
+        _isLoggedIn = false;
         break;
     }
   }
 
-  _logout() {
-    facebookLogin.logOut();
-    setState(() {
-      _isLoggedIn = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-            child: _isLoggedIn
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.network(
-                        userProfile["picture"]["data"]["url"],
-                        height: 50.0,
-                        width: 50.0,
-                      ),
-                      Text(userProfile["name"]),
-                      OutlineButton(
-                        child: Text("Logout"),
-                        onPressed: () {
-                          _logout();
-                        },
-                      )
-                    ],
-                  )
-                : Center(
-                    child: OutlineButton(
-                      child: Text("Login with Facebook"),
-                      onPressed: () {
-                        _loginWithFB();
-                      },
-                    ),
-                  )),
-      ),
-    );
+  Future<void> _logout() {
+    fbLogin.logOut();
+    _isLoggedIn = false;
   }
 }
