@@ -1,4 +1,4 @@
-import 'package:codecards/Services/googleAuth.dart';
+import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/Trials/googleAuth.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
@@ -107,8 +107,7 @@ class MyHomePage extends StatelessWidget {
       theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
-        // '/': (context) => OnBoard(),
-        '/': (context) => GoogleAuth(),
+        '/': (context) => OnBoard(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),

@@ -1,3 +1,4 @@
+import 'package:codecards/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
 
@@ -19,8 +20,29 @@ class SocialButton extends StatelessWidget {
               decoration: BoxDecoration(
                   color: color, borderRadius: BorderRadius.circular(10)),
               child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed('menuDashBoard');
+                onTap: () async {
+                  switch (title) {
+                    case 'Login With Facebook':
+                      try {
+                       await FacebookAuth().login().then((value) =>
+                            Navigator.of(context).pushNamed('menuDashBoard'));
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                      break;
+                    case 'Login With Google':
+                      try {
+                       await GoogleAuth().handleSignIn().then((value) =>
+                            Navigator.of(context).pushNamed('menuDashBoard'));
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                      break;
+                    case 'Login With Github':
+                      print('Fucking Logged in with github');
+                      //Navigator.of(context).pushNamed('menuDashBoard');
+                      break;
+                }
                 },
                 splashColor: White,
                 child: Container(
