@@ -1,3 +1,4 @@
+import 'package:codecards/Services/GithubAuth/GithubLogin.dart';
 import 'package:codecards/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
@@ -39,7 +40,8 @@ class SocialButton extends StatelessWidget {
                       }
                       break;
                     case 'Login With Github':
-                      print('Fucking Logged in with github');
+                      print('Logged in with github');
+                      GithubLogin().onClickGitHubLoginButton();
                       //Navigator.of(context).pushNamed('menuDashBoard');
                       break;
                 }

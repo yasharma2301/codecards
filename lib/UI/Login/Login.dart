@@ -1,3 +1,4 @@
+import 'package:codecards/Services/GithubAuth/GithubLogin.dart';
 import 'package:codecards/UI/Login/SignUpStack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   double screenHeight, screenWidth;
+
+  @override
+  void dispose() {
+    GithubLogin().stream.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
