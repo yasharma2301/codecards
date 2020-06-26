@@ -1,8 +1,8 @@
-import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/Trials/googleAuth.dart';
+import 'package:codecards/Trials/googleAuth.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
-import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/UI/Settings/Avatar/avatar.dart';
+import 'package:codecards/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
