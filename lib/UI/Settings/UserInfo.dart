@@ -24,28 +24,21 @@ class _UserInfoState extends State<UserInfo> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 20, right: 15, left: 15),
-              child: TextFormField(
-                style: TextStyle(
-                  color: White.withOpacity(0.9),
-                  fontSize: 20,
-                ),
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                  labelText: "USERNAME",
-                  labelStyle: TextStyle(
-                    color: White.withOpacity(0.5),
-                    fontSize: 15
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: LightGrey.withOpacity(0.7),
+                    ),
+                child: TextField(
+                  style: TextStyle(
+                    color: White.withOpacity(0.7),
+                    fontSize: 18,
                   ),
-                  fillColor: LightGrey.withOpacity(0.6),
-                  filled: true,
-                  // enabledBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                  //   borderSide: BorderSide(color: Colors.transparent),
-                  // ),
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                  //   borderSide: BorderSide(color: Colors.transparent),
-                  // ),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter Username",
+                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.6),fontSize: 16)),
                 ),
               ),
             ),

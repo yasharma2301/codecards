@@ -32,7 +32,7 @@ flutter:
 
   assets:
     - assets/
-
+    - assets/images/
   fonts:
     - family: Nunito Black
       fonts:

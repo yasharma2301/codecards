@@ -1,6 +1,8 @@
 import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/Trials/googleAuth.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
+import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
+import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
 import 'Services/auth.dart';
@@ -90,9 +92,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ThemeChanger>(
-      create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
-      child: MyHomePage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeChanger>(
+          create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
+        ),
+        ChangeNotifierProvider<AvatarChanger>(
+          create: (_) => AvatarChanger(avatarData[Avatars.astro]),
+        )
+      ],
+      child: Builder(builder: (BuildContext context){
+        BuildContext rootContext = context;
+        return MyHomePage();
+      }),
     );
   }
 }
@@ -111,6 +123,7 @@ class MyHomePage extends StatelessWidget {
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),
+        'avatar': (context) => Avatar(),
       },
     );
   }

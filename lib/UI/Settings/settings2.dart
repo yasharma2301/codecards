@@ -1,11 +1,14 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 import 'package:codecards/UI/Settings/UserInfo.dart';
 import 'package:codecards/UI/Settings/setTheme.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'Avatar/avatar.dart';
 import 'ColorPicker.dart';
 import 'adTile.dart';
 
@@ -17,6 +20,8 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
+    final AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
+
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -68,15 +73,25 @@ class _SettingsState extends State<Settings> {
                 Padding(
                   padding: const EdgeInsets.only(top: 50, right: 20),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avatar(),));
+                    },
                     child: Container(
                       height: 170,
                       width: 170,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                         color: Grey,
                       ),
-                      child: Center(),
+                      child: Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  image: AssetImage(avatarChanger.getAvatar()),
+                                  fit: BoxFit.cover)),
+                        ),
+                      ),
                     ),
                   ),
                 ),
