@@ -1,64 +1,358 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
+
 final Color backGroundColor = Color(0xFF1c2129);
 
-class Community extends StatelessWidget with NavigationStates{
+class Community extends StatelessWidget with NavigationStates {
   final Function onMenuTap;
+
   const Community({Key key, this.onMenuTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context,constraints){
+      builder: (context, constraints) {
         double currentWidth = constraints.constrainWidth();
         double maxWidth = MediaQuery.of(context).size.width;
         bool border;
-        if(maxWidth==currentWidth){
-          border=false;
-        }else{
-          border=true;
+        if (maxWidth == currentWidth) {
+          border = false;
+        } else {
+          border = true;
         }
         return Container(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 40),
           decoration: BoxDecoration(
-              boxShadow: [BoxShadow(color: PopBlue.withOpacity(0.5),blurRadius: 8,spreadRadius: 1)],
-              borderRadius: border? BorderRadius.circular(40):BorderRadius.circular(0),
-              color: backGroundColor
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ClampingScrollPhysics(),
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                        splashColor: LightPopBlue.withOpacity(0.8),
-                        hoverColor: LightPopBlue,
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                          size: 30,
+              boxShadow: [
+                BoxShadow(
+                    color: PopBlue.withOpacity(0.5),
+                    blurRadius: 8,
+                    spreadRadius: 1)
+              ],
+              borderRadius:
+                  border ? BorderRadius.circular(40) : BorderRadius.circular(0),
+              color: Grey),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 12, right: 12, top: 30),
+                  child: Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            splashColor: LightPopBlue.withOpacity(0.8),
+                            hoverColor: LightPopBlue,
+                            icon: Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            onPressed: onMenuTap,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Text(
+                            'Community',
+                            style: TextStyle(color: Colors.white, fontSize: 25,fontWeight: FontWeight.w400),
+                          ),
                         ),
-                        onPressed: onMenuTap,
-                      ),
-                      Text(
-                        "Community",
-                        style: TextStyle(fontSize: 24.0, color: Colors.white),
-                      ),
+                      )
                     ],
                   ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 70,
+                ),
+                Container(
+                  height: 500,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 15,
+                          child: Card1(),
+                        ),
+                        Positioned(left: 0, top: 250, child: Card2()),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class Card1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DelayedAnimation(
+      delay: 50,
+      child: Container(
+        height: 320,
+        width: MediaQuery.of(context).size.width - 15,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 6, left: 6, bottom: 6),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Grey.withOpacity(0.9),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 180,
+                  width: 180,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/workflow.png'),
+                          fit: BoxFit.cover)),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Coming Soon!',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Discover\nArticles, Solved\nquestions,\n\nMake rooms with\nfriends and discuss.',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Card2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DelayedAnimation(
+      delay: 500,
+      child: Container(
+        height: 226,
+        width: 226,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+                color: Colors.white, width: 3, style: BorderStyle.solid)),
+        child: Container(
+          height: 220,
+          width: 220,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Color(0xFF3C4869).withOpacity(0.8), Color(0xFFAEC5E6)],
+                stops: [0.1, 0.99],
+                begin: FractionalOffset.topLeft,
+                end: FractionalOffset.topRight,
+                tileMode: TileMode.repeated),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 15,
+                left: 15,
+                child: Text(
+                  'Ask\nPersonalised\nQuestions',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Positioned(
+                bottom: 60,
+                left: 15,
+                child: Text(
+                  'Get your\nqueries solved in\nminimal time.',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                right: 0,
+                child: Container(
+                  height: 125,
+                  width: 80,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
+                      border: Border.all(
+                          color: Colors.white,
+                          width: 3,
+                          style: BorderStyle.solid)),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: 0,
+                        left: 5,
+                        top: 10,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 55,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5)),
+                                  color: Colors.black,
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/brenda.PNG'),
+                                      fit: BoxFit.cover)),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Brenda Greene',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height: 28,
+                                  width: 32,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent[100]
+                                        .withOpacity(0.25),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Followers',
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            fontSize: 6,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        '243',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 6,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 28,
+                                  width: 32,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent[100]
+                                        .withOpacity(0.25),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Articles',
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            fontSize: 6,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        '13',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 6,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
