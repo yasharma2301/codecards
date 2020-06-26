@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'avatar_provider.dart';
+
 class Avatar extends StatefulWidget {
   @override
   _AvatarState createState() => _AvatarState();

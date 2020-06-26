@@ -5,6 +5,7 @@ import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 import 'file:///C:/Users/ysyas/AndroidStudioProjects/codecards/lib/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Services/auth.dart';
 import 'UI/OnBoard/onBoardingScreen.dart';
 import 'UI/Login/loginScreen.dart';
@@ -13,7 +14,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'Trials/facebookauth.dart';
 
-void main() {
+SharedPreferences prefs;
+const String avatarKey = 'avatar';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
+
+  if (!prefs.containsKey(avatarKey)) {
+    await prefs.setString(avatarKey, 'assets/images/boss.PNG');
+  }
+
   runApp(MyApp());
 }
 
@@ -98,7 +109,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
         ),
         ChangeNotifierProvider<AvatarChanger>(
-          create: (_) => AvatarChanger(avatarData[Avatars.astro]),
+          create: (_) => AvatarChanger(prefs.getString(avatarKey)),
         )
       ],
       child: Builder(builder: (BuildContext context){
