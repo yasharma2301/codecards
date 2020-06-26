@@ -13,3 +13,19 @@ Commit 23 - Main App Navigation Added and removed Flexible from Login Page Stack
 Commit 26 - Navigation Complete. Main Page is where we code swipe cards and settings, Ishit is doing.
 
 Commit 29 - Notes Page in progress.
+
+
+Date 6/24/2020 Added below code because of error(Plugin project :url_launcher_web not found. Please update settings.gradle. )
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+
+def plugins = new Properties()
+def pluginsFile = new File(flutterProjectRoot.toFile(), '.flutter-plugins')
+if (pluginsFile.exists()) {
+    pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
+}
+
+plugins.each { name, path ->
+    def pluginDirectory = flutterProjectRoot.resolve(path).resolve('android').toFile()
+    include ":$name"
+    project(":$name").projectDir = pluginDirectory
+}
