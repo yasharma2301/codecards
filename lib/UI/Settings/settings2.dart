@@ -76,21 +76,24 @@ class _SettingsState extends State<Settings> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avatar(),));
                     },
-                    child: Container(
-                      height: 170,
-                      width: 170,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Grey,
-                        border: Border.all(color: Colors.white70,width: 2)
-                      ),
-                      child: Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  image: AssetImage(avatarChanger.getAvatar()),
-                                  fit: BoxFit.cover)),
+                    child: Hero(
+                      tag: 'avatarHero',
+                      child: Container(
+                        height: 170,
+                        width: 170,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: Colors.white70,width: 2)
+                        ),
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage(avatarChanger.getAvatar()),
+                                    fit: BoxFit.cover)),
+                          ),
                         ),
                       ),
                     ),

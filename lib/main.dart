@@ -1,4 +1,5 @@
 import 'package:codecards/Trials/googleAuth.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
@@ -16,13 +17,18 @@ import 'Trials/facebookauth.dart';
 
 SharedPreferences prefs;
 const String avatarKey = 'avatar';
+const String hintKey = 'hint';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Admob.initialize("com.example.codecards");
   prefs = await SharedPreferences.getInstance();
 
   if (!prefs.containsKey(avatarKey)) {
     await prefs.setString(avatarKey, 'assets/images/boss.PNG');
+  }
+  if (!prefs.containsKey(hintKey)) {
+    await prefs.setInt(hintKey, 0);
   }
 
   runApp(MyApp());
@@ -112,7 +118,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => AvatarChanger(prefs.getString(avatarKey)),
         )
       ],
-      child: Builder(builder: (BuildContext context){
+      child: Builder(builder: (BuildContext context) {
         BuildContext rootContext = context;
         return MyHomePage();
       }),
