@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 import 'Avatar/avatar.dart';
 import 'Theme/ColorPicker.dart';
@@ -73,7 +74,10 @@ class _SettingsState extends State<Settings> {
                 Padding(
                   padding: const EdgeInsets.only(top: 50, right: 20),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      if (await Vibration.hasVibrator()) {
+                        Vibration.vibrate(duration: 5);
+                      }
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => Avatar(),
                       ));

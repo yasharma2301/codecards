@@ -23,6 +23,7 @@ dependencies:
   uni_links: ^0.4.0
   shared_preferences: ^0.5.7+3
   admob_flutter: ^0.3.4
+  vibration: ^1.4.0
 
 dev_dependencies:
   flutter_test:

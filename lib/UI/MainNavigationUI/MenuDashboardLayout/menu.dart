@@ -2,6 +2,7 @@ import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vibration/vibration.dart';
 
 class Menu extends StatefulWidget {
   final Animation<Offset> slideAnimation;
@@ -58,11 +59,16 @@ class _MenuState extends State<Menu> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.CodeCardsClickEvent);
-                            widget.onMenuItemClicked();
-                          },
+                          onTap: widget.isCollapsed
+                              ? null
+                              : () async {
+                                  if (await Vibration.hasVibrator()) {
+                                    Vibration.vibrate(duration: 5);
+                                  }
+                                  BlocProvider.of<NavigationBloc>(context).add(
+                                      NavigationEvents.CodeCardsClickEvent);
+                                  widget.onMenuItemClicked();
+                                },
                           child: Text(
                             "Code Cards",
                             style: TextStyle(
@@ -78,11 +84,16 @@ class _MenuState extends State<Menu> {
                           height: 20.0,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.BookmarksClickEvent);
-                            widget.onMenuItemClicked();
-                          },
+                          onTap: widget.isCollapsed
+                              ? null
+                              : () async {
+                                  BlocProvider.of<NavigationBloc>(context).add(
+                                      NavigationEvents.BookmarksClickEvent);
+                                  if (await Vibration.hasVibrator()) {
+                                    Vibration.vibrate(duration: 5);
+                                  }
+                                  widget.onMenuItemClicked();
+                                },
                           child: Text(
                             "Bookmarks",
                             style: TextStyle(
@@ -98,11 +109,16 @@ class _MenuState extends State<Menu> {
                           height: 20.0,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.CommunityClickEvent);
-                            widget.onMenuItemClicked();
-                          },
+                          onTap: widget.isCollapsed
+                              ? null
+                              : () async {
+                                  BlocProvider.of<NavigationBloc>(context).add(
+                                      NavigationEvents.CommunityClickEvent);
+                                  if (await Vibration.hasVibrator()) {
+                                    Vibration.vibrate(duration: 5);
+                                  }
+                                  widget.onMenuItemClicked();
+                                },
                           child: Text(
                             "Community",
                             style: TextStyle(
@@ -118,11 +134,16 @@ class _MenuState extends State<Menu> {
                           height: 20.0,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.RateUsClickEvent);
-                            widget.onMenuItemClicked();
-                          },
+                          onTap: widget.isCollapsed
+                              ? null
+                              : () async {
+                                  BlocProvider.of<NavigationBloc>(context)
+                                      .add(NavigationEvents.RateUsClickEvent);
+                                  if (await Vibration.hasVibrator()) {
+                                    Vibration.vibrate(duration: 5);
+                                  }
+                                  widget.onMenuItemClicked();
+                                },
                           child: Text(
                             "Rate Us",
                             style: TextStyle(
@@ -138,11 +159,17 @@ class _MenuState extends State<Menu> {
                           height: 20.0,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.DeveloperStoryClickEvent);
-                            widget.onMenuItemClicked();
-                          },
+                          onTap: widget.isCollapsed
+                              ? null
+                              : () async {
+                                  BlocProvider.of<NavigationBloc>(context).add(
+                                      NavigationEvents
+                                          .DeveloperStoryClickEvent);
+                                  if (await Vibration.hasVibrator()) {
+                                    Vibration.vibrate(duration: 5);
+                                  }
+                                  widget.onMenuItemClicked();
+                                },
                           child: Text(
                             "Developer Story",
                             style: TextStyle(
@@ -163,7 +190,13 @@ class _MenuState extends State<Menu> {
                   Positioned(
                     bottom: 20,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: widget.isCollapsed
+                          ? null
+                          : () async {
+                              if (await Vibration.hasVibrator()) {
+                                Vibration.vibrate(duration: 5);
+                              }
+                            },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
