@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Avatar/avatar.dart';
-import 'ColorPicker.dart';
+import 'Theme/ColorPicker.dart';
 import 'adTile.dart';
 
 class Settings extends StatefulWidget {
@@ -74,28 +74,48 @@ class _SettingsState extends State<Settings> {
                   padding: const EdgeInsets.only(top: 50, right: 20),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Avatar(),));
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Avatar(),
+                      ));
                     },
-                    child: Hero(
-                      tag: 'avatarHero',
-                      child: Container(
-                        height: 170,
-                        width: 170,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.white70,width: 2)
-                        ),
-                        child: Center(
+                    child: Stack(
+                      children: [
+                        Hero(
+                          tag: 'avatarHero',
                           child: Container(
+                            height: 170,
+                            width: 170,
                             decoration: BoxDecoration(
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                    image: AssetImage(avatarChanger.getAvatar()),
-                                    fit: BoxFit.cover)),
+                                border: Border.all(
+                                    color: Colors.white70, width: 2)),
+                            child: Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            avatarChanger.getAvatar()),
+                                        fit: BoxFit.cover)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Grey,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Icon(
+                              Icons.edit,
+                              color: White,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

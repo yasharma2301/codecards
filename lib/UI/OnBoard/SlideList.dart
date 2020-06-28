@@ -25,7 +25,7 @@ final SlideList = [
       animation: 'check_profile'),
   Slide(
       flare: 'assets/OAuth.flr',
-      title: 'We don\'t Store Your Data',
+      title: 'No new Email or Password',
       description:
           'We introduce the all new method of coding.\n Read a question. Write an Algorithm. Get Stuck? Get some hints.',
       animation: 'Untitled'),
