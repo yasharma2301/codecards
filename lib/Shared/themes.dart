@@ -37,8 +37,8 @@ final appThemeData = {
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.SeaGreen: ThemeData(
-      primaryColorLight: SeaGreen,
-      primaryColor: Colors.greenAccent,
+      primaryColorLight: Colors.greenAccent,
+      primaryColor: SeaGreen,
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.Violet: ThemeData(

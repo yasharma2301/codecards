@@ -38,6 +38,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
     });
   }
 
+
   void onMenuItemClicked() {
     setState(() {
       _controller.reverse();
@@ -78,6 +79,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
             BlocBuilder<NavigationBloc, NavigationStates>(
                 builder: (context, NavigationStates navigationStates) {
               return Menu(
+                onMenuTap: onMenuTap,
+                isCollapsed: isCollapsed,
                 slideAnimation: _slideAnimation,
                 menuScaleAnimation: _menuScaleAnimation,
                 onMenuItemClicked: onMenuItemClicked,

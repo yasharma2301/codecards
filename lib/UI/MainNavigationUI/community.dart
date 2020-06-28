@@ -1,9 +1,12 @@
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:codecards/UI/MainNavigationUI/code_cards.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
+
+import 'MenuDashboardLayout/menu_dashboard.dart';
 
 final Color backGroundColor = Color(0xFF1c2129);
 
@@ -14,90 +17,99 @@ class Community extends StatelessWidget with NavigationStates {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        double currentWidth = constraints.constrainWidth();
-        double maxWidth = MediaQuery.of(context).size.width;
-        bool border;
-        if (maxWidth == currentWidth) {
-          border = false;
-        } else {
-          border = true;
-        }
-        return Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: PopBlue.withOpacity(0.5),
-                    blurRadius: 8,
-                    spreadRadius: 1)
-              ],
-              borderRadius:
-                  border ? BorderRadius.circular(40) : BorderRadius.circular(0),
-              color: Grey),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 12, right: 12, top: 30),
-                  child: Stack(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            splashColor: LightPopBlue.withOpacity(0.8),
-                            hoverColor: LightPopBlue,
-                            icon: Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            onPressed: onMenuTap,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            'Community',
-                            style: TextStyle(color: Colors.white, fontSize: 25,fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 70,
-                ),
-                Container(
-                  height: 500,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15),
+    return WillPopScope(
+      onWillPop: ()  {
+        return Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> MenuDashboardPage()));
+      },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          double currentWidth = constraints.constrainWidth();
+          double maxWidth = MediaQuery.of(context).size.width;
+          bool border;
+          if (maxWidth == currentWidth) {
+            border = false;
+          } else {
+            border = true;
+          }
+          return Container(
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: PopBlue.withOpacity(0.5),
+                      blurRadius: 8,
+                      spreadRadius: 1)
+                ],
+                borderRadius: border
+                    ? BorderRadius.circular(40)
+                    : BorderRadius.circular(0),
+                color: Grey),
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 12, right: 12, top: 30),
                     child: Stack(
                       children: [
-                        Positioned(
-                          left: 15,
-                          child: Card1(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              splashColor: LightPopBlue.withOpacity(0.8),
+                              hoverColor: LightPopBlue,
+                              icon: Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              onPressed: onMenuTap,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
                         ),
-                        Positioned(left: 0, top: 250, child: Card2()),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              'Community',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 70,
+                  ),
+                  Container(
+                    height: 500,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 15,
+                            child: Card1(),
+                          ),
+                          Positioned(left: 0, top: 255, child: Card2()),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
@@ -259,7 +271,7 @@ class Card2 extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              'Brenda Greene',
+                              'Brenda Smith',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
@@ -354,5 +366,12 @@ class Card2 extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Card3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
