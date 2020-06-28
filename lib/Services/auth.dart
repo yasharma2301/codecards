@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +15,7 @@ class FacebookAuth {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
         final graphResponse = await http.get(
-            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
         final profile = JSON.jsonDecode(graphResponse.body);
         print('\x1B[94m');
         print(profile);
@@ -36,10 +35,10 @@ class FacebookAuth {
     }
   }
 
-  Future<void> logout() {
-    fbLogin.logOut();
-    _isLoggedIn = false;
-  }
+  // Future<void> logout() {
+  //   fbLogin.logOut();
+  //   _isLoggedIn = false;
+  // }
 }
 
 class GoogleAuth {

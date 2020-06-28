@@ -9,19 +9,6 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  // List<List<Color>> _gradients = [
-  //   [Color(0xFF654ea3), Color(0xFFeaafc8)],
-  //   [PopBlue, Colors.blueAccent[100]],
-  //   [Color(0xFFffa77b), Color(0xFFff5e62)],
-  //   [Color(0xFFfeb47b), Color(0xFFff7e5f)],
-  //   [Color(0xFFd4fc79), Color(0xFF96e6a1)],
-  //   [Color(0xFF84fab0), Color(0xFF8fd3f4)],
-  //   [Color(0xFF9890e3), Color(0xFFb1f4cf)],
-  //   [Color(0xFF74ebd5), Color(0xFF9face6)],
-  //   [Color(0xFF9795f0), Color(0xFFfbc8d4)],
-  //   [Color(0xFFabecd6), Color(0xFFfbed96)],
-  // ];
-
   @override
   Widget build(BuildContext context) {
     ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);

@@ -1,4 +1,3 @@
-import 'package:codecards/Trials/googleAuth.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
@@ -7,13 +6,11 @@ import 'package:codecards/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Services/auth.dart';
 import 'UI/OnBoard/onBoardingScreen.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'Trials/facebookauth.dart';
 
 SharedPreferences prefs;
 const String avatarKey = 'avatar';
@@ -119,7 +116,7 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: Builder(builder: (BuildContext context) {
-        BuildContext rootContext = context;
+        // BuildContext rootContext = context;
         return MyHomePage();
       }),
     );

@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -54,52 +52,43 @@ class _GoogleAuthState extends State<GoogleAuth> {
         backgroundColor: Colors.redAccent,
       ),
       body: Center(
-        child: 
-        _currentUser == null ?
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RaisedButton(
-              onPressed: () => _handleSignIn(),
-              child: Text(
-                "Sign in with Google",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              color: Colors.redAccent,
-            ),
-          ],
-        ) 
-        :
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if( _currentUser.photoUrl != null )
-              Image.network(_currentUser.photoUrl),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Name:"),
-                Text(_currentUser.displayName)
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Email:"),
-                Text(_currentUser.email)
-              ],
-            ),
-            RaisedButton(
-              onPressed: () => _handleSignOut(),
-              child: Text(
-                "Logout from Google",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              color: Colors.blueGrey,
-            )
-          ],
-        )
-      ),
+          child: _currentUser == null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RaisedButton(
+                      onPressed: () => _handleSignIn(),
+                      child: Text(
+                        "Sign in with Google",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      color: Colors.redAccent,
+                    ),
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (_currentUser.photoUrl != null)
+                      Image.network(_currentUser.photoUrl),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [Text("Name:"), Text(_currentUser.displayName)],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [Text("Email:"), Text(_currentUser.email)],
+                    ),
+                    RaisedButton(
+                      onPressed: () => _handleSignOut(),
+                      child: Text(
+                        "Logout from Google",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      color: Colors.blueGrey,
+                    )
+                  ],
+                )),
     );
   }
 }

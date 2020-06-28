@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -45,7 +43,6 @@ class _FBAuthState extends State<FBAuth> {
         break;
     }
   }
-
 
   FacebookAuth fb = FacebookAuth();
 
