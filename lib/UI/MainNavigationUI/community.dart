@@ -1,11 +1,8 @@
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
-import 'package:codecards/UI/MainNavigationUI/code_cards.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
-
 import 'MenuDashboardLayout/menu_dashboard.dart';
 
 final Color backGroundColor = Color(0xFF1c2129);
@@ -74,33 +71,32 @@ class Community extends StatelessWidget with NavigationStates {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Text(
-                              'Community',
+                              'COMMUNITY',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w400),
+                                  fontSize: 23,
+                                  fontFamily: 'Montserrat',
+                                  ),
                             ),
                           ),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 70,
-                  ),
-                  Container(
-                    height: 500,
-                    width: MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 15,
-                            child: Card1(),
-                          ),
-                          Positioned(left: 0, top: 255, child: Card2()),
-                        ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height-130,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Stack(
+                          children: [
+                            Positioned(left: 15, child: Card1(),),
+                            Positioned(right: 10, top: 255, child: Card2()),
+                            Positioned(left: 0,top:440,child: Card3(),),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -120,10 +116,17 @@ class Card1 extends StatelessWidget {
     return DelayedAnimation(
       delay: 50,
       child: Container(
-        height: 320,
+        height: MediaQuery.of(context).size.height/2.4,
         width: MediaQuery.of(context).size.width - 15,
         decoration: BoxDecoration(
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.white30,
+                offset: Offset(4.0, 4.0),
+                blurRadius: 10.0,
+                spreadRadius: 0.5),
+          ],
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
         ),
@@ -131,21 +134,30 @@ class Card1 extends StatelessWidget {
           padding: const EdgeInsets.only(top: 6, left: 6, bottom: 6),
           child: Container(
             decoration: BoxDecoration(
-              color: Grey.withOpacity(0.9),
+              gradient: LinearGradient(
+                  colors: [Color(0xFFF2994A).withOpacity(0.95), Color(0xFFF2C94C).withOpacity(0.9)],
+                  stops: [0.1, 0.99],
+                  begin: FractionalOffset.topLeft,
+                  end: FractionalOffset.topRight,
+                  tileMode: TileMode.repeated),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10)),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  height: 180,
-                  width: 180,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/workflow.png'),
-                          fit: BoxFit.cover)),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    height: 180,
+                    width: 180,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/workflow.png'),
+                            fit: BoxFit.cover)),
+                  ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -154,18 +166,18 @@ class Card1 extends StatelessWidget {
                       'Coming Soon!',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 24,
                           fontWeight: FontWeight.w500),
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     Text(
-                      'Discover\nArticles, Solved\nquestions,\n\nMake rooms with\nfriends and discuss.',
+                      'Discover\nArticles, Solved\nquestions\nand more.',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 17,
                           fontWeight: FontWeight.w300),
                       textAlign: TextAlign.left,
                     ),
@@ -184,12 +196,19 @@ class Card2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DelayedAnimation(
-      delay: 500,
+      delay: 350,
       child: Container(
-        height: 226,
+        height: MediaQuery.of(context).size.height/3.2,
         width: 226,
         decoration: BoxDecoration(
             color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.white30,
+                  offset: Offset(4.0, 4.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 0.5),
+              ],
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
                 color: Colors.white, width: 3, style: BorderStyle.solid)),
@@ -220,7 +239,7 @@ class Card2 extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 60,
+                bottom: 70,
                 left: 15,
                 child: Text(
                   'Get your\nqueries solved in\nminimal time.',
@@ -372,6 +391,70 @@ class Card2 extends StatelessWidget {
 class Card3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return DelayedAnimation(
+      delay: 550,
+      child: Container(
+        height: MediaQuery.of(context).size.height/4.7,
+        width: 250,
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.white30,
+                  offset: Offset(4.0, 4.0),
+                  blurRadius: 10.0,
+                  spreadRadius: 0.5),
+            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+                color: Colors.white, width: 3, style: BorderStyle.solid)),
+        child: Container(
+          height: 220,
+          width: 220,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.pink[500].withOpacity(0.72),Color(0xFFee9ca7).withOpacity(0.8)],
+                stops: [0.1, 0.99],
+                begin: FractionalOffset.topLeft,
+                end: FractionalOffset.topRight,
+                tileMode: TileMode.repeated),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 5,
+                left: -60,
+                child: Icon(Icons.lightbulb_outline,color: Colors.white12,size: 170,)
+              ),
+              Positioned(
+                top: 15,
+                left: 15,
+                child: Text(
+                  'Get the\nMost out of\nCodeCards!',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                right: 10,
+                child: Text(
+                  'Make rooms with\nfriends and discuss.',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

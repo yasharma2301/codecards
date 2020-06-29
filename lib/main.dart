@@ -1,3 +1,4 @@
+import 'package:codecards/Services/adProvider.dart';
 import 'package:codecards/Trials/googleAuth.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:codecards/Shared/themes.dart';
@@ -116,6 +117,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider<AvatarChanger>(
           create: (_) => AvatarChanger(prefs.getString(avatarKey)),
+        ),
+        ChangeNotifierProvider<HintCounter>(
+          create: (_) => HintCounter(prefs.getInt(hintKey)),
         )
       ],
       child: Builder(builder: (BuildContext context) {
