@@ -40,6 +40,10 @@ flutter:
     - family: Nunito Black
       fonts:
         - asset: fonts/Nunito-Black.ttf
+    -  family: Montserrat
+       fonts:
+         - asset: fonts/Montserrat-Regular.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
