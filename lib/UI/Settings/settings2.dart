@@ -72,55 +72,67 @@ class _SettingsState extends State<Settings> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 50, right: 20),
-                  child: GestureDetector(
-                    onTap: () async {
-                      if (await Vibration.hasVibrator()) {
-                        Vibration.vibrate(duration: 5);
-                      }
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Avatar(),
-                      ));
-                    },
-                    child: Stack(
-                      children: [
-                        Hero(
-                          tag: 'avatarHero',
-                          child: Container(
-                            height: 170,
-                            width: 170,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(
-                                    color: Colors.white70, width: 2)),
-                            child: Center(
+                  padding:
+                      const EdgeInsets.only(top: 50, right: 20, left: 22.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("Settings",
+                          style: TextStyle(
+                              color: White,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w500)),
+                      GestureDetector(
+                        onTap: () async {
+                          if (await Vibration.hasVibrator()) {
+                            Vibration.vibrate(duration: 5);
+                          }
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Avatar(),
+                          ));
+                        },
+                        child: Stack(
+                          children: [
+                            Hero(
+                              tag: 'avatarHero',
                               child: Container(
+                                height: 170,
+                                width: 170,
                                 decoration: BoxDecoration(
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(15),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            avatarChanger.getAvatar()),
-                                        fit: BoxFit.cover)),
+                                    border: Border.all(
+                                        color: Colors.white70, width: 2)),
+                                child: Center(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                avatarChanger.getAvatar()),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Grey,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Icon(
-                              Icons.edit,
-                              color: White,
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: Grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Icon(
+                                  Icons.edit,
+                                  color: White,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -141,9 +153,13 @@ class _SettingsState extends State<Settings> {
                     iconData: FontAwesomeIcons.fill,
                     title: "CHANGE\nACCENT COLOR",
                     onTap: _showColorPicker),
-                Settings2Tile(
-                  iconData: Icons.call,
-                  title: 'CONTACT US',
+                Hero(
+                  tag: 'contactUsPage',
+                  child: Settings2Tile(
+                    iconData: Icons.call,
+                    title: 'CONTACT US',
+                    onTap: () => Navigator.pushNamed(context, 'contact_us'),
+                  ),
                 ),
                 Settings2Tile(
                   iconData: Icons.info,
@@ -174,7 +190,8 @@ class _SettingsState extends State<Settings> {
                 },
                 child: Icon(
                   Icons.keyboard_backspace,
-                  color: Colors.white,
+                  // color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

@@ -11,6 +11,7 @@ import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'UI/Settings/Contact_US/Contact_US.dart';
 
 SharedPreferences prefs;
 const String avatarKey = 'avatar';
@@ -65,7 +66,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> notification() async {
-    var time = Time(19, 36, 50);
+    var time = Time(4, 10, 50);
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'id', 'CodeCards', 'Reminder to code daily',
         priority: Priority.High, importance: Importance.Max);
@@ -75,7 +76,7 @@ class _MyAppState extends State<MyApp> {
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
         'Reminder',
-        'Problems await coder, open CodeCards and swipe to solve',
+        'Problems await coder, open CodeCards and swipe to fuck',
         time,
         platformChannelSpecifics);
   }
@@ -138,6 +139,7 @@ class MyHomePage extends StatelessWidget {
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),
         'avatar': (context) => Avatar(),
+        'contact_us': (context) => ContactUs()
       },
     );
   }

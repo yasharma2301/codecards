@@ -163,7 +163,8 @@ class _OnBoardState extends State<OnBoard> {
                           });
                     },
                     child: Text(
-                      'Let\'s Get Started',
+                      // 'Let\'s Get Started',
+                      "Let's Start!",
                       style: TextStyle(
                           fontSize: 18,
                           color: White,

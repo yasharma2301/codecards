@@ -14,7 +14,7 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Container(
         width: widget.width,
         decoration:
@@ -27,9 +27,9 @@ class _UserInfoState extends State<UserInfo> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: LightGrey.withOpacity(0.7),
-                    ),
+                  borderRadius: BorderRadius.circular(6),
+                  color: LightGrey.withOpacity(0.7),
+                ),
                 child: TextField(
                   style: TextStyle(
                     color: White.withOpacity(0.7),
@@ -38,7 +38,8 @@ class _UserInfoState extends State<UserInfo> {
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Enter Username",
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.6),fontSize: 16)),
+                      hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.6), fontSize: 16)),
                 ),
               ),
             ),
@@ -54,8 +55,14 @@ class _UserInfoState extends State<UserInfo> {
                   bottomRight: Radius.circular(8),
                 ),
                 gradient: LinearGradient(
-                    colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColorLight],
-                    stops: [0.1, 0.99],
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).primaryColorLight
+                    ],
+                    stops: [
+                      0.1,
+                      0.99
+                    ],
                     begin: FractionalOffset.topLeft,
                     end: FractionalOffset.topRight,
                     tileMode: TileMode.repeated),
