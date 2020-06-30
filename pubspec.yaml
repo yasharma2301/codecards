@@ -25,6 +25,7 @@ dependencies:
   admob_flutter: ^0.3.4
   vibration: ^1.4.0
   image_picker: ^0.6.7+2
+  flutter_rating_bar: ^3.0.1+1
 
 dev_dependencies:
   flutter_test:

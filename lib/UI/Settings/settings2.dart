@@ -1,6 +1,7 @@
 import 'package:codecards/Services/adProvider.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
+import 'package:codecards/UI/Settings/RateUs/rateUs.dart';
 import 'package:codecards/UI/Settings/UserInfo.dart';
 import 'package:codecards/UI/Settings/setTheme.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
@@ -163,6 +164,11 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 Settings2Tile(
+                  iconData: Icons.star,
+                  title: "Rate Us",
+                  onTap: _showRatingModal,
+                ),
+                Settings2Tile(
                   iconData: Icons.info,
                   title: 'MORE INFO',
                 ),
@@ -227,6 +233,19 @@ class _SettingsState extends State<Settings> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             backgroundColor: Grey,
             child: ColorPicker(),
+          );
+        });
+  }
+
+  void _showRatingModal() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Grey,
+            child: RateUs(),
           );
         });
   }

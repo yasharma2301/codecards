@@ -14,6 +14,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'UI/Settings/Contact_US/Contact_US.dart';
+import 'UI/Settings/Contact_US/try.dart';
 
 SharedPreferences prefs;
 const String avatarKey = 'avatar';
