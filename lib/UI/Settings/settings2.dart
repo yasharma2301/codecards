@@ -1,16 +1,14 @@
-import 'package:codecards/Services/adProvider.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
+import 'package:codecards/UI/Settings/Contact_US/Contact_US.dart';
 import 'package:codecards/UI/Settings/RateUs/rateUs.dart';
 import 'package:codecards/UI/Settings/UserInfo.dart';
-import 'package:codecards/UI/Settings/setTheme.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
-
 import 'Avatar/avatar.dart';
 import 'Theme/ColorPicker.dart';
 import 'adTile.dart';
@@ -143,8 +141,8 @@ class _SettingsState extends State<Settings> {
                 // SetUsername(width:width,height: height,),
                 UserInfo(width: width),
                 Settings2Tile(
-                  iconData: Icons.bookmark,
-                  title: 'BOOKMARKS',
+                  iconData: Icons.color_lens,
+                  title: 'THEME',
                 ),
                 Settings2Tile(
                   onTap: _showTimePicker,
@@ -158,14 +156,14 @@ class _SettingsState extends State<Settings> {
                 Hero(
                   tag: 'contactUsPage',
                   child: Settings2Tile(
-                    iconData: Icons.call,
-                    title: 'CONTACT US',
-                    onTap: () => Navigator.pushNamed(context, 'contact_us'),
-                  ),
+                      iconData: Icons.call,
+                      title: 'SUPPORT',
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ContactUs()))),
                 ),
                 Settings2Tile(
                   iconData: Icons.star,
-                  title: "Rate Us",
+                  title: "RATE US",
                   onTap: _showRatingModal,
                 ),
                 Settings2Tile(

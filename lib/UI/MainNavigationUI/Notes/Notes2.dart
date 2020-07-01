@@ -61,9 +61,7 @@ _buildStoryPage(String data, bool active) {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/image.png')
-          ),
+              fit: BoxFit.cover, image: AssetImage('assets/image.png')),
           boxShadow: [
             BoxShadow(
                 color: Colors.black87,
@@ -77,21 +75,25 @@ _buildStoryPage(String data, bool active) {
 
 _buildTagPage() {
   return Container(
-      child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'Filter The Data:',
-        style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600),
-      ),
-      SizedBox(height: 20,),
-      Text('FILTERS', style: TextStyle(color: Colors.white70)),
-      _buildButton('This Week'),
-      _buildButton('This Month'),
-      _buildButton('Previous Month'),
-    ],
-  ));
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Filter The Data:',
+          style: TextStyle(
+              color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text('FILTERS', style: TextStyle(color: Colors.white70)),
+        _buildButton('This Week'),
+        _buildButton('This Month'),
+        _buildButton('Previous Month'),
+      ],
+    ),
+  );
 }
 
 _buildButton(tag) {

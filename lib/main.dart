@@ -135,7 +135,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
-      title: 'Code Cards',
+      title: 'CodeCards',
       debugShowCheckedModeBanner: false,
       theme: theme.getTheme(),
       initialRoute: '/',

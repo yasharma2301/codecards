@@ -26,6 +26,8 @@ dependencies:
   vibration: ^1.4.0
   image_picker: ^0.6.7+2
   flutter_rating_bar: ^3.0.1+1
+  flutter_tindercard: ^0.1.7
+
 
 dev_dependencies:
   flutter_test:

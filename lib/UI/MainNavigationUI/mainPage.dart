@@ -1,6 +1,8 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/MainNavigationUI/CardsLogic/cards.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:codecards/routes/slideFromRight.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,7 +21,7 @@ class _MainPageState extends State<MainPage> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.only(top: 30,left: 10),
+        padding: const EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -27,16 +29,19 @@ class _MainPageState extends State<MainPage> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  splashColor: LightPopBlue.withOpacity(0.5),
-                  hoverColor: LightPopBlue,
-                  highlightColor: Colors.transparent,
-                  icon: Icon(
-                    Icons.menu,
-                    color: Colors.white,
-                    size: 30,
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: IconButton(
+                    splashColor: LightPopBlue.withOpacity(0.5),
+                    hoverColor: LightPopBlue,
+                    highlightColor: Colors.transparent,
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: widget.onMenuTap,
                   ),
-                  onPressed: widget.onMenuTap,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
@@ -55,6 +60,11 @@ class _MainPageState extends State<MainPage> {
                   ),
                 )
               ],
+            ),
+            Expanded(
+              child: Container(
+                  child: CardsStack(),
+              ),
             )
           ],
         ),

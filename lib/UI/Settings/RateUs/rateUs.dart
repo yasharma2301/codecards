@@ -12,12 +12,12 @@ class _RateUsState extends State<RateUs> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    double _rating;
+    double _rating=0.0;
     String comments;
 
     return Container(
       width: size.width,
-      height: size.height / 2,
+      height: size.height / 1.85,
       child: Scaffold(
         appBar: AppBar(
           shape: RoundedRectangleBorder(
@@ -39,10 +39,6 @@ class _RateUsState extends State<RateUs> {
                   direction: Axis.horizontal,
                   allowHalfRating: true,
                   itemCount: 5,
-                  // itemBuilder: (context, _) => Icon(
-                  //   Icons.star,
-                  //   color: Theme.of(context).primaryColor,
-                  // ),
                   ratingWidget: RatingWidget(
                     full: Icon(
                       Icons.star,
@@ -68,6 +64,7 @@ class _RateUsState extends State<RateUs> {
               ),
               Container(
                 width: size.width - 50,
+                height: 180,
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     color: Grey, borderRadius: BorderRadius.circular(6)),
@@ -80,18 +77,17 @@ class _RateUsState extends State<RateUs> {
                   child: TextField(
                     cursorColor: Theme.of(context).primaryColorLight,
                     maxLines: 3,
-                    style: TextStyle(fontSize: 18, color: White),
+                    style: TextStyle(fontSize: 16, color: White),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Comments...",
                         hintStyle: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.7))),
-                    onChanged: (text) {
+                            fontSize: 18,
+                            color: Colors.white38)),
+                    onChanged: (text){
                       setState(() {
                         comments = text;
+                        print(comments);
                       });
                     },
                   ),
@@ -102,10 +98,8 @@ class _RateUsState extends State<RateUs> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
-                    _rating != null ? Navigator.pop(context) : print(_rating);
-                    // : Scaffold.of(context).showSnackBar(SnackBar(
-                    //     content: Text("Please rate before Posting!"),
-                    //     duration: Duration(seconds: 3)));
+                    print(_rating);
+                    print(comments);
                   },
                   child: Ink(
                     padding: EdgeInsets.symmetric(vertical: 20),
