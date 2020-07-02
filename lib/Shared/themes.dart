@@ -27,8 +27,8 @@ final appThemeData = {
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.RipeMango: ThemeData(
-      primaryColorLight: Colors.amber[300],
-      primaryColor: Colors.orange[400],
+      primaryColorLight: Colors.amber[200],
+      primaryColor: Color(0xFFe68d60),
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.HotPink: ThemeData(
@@ -43,27 +43,27 @@ final appThemeData = {
       canvasColor: Colors.transparent),
   AppThemes.Violet: ThemeData(
       primaryColorLight: Color(0xFFeaafc8),
-      primaryColor: Color(0xFF654ea3),
+      primaryColor: Color(0xFF8a60bf),
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.SunRise: ThemeData(
-      primaryColorLight: Color(0xFFff5e62),
-      primaryColor: Color(0xFFffa77b),
+      primaryColorLight: Color(0xFFffa77b),
+      primaryColor: Color(0xFFf46266),
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.NewLeaf: ThemeData(
-      primaryColorLight: Color(0xFF96e6a1),
-      primaryColor: Color(0xFFd4fc79),
+      primaryColorLight: Color(0xFFB5AC49),
+      primaryColor: Color(0xFF3CA55C),
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.MetalGreen: ThemeData(
-      primaryColorLight: Color(0xFF8fd3f4),
-      primaryColor: Color(0xFF84fab0),
+      primaryColorLight: Color(0xFF8ad4f8),
+      primaryColor: Color(0xFF4ec6a2),
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
   AppThemes.GreenApple: ThemeData(
-      primaryColorLight: Color(0xFFfbed96),
-      primaryColor: Color(0xFFabecd6),
+      primaryColorLight: Color(0xFF53c8ba),
+      primaryColor: Color(0xFF7f9cdd),
       primarySwatch: Colors.blueGrey,
       canvasColor: Colors.transparent),
 };
