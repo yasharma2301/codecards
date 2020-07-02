@@ -8,12 +8,13 @@ class RateUs extends StatefulWidget {
 }
 
 class _RateUsState extends State<RateUs> {
+  double _rating;
+  TextEditingController commentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    double _rating=0.0;
-    String comments;
 
     return Container(
       width: size.width,
@@ -58,7 +59,6 @@ class _RateUsState extends State<RateUs> {
                     setState(() {
                       _rating = rating;
                     });
-                    print(_rating);
                   },
                 ),
               ),
@@ -74,7 +74,8 @@ class _RateUsState extends State<RateUs> {
                     borderRadius: BorderRadius.circular(6),
                     color: LightGrey.withOpacity(0.7),
                   ),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: commentController,
                     cursorColor: Theme.of(context).primaryColorLight,
                     maxLines: 3,
                     style: TextStyle(fontSize: 16, color: White),
@@ -83,13 +84,7 @@ class _RateUsState extends State<RateUs> {
                         hintText: "Comments...",
                         hintStyle: TextStyle(
                             fontSize: 18,
-                            color: Colors.white38)),
-                    onChanged: (text){
-                      setState(() {
-                        comments = text;
-                        print(comments);
-                      });
-                    },
+                            color: Colors.white54)),
                   ),
                 ),
               ),
@@ -99,10 +94,10 @@ class _RateUsState extends State<RateUs> {
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
                     print(_rating);
-                    print(comments);
+                    print(commentController.text);
                   },
                   child: Ink(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(vertical: 17),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [

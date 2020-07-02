@@ -1,5 +1,6 @@
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -12,12 +13,36 @@ class ContactUs extends StatefulWidget {
 }
 
 class _ContactUsState extends State<ContactUs> {
+  File _image;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  var _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  bool checkText() {
+    if (nameController.text != '' &&
+        emailController.text != '' &&
+        descriptionController.text != '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
-    File _image;
     final picker = ImagePicker();
 
     Future _getImage() async {
@@ -122,7 +147,8 @@ class _ContactUsState extends State<ContactUs> {
                             borderRadius: BorderRadius.circular(6),
                             color: LightGrey.withOpacity(0.7),
                           ),
-                          child: TextField(
+                          child: TextFormField(
+                            controller: nameController,
                             cursorColor: Theme.of(context).primaryColorLight,
                             style: TextStyle(
                               color: White.withOpacity(0.9),
@@ -133,38 +159,50 @@ class _ContactUsState extends State<ContactUs> {
                                 hintText: "Enter your name",
                                 hintStyle: TextStyle(
                                     color: Colors.white.withOpacity(0.7),
-                                    fontSize: 17)),
+                                    fontSize: 16)),
                           ),
                         ),
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        width: width - 50,
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Grey,
-                            borderRadius: BorderRadius.circular(6)),
+                      Form(
+                        key: _formKey,
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          width: width - 50,
+                          padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: LightGrey.withOpacity(0.7),
-                          ),
-                          child: TextField(
-                            cursorColor: Theme.of(context).primaryColorLight,
-                            style: TextStyle(
-                              color: White.withOpacity(0.9),
-                              fontSize: 18,
+                              color: Grey,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: LightGrey.withOpacity(0.7),
                             ),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Email Address",
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
-                                    fontSize: 17)),
+                            child: TextFormField(
+                              controller: emailController,
+                              cursorColor: Theme.of(context).primaryColorLight,
+                              style: TextStyle(
+                                color: White.withOpacity(0.9),
+                                fontSize: 18,
+                              ),
+                              validator: (value) {
+                                Pattern pattern =
+                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                RegExp regex = new RegExp(pattern);
+                                return (!regex.hasMatch(value))
+                                    ? 'Enter a valid email.'
+                                    : null;
+                              },
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Email Address",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.7),
+                                      fontSize: 16)),
+                            ),
                           ),
                         ),
                       ),
@@ -184,7 +222,8 @@ class _ContactUsState extends State<ContactUs> {
                             borderRadius: BorderRadius.circular(6),
                             color: LightGrey.withOpacity(0.7),
                           ),
-                          child: TextField(
+                          child: TextFormField(
+                            controller: descriptionController,
                             maxLines: 8,
                             cursorColor: Theme.of(context).primaryColorLight,
                             style: TextStyle(
@@ -193,11 +232,10 @@ class _ContactUsState extends State<ContactUs> {
                                 border: InputBorder.none,
                                 labelText: "Describe your problem",
                                 labelStyle: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     height: 0.5,
                                     color: Colors.white.withOpacity(0.7))),
                             textCapitalization: TextCapitalization.sentences,
-                            onSubmitted: (text) => print(text),
                           ),
                         ),
                       ),
@@ -214,7 +252,7 @@ class _ContactUsState extends State<ContactUs> {
                         thickness: 0.3,
                       ),
                       Text(
-                        "Add screenshots (optional) :",
+                        "Add a screenshot (optional) :",
                         style: TextStyle(
                             color: White,
                             fontSize: 17,
@@ -227,9 +265,6 @@ class _ContactUsState extends State<ContactUs> {
                         children: [
                           InkWell(
                             onTap: _getImage,
-                            onLongPress: () {
-                              print(_image);
-                            },
                             borderRadius: BorderRadius.circular(10),
                             child: Container(
                               height: 180,
@@ -253,53 +288,6 @@ class _ContactUsState extends State<ContactUs> {
               ],
             ),
           ),
-//          Align(
-//            alignment: Alignment.bottomCenter,
-//            child: Container(
-//              margin: EdgeInsets.only(bottom: 50),
-//              decoration: BoxDecoration(boxShadow: [
-//                BoxShadow(
-//                  offset: const Offset(0.0, 0.0),
-//                  blurRadius: 10.0,
-//                  spreadRadius: 6.0,
-//                ),
-//              ]),
-//              child: Material(
-//                child: InkWell(
-//                  onTap: () {
-//                    Navigator.pop(context);
-//                  },
-//                  child: Ink(
-//                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-//                    decoration: BoxDecoration(
-//                      gradient: LinearGradient(
-//                          colors: [
-//                            Theme.of(context).primaryColor,
-//                            Theme.of(context).primaryColorLight
-//                          ],
-//                          stops: [
-//                            0.3,
-//                            0.95
-//                          ],
-//                          begin: FractionalOffset.topLeft,
-//                          end: FractionalOffset.topRight,
-//                          tileMode: TileMode.repeated),
-//                      borderRadius: BorderRadius.only(
-//                          topLeft: Radius.circular(10),
-//                          bottomLeft: Radius.circular(10),
-//                          topRight: Radius.circular(10),
-//                          bottomRight: Radius.circular(10)),
-//                    ),
-//                    child: Text("Send Query",
-//                        style: TextStyle(
-//                          color: White,
-//                          fontSize: 18,
-//                        )),
-//                  ),
-//                ),
-//              ),
-//            ),
-//          ),
           Positioned(
             left: 0,
             top: 50,
@@ -323,6 +311,57 @@ class _ContactUsState extends State<ContactUs> {
               ),
             ),
           ),
+          Positioned(
+            bottom: 0,
+            child: Opacity(
+              opacity: checkText() == true ? 1 : 0,
+              child: IgnorePointer(
+                ignoring: checkText() == true ? false : true,
+                child: InkWell(
+                  splashColor: Colors.white24,
+                  onTap: () {
+                    if (_formKey.currentState.validate()) {
+                      print('Clicked! Sent query successfully.');
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    width: width,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColorLight
+                          ],
+                          stops: [
+                            0.3,
+                            0.95
+                          ],
+                          begin: FractionalOffset.topLeft,
+                          end: FractionalOffset.topRight,
+                          tileMode: TileMode.repeated),
+                    ),
+                    child: Center(
+                        child: Text(
+                      'Send Query',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 19,
+                        fontWeight: FontWeight.w300,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.5, 1.5),
+                            blurRadius: 3.0,
+                            color: Colors.white60,
+                          ),
+                        ],
+                      ),
+                    )),
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

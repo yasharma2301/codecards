@@ -80,7 +80,7 @@ class _AdTileState extends State<AdTile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'WATCH AN AD TO INCREASE USE\nA HINT',
+              'WATCH AN AD TO USE A\nHINT',
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
             ),
