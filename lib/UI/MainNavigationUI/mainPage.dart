@@ -46,24 +46,24 @@ class _MainPageState extends State<MainPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: IconButton(
-                    splashColor: LightPopBlue.withOpacity(0.5),
-                    hoverColor: LightPopBlue,
-                    highlightColor: Colors.transparent,
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    onPressed:(){
-                      Navigator.push(context,SlideFromRightPageRoute(page: Settings()));
-                    }
-                  ),
+                      splashColor: LightPopBlue.withOpacity(0.5),
+                      hoverColor: LightPopBlue,
+                      highlightColor: Colors.transparent,
+                      icon: Icon(
+                        Icons.settings,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context, SlideFromRightPageRoute(page: Settings()));
+                      }),
                 )
               ],
             ),
             Expanded(
               child: Container(
-                  child: CardsStack(),
+                child: CardsStack(),
               ),
             )
           ],

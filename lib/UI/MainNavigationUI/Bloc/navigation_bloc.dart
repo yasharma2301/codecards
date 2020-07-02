@@ -4,6 +4,7 @@ import '../code_cards.dart';
 import '../community.dart';
 import '../developer_story.dart';
 import '../rate_us.dart';
+import 'package:codecards/UI/Settings/settings2.dart';
 
 enum NavigationEvents {
   CodeCardsClickEvent,
@@ -11,6 +12,7 @@ enum NavigationEvents {
   CommunityClickEvent,
   RateUsClickEvent,
   DeveloperStoryClickEvent,
+  // SettingsClickEvent
 }
 
 abstract class NavigationStates {}
@@ -20,9 +22,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
   NavigationBloc({this.onMenuTap});
 
   @override
-  NavigationStates get initialState => CodeCards(
-      onMenuTap: onMenuTap
-  );
+  NavigationStates get initialState => CodeCards(onMenuTap: onMenuTap);
 
   @override
   Stream<NavigationStates> mapEventToState(NavigationEvents event) async* {
@@ -44,6 +44,9 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.DeveloperStoryClickEvent:
         yield DeveloperStory(onMenuTap: onMenuTap);
         break;
+      // case NavigationEvents.SettingsClickEvent:
+      //   yield Settings();
+      //   break;
     }
   }
 }

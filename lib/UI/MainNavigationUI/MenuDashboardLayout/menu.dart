@@ -3,6 +3,10 @@ import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
+import 'menu_item.dart';
+import 'dart:math' as math;
+import 'package:provider/provider.dart';
+import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 
 class Menu extends StatefulWidget {
   final Animation<Offset> slideAnimation;
@@ -39,6 +43,8 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    final AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
+    Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: _onWillPop,
       child: SlideTransition(
@@ -46,169 +52,232 @@ class _MenuState extends State<Menu> {
         child: ScaleTransition(
           scale: widget.menuScaleAnimation,
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0),
+            padding: const EdgeInsets.only(left: 20),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Stack(
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height,
+                    width: size.width / 1.75,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        GestureDetector(
-                          onTap: widget.isCollapsed
-                              ? null
-                              : () async {
-                                  if (await Vibration.hasVibrator()) {
-                                    Vibration.vibrate(duration: 5);
-                                  }
-                                  BlocProvider.of<NavigationBloc>(context).add(
-                                      NavigationEvents.CodeCardsClickEvent);
-                                  widget.onMenuItemClicked();
-                                },
-                          child: Text(
-                            "Code Cards",
-                            style: TextStyle(
-                              color: PopBlue,
-                              fontSize: widget.isSelected == 0 ? 22 : 20,
-                              fontWeight: widget.isSelected == 0
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
-                          ),
+                        Menuitem(
+                          isCollapsed: widget.isCollapsed,
+                          onMenuItemClicked: widget.onMenuItemClicked,
+                          isSelected: widget.isSelected,
+                          title: "Code Cards",
+                          itemNumber: 0,
+                          navigateTo: NavigationEvents.CodeCardsClickEvent,
+                          icon: Icons.content_copy,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 10.0,
                         ),
-                        GestureDetector(
-                          onTap: widget.isCollapsed
-                              ? null
-                              : () async {
-                                  BlocProvider.of<NavigationBloc>(context).add(
-                                      NavigationEvents.BookmarksClickEvent);
-                                  if (await Vibration.hasVibrator()) {
-                                    Vibration.vibrate(duration: 5);
-                                  }
-                                  widget.onMenuItemClicked();
-                                },
-                          child: Text(
-                            "Bookmarks",
-                            style: TextStyle(
-                              color: PopBlue,
-                              fontSize: widget.isSelected == 1 ? 22 : 20,
-                              fontWeight: widget.isSelected == 1
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        GestureDetector(
-                          onTap: widget.isCollapsed
-                              ? null
-                              : () async {
-                                  BlocProvider.of<NavigationBloc>(context).add(
-                                      NavigationEvents.CommunityClickEvent);
-                                  if (await Vibration.hasVibrator()) {
-                                    Vibration.vibrate(duration: 5);
-                                  }
-                                  widget.onMenuItemClicked();
-                                },
-                          child: Text(
-                            "Community",
-                            style: TextStyle(
-                              color: PopBlue,
-                              fontSize: widget.isSelected == 2 ? 22 : 20,
-                              fontWeight: widget.isSelected == 2
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
-                          ),
+                        // GestureDetector(
+                        //   onTap: widget.isCollapsed
+                        //       ? null
+                        //       : () async {
+                        //           BlocProvider.of<NavigationBloc>(context).add(
+                        //               NavigationEvents.BookmarksClickEvent);
+                        //           if (await Vibration.hasVibrator()) {
+                        //             Vibration.vibrate(duration: 5);
+                        //           }
+                        //           widget.onMenuItemClicked();
+                        //         },
+                        //   child: Text(
+                        //     "Bookmarks",
+                        //     style: TextStyle(
+                        //       color: Theme.of(context).primaryColor,
+                        //       fontSize: widget.isSelected == 1 ? 22 : 20,
+                        //       fontWeight: widget.isSelected == 1
+                        //           ? FontWeight.bold
+                        //           : FontWeight.normal,
+                        //     ),
+                        //   ),
+                        // ),
+                        Menuitem(
+                          isCollapsed: widget.isCollapsed,
+                          onMenuItemClicked: widget.onMenuItemClicked,
+                          isSelected: widget.isSelected,
+                          title: "Bookmarks",
+                          itemNumber: 1,
+                          navigateTo: NavigationEvents.BookmarksClickEvent,
+                          icon: Icons.bookmark_border,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 10.0,
                         ),
-                        GestureDetector(
-                          onTap: widget.isCollapsed
-                              ? null
-                              : () async {
-                                  BlocProvider.of<NavigationBloc>(context)
-                                      .add(NavigationEvents.RateUsClickEvent);
-                                  if (await Vibration.hasVibrator()) {
-                                    Vibration.vibrate(duration: 5);
-                                  }
-                                  widget.onMenuItemClicked();
-                                },
-                          child: Text(
-                            "Rate Us",
-                            style: TextStyle(
-                              color: PopBlue,
-                              fontSize: widget.isSelected == 3 ? 22 : 20,
-                              fontWeight: widget.isSelected == 3
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        GestureDetector(
-                          onTap: widget.isCollapsed
-                              ? null
-                              : () async {
-                                  BlocProvider.of<NavigationBloc>(context).add(
-                                      NavigationEvents
-                                          .DeveloperStoryClickEvent);
-                                  if (await Vibration.hasVibrator()) {
-                                    Vibration.vibrate(duration: 5);
-                                  }
-                                  widget.onMenuItemClicked();
-                                },
-                          child: Text(
-                            "Developer Story",
-                            style: TextStyle(
-                              color: PopBlue,
-                              fontSize: widget.isSelected == 4 ? 22 : 20,
-                              fontWeight: widget.isSelected == 4
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
-                          ),
+                        // GestureDetector(
+                        //   onTap: widget.isCollapsed
+                        //       ? null
+                        //       : () async {
+                        //           BlocProvider.of<NavigationBloc>(context).add(
+                        //               NavigationEvents.CommunityClickEvent);
+                        //           if (await Vibration.hasVibrator()) {
+                        //             Vibration.vibrate(duration: 5);
+                        //           }
+                        //           widget.onMenuItemClicked();
+                        //         },
+                        //   child: Text(
+                        //     "Community",
+                        //     style: TextStyle(
+                        //       color: Theme.of(context).primaryColor,
+                        //       fontSize: widget.isSelected == 2 ? 22 : 20,
+                        //       fontWeight: widget.isSelected == 2
+                        //           ? FontWeight.bold
+                        //           : FontWeight.normal,
+                        //     ),
+                        //   ),
+                        // ),
+                        Menuitem(
+                          isCollapsed: widget.isCollapsed,
+                          onMenuItemClicked: widget.onMenuItemClicked,
+                          isSelected: widget.isSelected,
+                          title: "Community",
+                          itemNumber: 2,
+                          navigateTo: NavigationEvents.CommunityClickEvent,
+                          icon: Icons.group,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 10.0,
+                        ),
+                        // GestureDetector(
+                        //   onTap: widget.isCollapsed
+                        //       ? null
+                        //       : () async {
+                        //           BlocProvider.of<NavigationBloc>(context).add(
+                        //               NavigationEvents
+                        //                   .DeveloperStoryClickEvent);
+                        //           if (await Vibration.hasVibrator()) {
+                        //             Vibration.vibrate(duration: 5);
+                        //           }
+                        //           widget.onMenuItemClicked();
+                        //         },
+                        //   child: Text(
+                        //     "Developer Story",
+                        //     style: TextStyle(
+                        //       color: Theme.of(context).primaryColor,
+                        //       fontSize: widget.isSelected == 4 ? 22 : 20,
+                        //       fontWeight: widget.isSelected == 4
+                        //           ? FontWeight.bold
+                        //           : FontWeight.normal,
+                        //     ),
+                        //   ),
+                        // ),
+                        Menuitem(
+                          isCollapsed: widget.isCollapsed,
+                          onMenuItemClicked: widget.onMenuItemClicked,
+                          isSelected: widget.isSelected,
+                          title: "Developer Story",
+                          itemNumber: 4,
+                          navigateTo: NavigationEvents.DeveloperStoryClickEvent,
+                          icon: Icons.code,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Menuitem(
+                          isCollapsed: widget.isCollapsed,
+                          onMenuItemClicked: widget.onMenuItemClicked,
+                          isSelected: widget.isSelected,
+                          title: "Support",
+                          itemNumber: 5,
+                          navigateTo: NavigationEvents.DeveloperStoryClickEvent,
+                          icon: Icons.headset_mic,
+                        ),
+                        Divider(
+                          height: 50,
+                          color: White.withOpacity(0.4),
                         ),
                       ],
                     ),
                   ),
                   Positioned(
-                    bottom: 20,
-                    child: GestureDetector(
-                      onTap: widget.isCollapsed
-                          ? null
-                          : () async {
-                              if (await Vibration.hasVibrator()) {
-                                Vibration.vibrate(duration: 5);
-                              }
-                            },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    bottom: 30,
+                    left: -50,
+                    child: Container(
+                      width: size.width / 1.75,
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: PopBlue,
-                            size: 15,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                // borderRadius: BorderRadius.circular(100),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    color: Theme.of(context)
+                                        .primaryColorLight
+                                        .withOpacity(0.6))),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.asset(
+                                avatarChanger.getAvatar(),
+                                height: 120,
+                                width: 120,
+                              ),
+                            ),
                           ),
-                          Text(
-                            "Logout",
-                            style: TextStyle(color: PopBlue, fontSize: 20),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.perm_identity,
+                                color: Theme.of(context).primaryColor,
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Username",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          GestureDetector(
+                            onTap: widget.isCollapsed
+                                ? null
+                                : () async {
+                                    if (await Vibration.hasVibrator()) {
+                                      Vibration.vibrate(duration: 5);
+                                    }
+                                  },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Transform.rotate(
+                                  angle: math.pi,
+                                  child: Icon(
+                                    Icons.exit_to_app,
+                                    color: Theme.of(context).primaryColor,
+                                    size: 20,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Logout",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

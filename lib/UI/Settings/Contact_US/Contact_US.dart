@@ -2,6 +2,7 @@ import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -38,6 +39,8 @@ class _ContactUsState extends State<ContactUs> {
     }
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -47,13 +50,15 @@ class _ContactUsState extends State<ContactUs> {
 
     Future _getImage() async {
       var image = await picker.getImage(source: ImageSource.gallery);
-      setState(() {
-        _image = File(image.path);
-      });
-      print(_image);
+      if (image != null) {
+        setState(() {
+          _image = File(image.path);
+        });
+      }
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Grey,
       body: Stack(
         children: [
@@ -97,7 +102,8 @@ class _ContactUsState extends State<ContactUs> {
             ),
           ),
           SingleChildScrollView(
-            padding: EdgeInsets.only(left: 25, right: 25, bottom: 100),
+            padding: EdgeInsets.only(
+                left: 25, right: 25, bottom: checkText() ? 80 : 0),
             scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,10 +121,11 @@ class _ContactUsState extends State<ContactUs> {
                           bottom: 10,
                           child: Material(
                             child: Text(
-                              "Contact Us",
+                              "Support".toUpperCase(),
                               style: TextStyle(
                                   color: White,
-                                  fontSize: 32,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat'),
                             ),
                           ),
@@ -141,8 +148,7 @@ class _ContactUsState extends State<ContactUs> {
                             color: Grey,
                             borderRadius: BorderRadius.circular(6)),
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
                             color: LightGrey.withOpacity(0.7),
@@ -156,9 +162,9 @@ class _ContactUsState extends State<ContactUs> {
                             ),
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Enter your name",
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
+                                labelText: "Enter your name",
+                                labelStyle: TextStyle(
+                                    color: Theme.of(context).primaryColorLight,
                                     fontSize: 16)),
                           ),
                         ),
@@ -175,33 +181,34 @@ class _ContactUsState extends State<ContactUs> {
                               color: Grey,
                               borderRadius: BorderRadius.circular(6)),
                           child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 8),
+                            padding: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               color: LightGrey.withOpacity(0.7),
                             ),
                             child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
                               controller: emailController,
                               cursorColor: Theme.of(context).primaryColorLight,
                               style: TextStyle(
                                 color: White.withOpacity(0.9),
-                                fontSize: 18,
+                                fontSize: 20,
                               ),
                               validator: (value) {
                                 Pattern pattern =
                                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                                 RegExp regex = new RegExp(pattern);
-                                return (!regex.hasMatch(value))
-                                    ? 'Enter a valid email.'
-                                    : null;
+                                return (!regex.hasMatch(value)) ? '' : null;
                               },
                               decoration: InputDecoration(
+                                  errorStyle: TextStyle(height: 0),
                                   border: InputBorder.none,
-                                  hintText: "Email Address",
-                                  hintStyle: TextStyle(
-                                      color: Colors.white.withOpacity(0.7),
-                                      fontSize: 16)),
+                                  labelText: "Email Address",
+                                  labelStyle: TextStyle(
+                                      color:
+                                          Theme.of(context).primaryColorLight,
+                                      fontSize: 18,
+                                      height: 1)),
                             ),
                           ),
                         ),
@@ -216,8 +223,7 @@ class _ContactUsState extends State<ContactUs> {
                             color: Grey,
                             borderRadius: BorderRadius.circular(6)),
                         child: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
                             color: LightGrey.withOpacity(0.7),
@@ -234,7 +240,8 @@ class _ContactUsState extends State<ContactUs> {
                                 labelStyle: TextStyle(
                                     fontSize: 16,
                                     height: 0.5,
-                                    color: Colors.white.withOpacity(0.7))),
+                                    color:
+                                        Theme.of(context).primaryColorLight)),
                             textCapitalization: TextCapitalization.sentences,
                           ),
                         ),
@@ -315,16 +322,25 @@ class _ContactUsState extends State<ContactUs> {
             bottom: 0,
             child: Opacity(
               opacity: checkText() == true ? 1 : 0,
-              child: IgnorePointer(
-                ignoring: checkText() == true ? false : true,
+              child: Material(
                 child: InkWell(
-                  splashColor: Colors.white24,
+                  splashColor: Theme.of(context).primaryColorLight,
                   onTap: () {
                     if (_formKey.currentState.validate()) {
                       print('Clicked! Sent query successfully.');
+                      Navigator.pop(context);
+                    } else {
+                      _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                        content: new Text(
+                          "Please enter a Valid Email Address!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.redAccent),
+                        ),
+                        duration: Duration(seconds: 1),
+                      ));
                     }
                   },
-                  child: Container(
+                  child: Ink(
                     height: 50,
                     width: width,
                     decoration: BoxDecoration(
@@ -348,13 +364,6 @@ class _ContactUsState extends State<ContactUs> {
                         color: Colors.white,
                         fontSize: 19,
                         fontWeight: FontWeight.w300,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.5, 1.5),
-                            blurRadius: 3.0,
-                            color: Colors.white60,
-                          ),
-                        ],
                       ),
                     )),
                   ),
