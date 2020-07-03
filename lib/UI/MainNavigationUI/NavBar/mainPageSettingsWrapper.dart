@@ -37,7 +37,8 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
         body: selectedBar == 0
             ? MainPage(
               onMenuTap: widget.onMenuTap,
-            )
+              border: widget.border,
+        )
             : Notes(),
         bottomNavigationBar: AnimatedBottomBar(
           border: widget.border,

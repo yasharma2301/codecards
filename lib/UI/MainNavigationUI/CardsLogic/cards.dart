@@ -25,8 +25,8 @@ class _CardsStackState extends State<CardsStack>
   Widget build(BuildContext context) {
     CardController controller;
 
-    return new Scaffold(
-        body: Column(
+    return Container(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(

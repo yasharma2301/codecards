@@ -31,10 +31,7 @@ class Menuitem extends StatefulWidget {
 class _MenuitemState extends State<Menuitem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        splashColor: Theme.of(context).primaryColorLight,
-        highlightColor: Theme.of(context).primaryColorLight.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(15),
+    return GestureDetector(
         onTap: widget.isCollapsed
             ? null
             : () async {
@@ -44,19 +41,15 @@ class _MenuitemState extends State<Menuitem> {
                 BlocProvider.of<NavigationBloc>(context).add(widget.navigateTo);
                 widget.onMenuItemClicked();
               },
-        child: Ink(
-          // width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-          ),
+        child: Container(
+          height: 40,
           child: Row(
             children: [
               widget.icon != null
                   ? Icon(widget.icon,
                       color: widget.isSelected == widget.itemNumber
                           ? Theme.of(context).primaryColorLight
-                          : Theme.of(context).primaryColor.withOpacity(0.6))
+                          : White.withOpacity(0.8))
                   : Container(),
               widget.icon != null
                   ? SizedBox(
@@ -68,11 +61,11 @@ class _MenuitemState extends State<Menuitem> {
                 style: TextStyle(
                   color: widget.isSelected == widget.itemNumber
                       ? Theme.of(context).primaryColorLight
-                      : Theme.of(context).primaryColor.withOpacity(0.6),
-                  fontSize: widget.isSelected == widget.itemNumber ? 27 : 25,
+                      : White.withOpacity(0.8),
+                  fontSize: widget.isSelected == widget.itemNumber ? 22 : 19,
                   fontWeight: widget.isSelected == widget.itemNumber
-                      ? FontWeight.w600
-                      : FontWeight.normal,
+                      ? FontWeight.w700
+                      : FontWeight.w300,
                 ),
               ),
             ],

@@ -38,15 +38,12 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
     });
   }
 
-
   void onMenuItemClicked() {
     setState(() {
       _controller.reverse();
     });
     isCollapsed = !isCollapsed;
   }
-
-
 
   @override
   void initState() {
@@ -73,7 +70,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
     return Scaffold(
       backgroundColor: backGroundColor,
       body: BlocProvider<NavigationBloc>(
-        create: (context) => NavigationBloc(onMenuTap: onMenuTap),
+        create: (context) =>
+            NavigationBloc(onMenuTap: onMenuTap),
         child: Stack(
           children: <Widget>[
             BlocBuilder<NavigationBloc, NavigationStates>(

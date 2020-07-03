@@ -10,11 +10,19 @@ class Dashboard extends StatelessWidget {
   final bool setRadius;
   final Function onMenuTap;
   final Widget child;
-  const Dashboard(
-      {Key key, this.isCollapsed, this.screenWidth, this.duration, this.scaleAnimation, this.onMenuTap,
-      this.child,this.borderAnimation,this.anim,this.setRadius})
-      : super(key: key);
 
+  const Dashboard(
+      {Key key,
+      this.isCollapsed,
+      this.screenWidth,
+      this.duration,
+      this.scaleAnimation,
+      this.onMenuTap,
+      this.child,
+      this.borderAnimation,
+      this.anim,
+      this.setRadius})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,9 @@ class Dashboard extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           animationDuration: duration,
-          borderRadius: isCollapsed ? BorderRadius.circular(0) : BorderRadius.circular(40),
+          borderRadius: isCollapsed
+              ? BorderRadius.circular(0)
+              : BorderRadius.circular(40),
           elevation: 10.0,
           child: child,
         ),

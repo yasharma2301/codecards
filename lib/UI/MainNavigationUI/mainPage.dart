@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
   final Function onMenuTap;
-
-  const MainPage({Key key, this.onMenuTap}) : super(key: key);
+  final bool border;
+  const MainPage({Key key, this.onMenuTap,this.border}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.only(top: 30),
+        padding: widget.border==true? EdgeInsets.only(top: 30,left: 15):EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: widget.border==true? EdgeInsets.only(left: 0):EdgeInsets.only(left: 12),
                   child: IconButton(
                     splashColor: LightPopBlue.withOpacity(0.5),
                     hoverColor: LightPopBlue,
@@ -62,8 +62,11 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
             Expanded(
-              child: Container(
-                child: CardsStack(),
+              child: IgnorePointer(
+                ignoring: widget.border==true?true:false,
+                child: Container(
+                  child: CardsStack(),
+                ),
               ),
             )
           ],

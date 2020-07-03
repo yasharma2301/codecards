@@ -1,7 +1,7 @@
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
+import 'package:dough/dough.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vibration/vibration.dart';
 import 'menu_item.dart';
 import 'dart:math' as math;
@@ -52,7 +52,7 @@ class _MenuState extends State<Menu> {
         child: ScaleTransition(
           scale: widget.menuScaleAnimation,
           child: Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 15),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Stack(
@@ -69,36 +69,14 @@ class _MenuState extends State<Menu> {
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
-                          title: "Code Cards",
+                          title: "CodeCards",
                           itemNumber: 0,
                           navigateTo: NavigationEvents.CodeCardsClickEvent,
-                          icon: Icons.content_copy,
+                          icon: Icons.code,
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
-                        // GestureDetector(
-                        //   onTap: widget.isCollapsed
-                        //       ? null
-                        //       : () async {
-                        //           BlocProvider.of<NavigationBloc>(context).add(
-                        //               NavigationEvents.BookmarksClickEvent);
-                        //           if (await Vibration.hasVibrator()) {
-                        //             Vibration.vibrate(duration: 5);
-                        //           }
-                        //           widget.onMenuItemClicked();
-                        //         },
-                        //   child: Text(
-                        //     "Bookmarks",
-                        //     style: TextStyle(
-                        //       color: Theme.of(context).primaryColor,
-                        //       fontSize: widget.isSelected == 1 ? 22 : 20,
-                        //       fontWeight: widget.isSelected == 1
-                        //           ? FontWeight.bold
-                        //           : FontWeight.normal,
-                        //     ),
-                        //   ),
-                        // ),
                         Menuitem(
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
@@ -111,28 +89,6 @@ class _MenuState extends State<Menu> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        // GestureDetector(
-                        //   onTap: widget.isCollapsed
-                        //       ? null
-                        //       : () async {
-                        //           BlocProvider.of<NavigationBloc>(context).add(
-                        //               NavigationEvents.CommunityClickEvent);
-                        //           if (await Vibration.hasVibrator()) {
-                        //             Vibration.vibrate(duration: 5);
-                        //           }
-                        //           widget.onMenuItemClicked();
-                        //         },
-                        //   child: Text(
-                        //     "Community",
-                        //     style: TextStyle(
-                        //       color: Theme.of(context).primaryColor,
-                        //       fontSize: widget.isSelected == 2 ? 22 : 20,
-                        //       fontWeight: widget.isSelected == 2
-                        //           ? FontWeight.bold
-                        //           : FontWeight.normal,
-                        //     ),
-                        //   ),
-                        // ),
                         Menuitem(
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
@@ -145,37 +101,14 @@ class _MenuState extends State<Menu> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        // GestureDetector(
-                        //   onTap: widget.isCollapsed
-                        //       ? null
-                        //       : () async {
-                        //           BlocProvider.of<NavigationBloc>(context).add(
-                        //               NavigationEvents
-                        //                   .DeveloperStoryClickEvent);
-                        //           if (await Vibration.hasVibrator()) {
-                        //             Vibration.vibrate(duration: 5);
-                        //           }
-                        //           widget.onMenuItemClicked();
-                        //         },
-                        //   child: Text(
-                        //     "Developer Story",
-                        //     style: TextStyle(
-                        //       color: Theme.of(context).primaryColor,
-                        //       fontSize: widget.isSelected == 4 ? 22 : 20,
-                        //       fontWeight: widget.isSelected == 4
-                        //           ? FontWeight.bold
-                        //           : FontWeight.normal,
-                        //     ),
-                        //   ),
-                        // ),
                         Menuitem(
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
-                          title: "Developer Story",
+                          title: "Settings",
                           itemNumber: 4,
                           navigateTo: NavigationEvents.DeveloperStoryClickEvent,
-                          icon: Icons.code,
+                          icon: Icons.settings,
                         ),
                         SizedBox(
                           height: 10.0,
@@ -190,97 +123,69 @@ class _MenuState extends State<Menu> {
                           icon: Icons.headset_mic,
                         ),
                         Divider(
-                          height: 50,
-                          color: White.withOpacity(0.4),
+                          height: 40,
+                          color: White.withOpacity(0.35),
                         ),
                       ],
                     ),
                   ),
                   Positioned(
                     bottom: 30,
-                    left: -50,
-                    child: Container(
-                      width: size.width / 1.75,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(5),
+                    left: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        PressableDough(
+                          child: Container(
+                            height: 80,
+                            width: 80,
                             decoration: BoxDecoration(
-                                // borderRadius: BorderRadius.circular(100),
                                 shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage(avatarChanger.getAvatar()),
+                                    fit: BoxFit.fill),
                                 border: Border.all(
                                     color: Theme.of(context)
                                         .primaryColorLight
                                         .withOpacity(0.6))),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.asset(
-                                avatarChanger.getAvatar(),
-                                height: 120,
-                                width: 120,
-                              ),
-                            ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        GestureDetector(
+                          onTap: widget.isCollapsed
+                              ? null
+                              : () async {
+                                  if (await Vibration.hasVibrator()) {
+                                    Vibration.vibrate(duration: 5);
+                                  }
+                                },
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(
-                                Icons.perm_identity,
-                                color: Theme.of(context).primaryColor,
-                                size: 30,
+                              Transform.rotate(
+                                angle: math.pi,
+                                child: Icon(
+                                  Icons.exit_to_app,
+                                  color: Theme.of(context).primaryColorLight,
+                                  size: 20,
+                                ),
                               ),
                               SizedBox(
                                 width: 10,
                               ),
                               Text(
-                                "Username",
+                                "Logout",
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 20),
+                                    color: Theme.of(context).primaryColorLight,
+                                    fontSize: 18),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          GestureDetector(
-                            onTap: widget.isCollapsed
-                                ? null
-                                : () async {
-                                    if (await Vibration.hasVibrator()) {
-                                      Vibration.vibrate(duration: 5);
-                                    }
-                                  },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Transform.rotate(
-                                  angle: math.pi,
-                                  child: Icon(
-                                    Icons.exit_to_app,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 20,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Logout",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   )
                 ],

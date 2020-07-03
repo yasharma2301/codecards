@@ -4,7 +4,6 @@ import '../code_cards.dart';
 import '../community.dart';
 import '../developer_story.dart';
 import '../rate_us.dart';
-import 'package:codecards/UI/Settings/settings2.dart';
 
 enum NavigationEvents {
   CodeCardsClickEvent,
