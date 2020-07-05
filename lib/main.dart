@@ -6,6 +6,8 @@ import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
+import 'package:codecards/UI/TempLogin/tempLogin.dart';
+import 'package:codecards/UI/TempLogin/tempSignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'UI/OnBoard/onBoardingScreen.dart';
@@ -140,7 +142,9 @@ class MyHomePage extends StatelessWidget {
       theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
-        '/': (context) => OnBoard(),
+        // '/': (context) => OnBoard(),
+        '/': (context) => SignUpTemp(),
+        'loginTemp': (context) => LoginTemp(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),
