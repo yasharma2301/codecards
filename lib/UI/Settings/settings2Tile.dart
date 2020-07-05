@@ -1,4 +1,4 @@
-  import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,25 +21,32 @@ class Settings2Tile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          Container(
-            height: 80,
-            width: width,
-            decoration: BoxDecoration(
-                color: Grey, borderRadius: BorderRadius.circular(8)),
-            child: Material(
-              child: InkWell(
-                highlightColor: Colors.black,
-                borderRadius: BorderRadius.circular(8),
-                onTap: onTap,
+          Material(
+            child: InkWell(
+              highlightColor: Grey,
+              splashColor: Grey,
+              borderRadius: BorderRadius.circular(8),
+              onTap: onTap,
+              child: Ink(
+                height: 80,
+                width: width,
+                decoration: BoxDecoration(
+                    color: Grey, borderRadius: BorderRadius.circular(8)),
                 child: Stack(fit: StackFit.expand, children: [
                   Positioned(
                     right: 0,
                     top: 0,
-                    child: Container(
+                    child: Ink(
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
-                              colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColorLight],
-                              stops: [0.3,0.95],
+                              colors: [
+                                Theme.of(context).primaryColor,
+                                Theme.of(context).primaryColorLight
+                              ],
+                              stops: [
+                                0.3,
+                                0.95
+                              ],
                               begin: FractionalOffset.topLeft,
                               end: FractionalOffset.topRight,
                               tileMode: TileMode.repeated),

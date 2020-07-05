@@ -13,7 +13,8 @@ class ContactUs extends StatefulWidget {
   _ContactUsState createState() => _ContactUsState();
 }
 
-class _ContactUsState extends State<ContactUs> {
+class _ContactUsState extends State<ContactUs>
+    with SingleTickerProviderStateMixin {
   File _image;
 
   TextEditingController nameController = TextEditingController();
@@ -37,6 +38,31 @@ class _ContactUsState extends State<ContactUs> {
     } else {
       return false;
     }
+  }
+
+  double _showSnackBar = 0;
+  AnimationController controller;
+  Animation moveSocial;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+
+    moveSocial = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn));
+
+    controller.addListener(() {
+      setState(() {
+        _showSnackBar = controller.value;
+      });
+      if (controller.isCompleted) {
+        Future.delayed(Duration(seconds: 3))
+            .then((value) => controller.reverse());
+      }
+    });
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -325,19 +351,31 @@ class _ContactUsState extends State<ContactUs> {
               child: Material(
                 child: InkWell(
                   splashColor: Theme.of(context).primaryColorLight,
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState.validate()) {
                       print('Clicked! Sent query successfully.');
                       Navigator.pop(context);
                     } else {
-                      _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                        content: new Text(
-                          "Please enter a Valid Email Address!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.redAccent),
-                        ),
-                        duration: Duration(seconds: 1),
-                      ));
+                      // _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                      //   content: Container(
+                      //     decoration: BoxDecoration(
+                      //         border: Border(
+                      //             left: BorderSide(
+                      //                 width: 3, color: Colors.redAccent))),
+                      //     child: Text(
+                      //       "Please enter a Valid Email Address!",
+                      //       textAlign: TextAlign.center,
+                      //       style: TextStyle(color: Colors.redAccent),
+                      //     ),
+                      //   ),
+                      //   duration: Duration(seconds: 1),
+                      // ));
+                      setState(() {
+                        // _showSnackBar = !_showSnackBar;
+                      });
+                      await controller.forward();
+                      // Future.delayed(Duration(seconds: 2));
+                      // await controller.reverse();
                     }
                   },
                   child: Ink(
@@ -370,7 +408,54 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
             ),
-          )
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Transform.scale(
+              scale: _showSnackBar,
+              child: Container(
+                // duration: Duration(milliseconds: 200),
+                margin: EdgeInsets.only(bottom: 20),
+                width: width - 20,
+                height: 45,
+                decoration: BoxDecoration(
+                    color: Color(0xFF333333),
+                    border: Border(
+                        left: BorderSide(color: Colors.redAccent, width: 2.5))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Icon(
+                          Icons.error_outline,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Please Enter a Valid Email Address!",
+                        style: TextStyle(color: White, fontSize: 16),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.reverse();
+                      },
+                      child: Icon(
+                        Icons.cancel,
+                        color: Colors.redAccent,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

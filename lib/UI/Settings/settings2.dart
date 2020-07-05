@@ -1,4 +1,5 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 import 'package:codecards/UI/Settings/Contact_US/Contact_US.dart';
 import 'package:codecards/UI/Settings/RateUs/rateUs.dart';
@@ -12,6 +13,7 @@ import 'package:vibration/vibration.dart';
 import 'Avatar/avatar.dart';
 import 'Theme/ColorPicker.dart';
 import 'adTile.dart';
+import 'themeSelector.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -19,6 +21,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  String currentTheme = "dark";
+
   @override
   Widget build(BuildContext context) {
     final AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
@@ -140,9 +144,26 @@ class _SettingsState extends State<Settings> {
                 ),
                 // SetUsername(width:width,height: height,),
                 UserInfo(width: width),
+                ThemeSelector(),
+                SizedBox(
+                  height: 20,
+                ),
                 Settings2Tile(
-                  iconData: Icons.color_lens,
-                  title: 'THEME',
+                  iconData: currentTheme == "dark"
+                      ? Icons.brightness_4
+                      : Icons.brightness_7,
+                  title: currentTheme == "dark" ? "DARK THEME" : "LIGHT THEME",
+                  onTap: () {
+                    if (currentTheme == "dark") {
+                      setState(() {
+                        currentTheme = "light";
+                      });
+                    } else {
+                      setState(() {
+                        currentTheme = "dark";
+                      });
+                    }
+                  },
                 ),
                 Settings2Tile(
                   onTap: _showTimePicker,
