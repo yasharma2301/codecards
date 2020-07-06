@@ -101,8 +101,8 @@ class _SettingsState extends State<Settings> {
                             Hero(
                               tag: 'avatarHero',
                               child: Container(
-                                height: 170,
-                                width: 170,
+                                height: height / 5,
+                                width: width / 2.5,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(15),
@@ -147,23 +147,6 @@ class _SettingsState extends State<Settings> {
                 ThemeSelector(),
                 SizedBox(
                   height: 20,
-                ),
-                Settings2Tile(
-                  iconData: currentTheme == "dark"
-                      ? Icons.brightness_4
-                      : Icons.brightness_7,
-                  title: currentTheme == "dark" ? "DARK THEME" : "LIGHT THEME",
-                  onTap: () {
-                    if (currentTheme == "dark") {
-                      setState(() {
-                        currentTheme = "light";
-                      });
-                    } else {
-                      setState(() {
-                        currentTheme = "dark";
-                      });
-                    }
-                  },
                 ),
                 Settings2Tile(
                   onTap: _showTimePicker,

@@ -314,7 +314,8 @@ class _ContactUsState extends State<ContactUs>
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      SizedBox(height: 20),
                     ],
                   ),
                 )

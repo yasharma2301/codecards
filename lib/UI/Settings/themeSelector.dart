@@ -32,7 +32,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                     });
                   },
                   child: Ink(
-                    padding: EdgeInsets.only(left: 20, right: 60),
+                    padding: EdgeInsets.only(left: 10),
                     height: 80,
                     width: width / 2 + 20,
                     decoration: BoxDecoration(
@@ -46,15 +46,19 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                           : null,
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Icon(
                           Icons.brightness_4,
                           size: 30,
                           color: Grey,
                         ),
+                        SizedBox(
+                          width: 20,
+                        ),
                         Text(
-                          "DARK THEME",
+                          "DARK\nTHEME",
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 16, color: White),
                         )
                       ],
@@ -77,7 +81,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                     });
                   },
                   child: Ink(
-                    padding: EdgeInsets.only(left: 60, right: 20),
+                    padding: EdgeInsets.only(right: 10),
                     height: 80,
                     width: width / 2 + 20,
                     decoration: BoxDecoration(
@@ -92,12 +96,14 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                           : Border.all(color: White, width: 3),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "LIGHT THEME",
+                          "LIGHT\nTHEME",
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 16, color: White),
                         ),
+                        SizedBox(width: 20),
                         Icon(
                           Icons.brightness_7,
                           size: 30,
@@ -132,7 +138,6 @@ class RightClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }
@@ -153,7 +158,6 @@ class LeftClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }

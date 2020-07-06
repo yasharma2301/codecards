@@ -252,7 +252,7 @@ class _LoginTempState extends State<LoginTemp> {
       print('Response status: ${response.statusCode}');
       print("Response Body: ${response.body}");
       response.statusCode == 202
-          ? Navigator.popAndPushNamed(context, 'menuDashBoard')
+          ? Navigator.pop(context, {'success': true})
           : ("Response Error: ${response.body}");
     }
   }
