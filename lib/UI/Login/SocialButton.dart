@@ -33,8 +33,7 @@ class SocialButton extends StatelessWidget {
                       break;
                     case 'Login With Google':
                       try {
-                       await GoogleAuth().handleSignIn().then((value) =>
-                            Navigator.of(context).pushNamed('menuDashBoard'));
+                       await GoogleAuth().handleSignIn().then((value) => debugPrint('google'));
                       } catch (e) {
                         print(e.toString());
                       }

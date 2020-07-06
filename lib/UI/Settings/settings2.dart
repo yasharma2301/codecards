@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
                           style: TextStyle(
                               color: White,
                               fontSize: 40,
-                              fontWeight: FontWeight.w500)),
+                              fontWeight: FontWeight.w300)),
                       GestureDetector(
                         onTap: () async {
                           if (await Vibration.hasVibrator()) {
@@ -199,8 +199,7 @@ class _SettingsState extends State<Settings> {
                 },
                 child: Icon(
                   Icons.keyboard_backspace,
-                  // color: Colors.white,
-                  color: Theme.of(context).primaryColor,
+                   color: Colors.white,
                 ),
               ),
             ),

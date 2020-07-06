@@ -14,6 +14,7 @@ class _LoginTempState extends State<LoginTemp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Grey,
       body: Stack(
         children: [
@@ -57,16 +58,13 @@ class _LoginTempState extends State<LoginTemp> {
           ),
           Container(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                SizedBox(
-                  height: 30.0,
-                ),
                 CircleAvatar(
                   child: Image.network(
                       "https://img.icons8.com/bubbles/344/enter-2.png"),
-                  maxRadius: 50,
+                  maxRadius: 70,
                   backgroundColor: Colors.transparent,
                 ),
                 SizedBox(
@@ -119,7 +117,7 @@ class _LoginTempState extends State<LoginTemp> {
                 child: Icon(
                   Icons.keyboard_backspace,
                   // color: Colors.white,
-                  color: Theme.of(context).primaryColor,
+                  color: White,
                 ),
               ),
             ),
@@ -137,7 +135,6 @@ class _LoginTempState extends State<LoginTemp> {
           ClipPath(
             clipper: RoundedDiagonalPathClipper(),
             child: Container(
-              // height: 400,
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(

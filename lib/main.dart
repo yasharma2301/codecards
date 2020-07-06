@@ -1,4 +1,5 @@
 import 'package:codecards/Services/adProvider.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Trials/googleAuth.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:codecards/Shared/themes.dart';
@@ -116,6 +117,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
+        ),
+        ChangeNotifierProvider<UserRepository>(
+          create: (_) => UserRepository(),
         ),
         ChangeNotifierProvider<AvatarChanger>(
           create: (_) => AvatarChanger(prefs.getString(avatarKey)),
