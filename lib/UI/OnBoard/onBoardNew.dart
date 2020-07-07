@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:codecards/Shared/fade_animation.dart';
@@ -85,7 +87,9 @@ class _OnBoardNewState extends State<OnBoardNew> with TickerProviderStateMixin {
 
     return WillPopScope(
       onWillPop: () {
-        return SystemNavigator.pop();
+        SystemNavigator.pop();
+        exit(0);
+        return;
       },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(9, 14, 23, 1),
