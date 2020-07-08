@@ -28,6 +28,7 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   flutter_tindercard: ^0.1.7
   dough: ^0.0.5
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

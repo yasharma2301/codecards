@@ -131,7 +131,7 @@ class _SignUpTempState extends State<SignUpTemp> {
                     onTap: () async {
                       dynamic instance =
                           await Navigator.pushNamed(context, 'loginTemp');
-                      if (instance['success']) {
+                      if (instance != null && instance['success']) {
                         Navigator.popAndPushNamed(context, 'menuDashBoard');
                       }
                     },

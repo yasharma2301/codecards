@@ -1,6 +1,8 @@
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/UI/TempLogin/Reset_Password_Webview.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginTemp extends StatefulWidget {
   static final String path = "lib/src/pages/login/Login1.dart";
@@ -97,6 +99,20 @@ class _LoginTempState extends State<LoginTemp> {
                     ),
                   ),
                 ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 20),
+                    child: GestureDetector(
+                      onTap: _resetPassword,
+                      child: Text(
+                        "Forgot Password?",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            color: Blue,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ))
               ],
             ),
           ),
@@ -235,7 +251,7 @@ class _LoginTempState extends State<LoginTemp> {
   }
 
   Future<void> _login() async {
-    String url = 'http://192.168.0.104:8000/login';
+    String url = 'http://192.168.0.105:8000/login';
     Map user = {
       'email': _email,
       'password': _password,
@@ -255,6 +271,19 @@ class _LoginTempState extends State<LoginTemp> {
           ? Navigator.pop(context, {'success': true})
           : ("Response Error: ${response.body}");
     }
+  }
+
+  Future<void> _resetPassword() async {
+    // const url = 'http://192.168.0.105:8000/reset_password/';
+    // if (await canLaunch(url)) {
+    //   await launch(
+    //     url,
+    //   );
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Reset_Password_Webview()));
   }
 }
 
