@@ -1,66 +1,36 @@
 import 'dart:async';
-import 'dart:io';
-
+import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-class Reset_Password_Webview extends StatefulWidget {
-  Reset_Password_Webview({Key key}) : super(key: key);
+class ResetPassword extends StatefulWidget {
+  @override
+  _ResetPasswordState createState() => _ResetPasswordState();
+}
+
+class _ResetPasswordState extends State<ResetPassword> {
+  final webView = FlutterWebviewPlugin();
 
   @override
-  _Reset_Password_WebviewState createState() => _Reset_Password_WebviewState();
-}
-
-WebViewController controllerGlobal;
-
-Future<bool> _exitApp(BuildContext context) async {
-  var canGoBack = await controllerGlobal.canGoBack();
-  if (await controllerGlobal.canGoBack()) {
-    print("onwill goback");
-    controllerGlobal.goBack();
-  } else {
-    Scaffold.of(context).showSnackBar(
-      const SnackBar(content: Text("No back history item")),
-    );
-    return Future.value(false);
+  void initState() {
+    super.initState();
+    webView.close();
   }
-}
-
-class _Reset_Password_WebviewState extends State<Reset_Password_Webview> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    webView.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _exitApp(context),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Reset Password"),
-          actions: [
-            // NavigationCon
-          ],
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () async {
-              dispose();
-            },
-          ),
-        ),
-        body: WebView(
-          initialUrl: 'http://192.168.0.105:8000/reset_password/',
-          // initialUrl: 'https://google.com',
-          onWebViewCreated: (WebViewController webViewController) async {
-            _controller.complete(webViewController);
-          },
-        ),
-      ),
+    return WebviewScaffold(
+      appBar: AppBar(title: Text('Reset Password'),backgroundColor: Grey,),
+      url: 'https://google.com',
+      withJavascript: true,
+      withLocalStorage: true,
+      withZoom: true,
     );
   }
 }

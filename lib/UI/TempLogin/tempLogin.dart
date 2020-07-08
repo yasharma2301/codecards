@@ -280,7 +280,7 @@ class _LoginTempState extends State<LoginTemp> {
     //   throw 'Could not launch $url';
     // }
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => Reset_Password_Webview()));
+        MaterialPageRoute(builder: (context) => ResetPassword()));
   }
 }
 

@@ -144,8 +144,8 @@ class MyHomePage extends StatelessWidget {
       theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
-        '/': (context) => OnBoardNew(),
-        //'/': (context) => SignUpTemp(),
+        //'/': (context) => OnBoardNew(),
+        '/': (context) => LoginTemp(),
         'loginTemp': (context) => LoginTemp(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
