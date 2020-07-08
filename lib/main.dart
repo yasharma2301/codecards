@@ -1,5 +1,5 @@
 import 'package:codecards/Services/adProvider.dart';
-import 'package:codecards/Trials/googleAuth.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
@@ -10,13 +10,12 @@ import 'package:codecards/UI/TempLogin/tempLogin.dart';
 import 'package:codecards/UI/TempLogin/tempSignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'UI/OnBoard/onBoardingScreen.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'UI/OnBoard/onBoardNew.dart';
 import 'UI/Settings/Contact_US/Contact_US.dart';
-import 'UI/Settings/Contact_US/try.dart';
 
 SharedPreferences prefs;
 const String avatarKey = 'avatar';
@@ -117,6 +116,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
         ),
+        ChangeNotifierProvider<UserRepository>(
+          create: (_) => UserRepository(),
+        ),
         ChangeNotifierProvider<AvatarChanger>(
           create: (_) => AvatarChanger(prefs.getString(avatarKey)),
         ),
@@ -142,8 +144,8 @@ class MyHomePage extends StatelessWidget {
       theme: theme.getTheme(),
       initialRoute: '/',
       routes: {
-        // '/': (context) => OnBoard(),
-        '/': (context) => SignUpTemp(),
+        '/': (context) => OnBoardNew(),
+        //'/': (context) => SignUpTemp(),
         'loginTemp': (context) => LoginTemp(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),

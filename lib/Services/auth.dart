@@ -51,12 +51,13 @@ class GoogleAuth {
 
   Future<void> handleSignIn() async {
     try {
-      await _googleSignIn.signIn();
-      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-        print(account);
-        _currentUser = account;
-        print(_currentUser);
-      });
+      await _googleSignIn.signIn().then((value) => _currentUser=value);
+      print(_currentUser);
+//      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+//        print(account);
+//        _currentUser = account;
+//        print(_currentUser);
+//      });
     } catch (error) {
       print(error);
     }

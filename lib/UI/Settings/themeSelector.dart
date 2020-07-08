@@ -17,7 +17,6 @@ class _ThemeSelectorState extends State<ThemeSelector> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Stack(
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -36,7 +35,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                     height: 80,
                     width: width / 2 + 20,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.7),
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8),
                         topLeft: Radius.circular(8),
@@ -86,7 +85,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                     width: width / 2 + 20,
                     decoration: BoxDecoration(
                       color:
-                          Theme.of(context).primaryColorLight.withOpacity(0.7),
+                          Theme.of(context).primaryColorLight,
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(8),
                         topRight: Radius.circular(8),

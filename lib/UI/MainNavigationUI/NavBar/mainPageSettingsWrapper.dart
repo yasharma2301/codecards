@@ -36,8 +36,8 @@ class _BottomBarAndScaffoldState extends State<BottomBarAndScaffold> {
         backgroundColor: Colors.transparent,
         body: selectedBar == 0
             ? MainPage(
-              onMenuTap: widget.onMenuTap,
-              border: widget.border,
+          onMenuTap: widget.onMenuTap,
+          border: widget.border,
         )
             : Notes(),
         bottomNavigationBar: AnimatedBottomBar(
