@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:flushbar/flushbar.dart';
 
 class ContactUs extends StatefulWidget {
   ContactUs({Key key}) : super(key: key);
@@ -354,29 +358,28 @@ class _ContactUsState extends State<ContactUs>
                   splashColor: Theme.of(context).primaryColorLight,
                   onTap: () async {
                     if (_formKey.currentState.validate()) {
-                      print('Clicked! Sent query successfully.');
-                      Navigator.pop(context);
+                      Map response = await _sendQuery();
+                      if (response['success']) {
+                        Navigator.pop(context, response);
+                      } else {
+                        Flushbar(
+                          icon: Icon(Icons.error_outline,
+                              color: Colors.redAccent),
+                          leftBarIndicatorColor: Colors.redAccent,
+                          message: response['message'],
+                          duration: Duration(seconds: 3),
+                          isDismissible: true,
+                        )..show(context);
+                      }
                     } else {
-                      // _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                      //   content: Container(
-                      //     decoration: BoxDecoration(
-                      //         border: Border(
-                      //             left: BorderSide(
-                      //                 width: 3, color: Colors.redAccent))),
-                      //     child: Text(
-                      //       "Please enter a Valid Email Address!",
-                      //       textAlign: TextAlign.center,
-                      //       style: TextStyle(color: Colors.redAccent),
-                      //     ),
-                      //   ),
-                      //   duration: Duration(seconds: 1),
-                      // ));
-                      setState(() {
-                        // _showSnackBar = !_showSnackBar;
-                      });
-                      await controller.forward();
-                      // Future.delayed(Duration(seconds: 2));
-                      // await controller.reverse();
+                      Flushbar(
+                        icon:
+                            Icon(Icons.error_outline, color: Colors.redAccent),
+                        leftBarIndicatorColor: Colors.redAccent,
+                        message: "Please enter a valid Email Address!",
+                        duration: Duration(seconds: 2),
+                        isDismissible: true,
+                      )..show(context);
                     }
                   },
                   child: Ink(
@@ -460,5 +463,35 @@ class _ContactUsState extends State<ContactUs>
         ],
       ),
     );
+  }
+
+  Future<Map> _sendQuery() async {
+    String url = 'http://192.168.0.105:8000/contact-us/';
+
+    var request = http.MultipartRequest('POST', Uri.parse(url))
+      ..fields['name'] = nameController.text
+      ..fields['email'] = emailController.text
+      ..fields['details'] = descriptionController.text;
+
+    if (_image != null) {
+      String screenshot_name = _image.path.split('/').last;
+      request.files.add(http.MultipartFile(
+          'screenshot', _image.readAsBytes().asStream(), _image.lengthSync(),
+          filename: screenshot_name));
+    } else
+      request.fields['screenshot'] = '';
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      return {
+        'success': true,
+        'message':
+            "Query Successfully sent to our Support team. We will try to respond to you as soon as we can."
+      };
+    } else {
+      return {
+        'success': false,
+        'message': "Server Error! Please try again later."
+      };
+    }
   }
 }

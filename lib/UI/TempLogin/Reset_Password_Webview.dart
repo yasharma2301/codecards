@@ -26,8 +26,11 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-      appBar: AppBar(title: Text('Reset Password'),backgroundColor: Grey,),
-      url: 'https://google.com',
+      appBar: AppBar(
+        title: Text('Reset Password'),
+        backgroundColor: Grey,
+      ),
+      url: 'http://192.168.0.105:8000/reset_password',
       withJavascript: true,
       withLocalStorage: true,
       withZoom: true,

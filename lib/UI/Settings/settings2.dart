@@ -14,6 +14,7 @@ import 'Avatar/avatar.dart';
 import 'Theme/ColorPicker.dart';
 import 'adTile.dart';
 import 'themeSelector.dart';
+import 'package:flushbar/flushbar.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -162,8 +163,7 @@ class _SettingsState extends State<Settings> {
                   child: Settings2Tile(
                       iconData: Icons.call,
                       title: 'SUPPORT',
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ContactUs()))),
+                      onTap: () => _goToContactUs(context)),
                 ),
                 Settings2Tile(
                   iconData: Icons.star,
@@ -199,7 +199,7 @@ class _SettingsState extends State<Settings> {
                 },
                 child: Icon(
                   Icons.keyboard_backspace,
-                   color: Colors.white,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -249,5 +249,19 @@ class _SettingsState extends State<Settings> {
             child: RateUs(),
           );
         });
+  }
+
+  void _goToContactUs(BuildContext context) async {
+    dynamic instance = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ContactUs()));
+    if (instance != null) {
+      Flushbar(
+        icon: Icon(Icons.check_circle_outline, color: Colors.greenAccent),
+        leftBarIndicatorColor: Colors.greenAccent,
+        message: instance['message'],
+        duration: Duration(seconds: 3),
+        isDismissible: true,
+      )..show(context);
+    }
   }
 }
