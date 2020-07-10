@@ -25,171 +25,177 @@ class _newSignUpState extends State<newSignUp> {
           color: Grey,
           borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       child: Scaffold(
-        // backgroundColor: Grey,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: LightGrey.withOpacity(0.7),
-              ),
-              child: TextFormField(
-                controller: _emailContoller,
-                style: TextStyle(
-                  color: White.withOpacity(0.7),
-                  fontSize: 18,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20,),
+              Text('Register a new Account',style: TextStyle(color: Colors.white,fontSize: 18),),
+              SizedBox(height: 20,),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: LightGrey.withOpacity(0.7),
                 ),
-                decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.mail_outline,
-                      color: Grey,
-                    ),
-                    border: InputBorder.none,
-                    hintText: "Enter Email",
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.6), fontSize: 16)),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: LightGrey.withOpacity(0.7),
-              ),
-              child: TextFormField(
-                controller: _usernameContoller,
-                style: TextStyle(
-                  color: White.withOpacity(0.7),
-                  fontSize: 18,
-                ),
-                decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.person_outline,
-                      color: Grey,
-                    ),
-                    border: InputBorder.none,
-                    hintText: "Enter Username",
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.6), fontSize: 16)),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: LightGrey.withOpacity(0.7),
-              ),
-              child: TextFormField(
-                controller: _passwordContoller,
-                obscureText: passwordVisible,
-                style: TextStyle(
-                  color: White.withOpacity(0.7),
-                  fontSize: 18,
-                ),
-                decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.lock_outline,
-                      color: Grey,
-                    ),
-                    suffixIcon: IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
+                child: TextFormField(
+                  controller: _emailContoller,
+                  style: TextStyle(
+                    color: White.withOpacity(0.7),
+                    fontSize: 18,
+                  ),
+                  decoration: InputDecoration(
                       icon: Icon(
-                        passwordVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: passwordEmpty
-                            ? Colors.transparent
-                            : Colors.white.withOpacity(0.5),
+                        Icons.mail_outline,
+                        color: Grey,
                       ),
-                      onPressed: () {
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                        });
-                      },
-                    ),
-                    border: InputBorder.none,
-                    hintText: "Enter Password",
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.6), fontSize: 16)),
-                onChanged: (value) {
-                  if (value.length > 0) {
-                    setState(() {
-                      passwordEmpty = false;
-                    });
-                  } else {
-                    setState(() {
-                      passwordEmpty = true;
-                    });
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: LightGrey.withOpacity(0.7),
-              ),
-              child: TextFormField(
-                controller: _password2Contoller,
-                obscureText: true,
-                style: TextStyle(
-                  color: White.withOpacity(0.7),
-                  fontSize: 18,
+                      border: InputBorder.none,
+                      hintText: "Enter Email",
+                      hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.6), fontSize: 16)),
                 ),
-                decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.lock_outline,
-                      color: Grey,
-                    ),
-                    border: InputBorder.none,
-                    hintText: "Confirm Password",
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.6), fontSize: 16)),
               ),
-            ),
-            SizedBox(
-              height: _height / 45,
-            ),
-            InkWell(
-              onTap: () {
-                _signUp(context);
-              },
-              child: ClipPath(
-                clipper: SignUpClipper(),
-                child: Container(
-                  width: _width / 1.5,
-                  height: _height / 12,
-                  color: Color(0xFFF95A5F).withOpacity(0.8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Sign Up",
-                        style: TextStyle(color: White, fontSize: 20),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: LightGrey.withOpacity(0.7),
+                ),
+                child: TextFormField(
+                  controller: _usernameContoller,
+                  style: TextStyle(
+                    color: White.withOpacity(0.7),
+                    fontSize: 18,
+                  ),
+                  decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.person_outline,
+                        color: Grey,
                       ),
-                      SizedBox(
-                        width: 20,
+                      border: InputBorder.none,
+                      hintText: "Enter Username",
+                      hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.6), fontSize: 16)),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: LightGrey.withOpacity(0.7),
+                ),
+                child: TextFormField(
+                  controller: _passwordContoller,
+                  obscureText: passwordVisible,
+                  style: TextStyle(
+                    color: White.withOpacity(0.7),
+                    fontSize: 18,
+                  ),
+                  decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.vpn_key,
+                        color: Grey,
                       ),
-                      Icon(Icons.arrow_forward, color: White)
-                    ],
+                      suffixIcon: IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        icon: Icon(
+                          passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: passwordEmpty
+                              ? Colors.transparent
+                              : Colors.white.withOpacity(0.5),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            passwordVisible = !passwordVisible;
+                          });
+                        },
+                      ),
+                      border: InputBorder.none,
+                      hintText: "Enter Password",
+                      hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.6), fontSize: 16)),
+                  onChanged: (value) {
+                    if (value.length > 0) {
+                      setState(() {
+                        passwordEmpty = false;
+                      });
+                    } else {
+                      setState(() {
+                        passwordEmpty = true;
+                      });
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: LightGrey.withOpacity(0.7),
+                ),
+                child: TextFormField(
+                  controller: _password2Contoller,
+                  obscureText: true,
+                  style: TextStyle(
+                    color: White.withOpacity(0.7),
+                    fontSize: 18,
+                  ),
+                  decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.vpn_key,
+                        color: Grey,
+                      ),
+                      border: InputBorder.none,
+                      hintText: "Confirm Password",
+                      hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.6), fontSize: 16)),
+                ),
+              ),
+              SizedBox(
+                height: _height / 45,
+              ),
+              InkWell(
+                onTap: () {
+                  _signUp(context);
+                },
+                child: ClipPath(
+                  clipper: SignUpClipper(),
+                  child: Container(
+                    width: _width / 1.7,
+                    height: _height / 12,
+                    color: Color(0xFFF95A5F).withOpacity(0.8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Sign Up",
+                          style: TextStyle(color: White, fontSize: 20),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Icon(Icons.arrow_forward, color: White)
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 20,)
+            ],
+          ),
         ),
       ),
     );
@@ -240,8 +246,6 @@ class SignUpClipper extends CustomClipper<Path> {
     path.lineTo(size.width, size.height * 0.45);
     path.quadraticBezierTo(size.width, size.height * 0.2,
         size.width - roundnessFactor * 0.7, size.height * 0.2);
-
-    // path.quadraticBezierTo(0, size.height * 0.2, 0, size.height);
 
     path.close();
 

@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  bool _signUpPage = false;
+  bool _sheetCollapsed = true;
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +34,11 @@ class _RegisterPageState extends State<RegisterPage> {
     _width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () {
-        // return Navigator.of(context).pushReplacement(
-        //     MaterialPageRoute(builder: (context) => OnBoardNew()));
-        setState(() {
-          _signUpPage = false;
-        });
+        return Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => OnBoardNew()));
       },
       child: Scaffold(
-        backgroundColor: _signUpPage ? LightGrey : Grey,
-        resizeToAvoidBottomInset: false,
+        backgroundColor: Grey,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -52,18 +48,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: 0,
-                    ),
-                    Image.asset(
-                      "assets/codecards.png",
-                      height: _height / 5,
+                    AnimatedContainer(
+                      height: _sheetCollapsed? _height / 5:_height/2,
                       width: _width,
+                      duration: Duration(microseconds: 200000),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(image: AssetImage("assets/codecards.png"))
+                      ),
                     ),
                     Text(
-                      _signUpPage
-                          ? "Create New Account"
-                          : 'Login To Your Account',
+                      'Login To Your Account',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 21,
@@ -116,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         decoration: InputDecoration(
                             icon: Icon(
-                              Icons.lock_outline,
+                              Icons.vpn_key,
                               color: Grey,
                             ),
                             suffixIcon: IconButton(
@@ -163,21 +157,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         'Forgot password?',
                         textAlign: TextAlign.end,
                         style: TextStyle(
-                            color: Colors.blueAccent.withOpacity(0.8),
+                            color: Colors.blueAccent[100].withOpacity(0.8),
                             fontSize: 17),
                       ),
                     ),
                     SizedBox(
-                      height: _height / 40,
+                      height: 10,
                     ),
-
-                    // Clipped button here
                     InkWell(
                       onTap: () => _login(context),
                       child: ClipPath(
                         clipper: LoginClipper(),
                         child: Container(
-                          width: _width / 1.5,
+                          width: _width / 1.7,
                           height: _height / 12,
                           color: Color(0xFFF95A5F).withOpacity(0.8),
                           child: Row(
@@ -205,104 +197,50 @@ class _RegisterPageState extends State<RegisterPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don't have an Account?  ",
-                              style: TextStyle(fontSize: 18, color: White),
+                              "Don't have an Account? ",
+                              style: TextStyle(fontSize: 16, color: White),
                             ),
                             GestureDetector(
                               onTap: () => _bringUpSignUp(context),
                               child: Text(
                                 "Create one Now!",
                                 style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.blueAccent[400]),
+                                    fontSize: 16,
+                                    color: Colors.blueAccent[100]),
                               ),
                             )
                           ],
                         )),
-
                     Container(
                       height: _height / 15,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: _width / 2.6,
-                            height: 2,
-                            color: White.withOpacity(0.4),
+                          Expanded(
+                            child: Container(
+                              height: 1,
+                              color: White.withOpacity(0.4),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
                           ),
                           Text(
                             "OR",
                             style: TextStyle(color: White, fontSize: 16),
                           ),
-                          Container(
-                            width: _width / 2.6,
-                            height: 2,
-                            color: White.withOpacity(0.4),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              height: 1,
+                              color: White.withOpacity(0.4),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    // Container(
-                    //     width: _width,
-                    //     height: 55,
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.blueAccent[200],
-                    //         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    //     child: FlatButton(
-                    //         color: Colors.transparent,
-                    //         onPressed: () {},
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.start,
-                    //           children: <Widget>[
-                    //             Icon(
-                    //               FontAwesomeIcons.facebook,
-                    //               color: Colors.white,
-                    //             ),
-                    //             SizedBox(
-                    //               width: _width / 5,
-                    //             ),
-                    //             Text(
-                    //               "Connect with Facebook",
-                    //               style: TextStyle(color: Colors.white),
-                    //             ),
-                    //           ],
-                    //         ))),
-                    SocialButton2(
-                      width: _width,
-                      title: "Connect with Facebook",
-                      icon: FontAwesomeIcons.facebook,
-                      color: Colors.blueAccent[200],
-                      function: () {},
-                    ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: _height / 45,
-                    ),
-                    // Container(
-                    //     width: _width,
-                    //     height: 55,
-                    //     decoration: BoxDecoration(
-                    //         color: Color(0xfff95a5f),
-                    //         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    //     child: FlatButton(
-                    //         color: Colors.transparent,
-                    //         onPressed: () {},
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.start,
-                    //           children: <Widget>[
-                    //             Icon(
-                    //               FontAwesomeIcons.google,
-                    //               color: Colors.white,
-                    //             ),
-                    //             SizedBox(
-                    //               width: _width / 5,
-                    //             ),
-                    //             Text(
-                    //               "Connect with Google",
-                    //               style: TextStyle(color: Colors.white),
-                    //             ),
-                    //           ],
-                    //         ))),
                     SocialButton2(
                       width: _width,
                       title: "Connect with Google",
@@ -314,31 +252,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: Colors.transparent,
                       height: _height / 45,
                     ),
-                    // Container(
-                    //     width: _width,
-                    //     height: 55,
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.blueGrey[600],
-                    //         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    //     child: FlatButton(
-                    //         color: Colors.transparent,
-                    //         onPressed: () {},
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.start,
-                    //           children: <Widget>[
-                    //             Icon(
-                    //               FontAwesomeIcons.github,
-                    //               color: Colors.white,
-                    //             ),
-                    //             SizedBox(
-                    //               width: _width / 5,
-                    //             ),
-                    //             Text(
-                    //               "Connect with Github",
-                    //               style: TextStyle(color: Colors.white),
-                    //             ),
-                    //           ],
-                    //         ))),
+                    SocialButton2(
+                      width: _width,
+                      title: "Connect with Facebook",
+                      icon: FontAwesomeIcons.facebook,
+                      color: Colors.blueAccent[200],
+                      function: () {},
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: _height / 45,
+                    ),
                     SocialButton2(
                       width: _width,
                       title: "Connect with Github",
@@ -348,6 +272,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         _bringUpSignUp(context);
                       },
                     ),
+                    SizedBox(
+                      height: 20,
+                    )
                   ],
                 ),
               ),
@@ -378,9 +305,9 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _bringUpSignUp(BuildContext context) {
-    // setState(() {
-    //   _signUpPage = !_signUpPage;
-    // });
+    setState(() {
+      _sheetCollapsed = false;
+    });
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -389,7 +316,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(25))),
               child: newSignUp());
-        });
+        }).whenComplete(() {
+          setState(() {
+            _sheetCollapsed = true;
+          });
+    });
   }
 }
 
@@ -412,8 +343,6 @@ class LoginClipper extends CustomClipper<Path> {
     path.lineTo(size.width, size.height * 0.45);
     path.quadraticBezierTo(size.width, size.height * 0.2,
         size.width - roundnessFactor * 0.7, size.height * 0.2);
-
-    // path.quadraticBezierTo(0, size.height * 0.2, 0, size.height);
 
     path.close();
 

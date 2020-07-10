@@ -19,7 +19,6 @@ class _SocialButton2State extends State<SocialButton2> {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
-    double _defaultFontSize = MediaQuery.of(context).textScaleFactor;
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       splashColor: widget.color,
@@ -28,7 +27,7 @@ class _SocialButton2State extends State<SocialButton2> {
           width: widget.width,
           height: _height / 15,
           decoration: BoxDecoration(
-              // color: widget.color,
+               color: widget.color,
               border: Border.all(color: widget.color, width: 2),
               borderRadius: BorderRadius.all(Radius.circular(5))),
           child: Padding(
@@ -41,7 +40,7 @@ class _SocialButton2State extends State<SocialButton2> {
                   color: Colors.white,
                 ),
                 SizedBox(
-                  width: widget.width / 4,
+                  width: widget.width / 5,
                 ),
                 Text(widget.title,
                     style: TextStyle(color: Colors.white, fontSize: 14)),
