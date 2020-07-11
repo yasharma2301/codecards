@@ -15,6 +15,8 @@ import 'Theme/ColorPicker.dart';
 import 'adTile.dart';
 import 'themeSelector.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class Settings extends StatefulWidget {
   @override
@@ -23,6 +25,24 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   String currentTheme = "dark";
+  String _userName = '';
+  String _userAvatar = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getSavedUser().then((user) {
+      setState(() {
+        _userName = user[0];
+        _userAvatar = user[1];
+      });
+    });
+  }
+
+  Future<List> _getSavedUser() async {
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    return [_sprefs.getString('userName'), _sprefs.getString('userAvatar')];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +164,7 @@ class _SettingsState extends State<Settings> {
                   height: 10,
                 ),
                 // SetUsername(width:width,height: height,),
-                UserInfo(width: width),
+                UserInfo(width: width, username: _userName),
                 ThemeSelector(),
                 SizedBox(
                   height: 20,

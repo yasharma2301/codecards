@@ -30,9 +30,19 @@ class _newSignUpState extends State<newSignUp> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 20,),
-              Text('Register a new Account',style: TextStyle(color: Colors.white,fontSize: 18),),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Create a new Account',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
                 decoration: BoxDecoration(
@@ -193,7 +203,9 @@ class _newSignUpState extends State<newSignUp> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,)
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
@@ -202,6 +214,8 @@ class _newSignUpState extends State<newSignUp> {
   }
 
   Future<void> _signUp(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+
     String url = 'http://192.168.0.105:8000/register';
 
     var response = await http.post(url, body: {

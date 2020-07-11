@@ -33,10 +33,22 @@ void main() async {
     await prefs.setInt(hintKey, 0);
   }
 
-  runApp(MyApp());
+  await _checkInitialRoute().then((value) {
+    runApp(MyApp(initialRoute: value ? 'menuDashBoard' : '/'));
+  });
+
+  // runApp(MyApp());
+}
+
+Future<bool> _checkInitialRoute() async {
+  SharedPreferences _sprefs = await SharedPreferences.getInstance();
+  return _sprefs.containsKey('userToken');
 }
 
 class MyApp extends StatefulWidget {
+  final String initialRoute;
+
+  const MyApp({Key key, this.initialRoute}) : super(key: key);
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -128,21 +140,25 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Builder(builder: (BuildContext context) {
         // BuildContext rootContext = context;
-        return MyHomePage();
+        return MyHomePage(initialRoute: widget.initialRoute);
       }),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  final String initialRoute;
+
+  const MyHomePage({Key key, this.initialRoute}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
+    Future.delayed(Duration(milliseconds: 1400));
     return MaterialApp(
       title: 'CodeCards',
       debugShowCheckedModeBanner: false,
       theme: theme.getTheme(),
-      initialRoute: '/',
+      initialRoute: initialRoute,
       routes: {
         '/': (context) => OnBoardNew(),
         //'/': (context) => SignUpTemp(),

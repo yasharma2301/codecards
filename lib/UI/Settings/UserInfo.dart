@@ -3,8 +3,9 @@ import 'package:codecards/Shared/Colors.dart';
 
 class UserInfo extends StatefulWidget {
   final double width;
+  final String username;
 
-  UserInfo({this.width});
+  UserInfo({this.width, this.username});
 
   @override
   _UserInfoState createState() => _UserInfoState();
@@ -30,7 +31,8 @@ class _UserInfoState extends State<UserInfo> {
                   borderRadius: BorderRadius.circular(6),
                   color: LightGrey.withOpacity(0.7),
                 ),
-                child: TextField(
+                child: TextFormField(
+                  initialValue: widget.username,
                   style: TextStyle(
                     color: White.withOpacity(0.7),
                     fontSize: 18,

@@ -1,5 +1,6 @@
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:codecards/UI/Login/ForgotPassword.dart';
 import 'package:codecards/UI/Login/newSignUp.dart';
 import 'package:codecards/UI/Login/newSocialButton.dart';
 import 'package:codecards/UI/OnBoard/onBoardNew.dart';
@@ -8,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flushbar/flushbar.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -18,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   double _height, _width;
   bool passwordVisible = true, passwordEmpty = true;
   TextEditingController _passwordContoller = TextEditingController();
-  TextEditingController _emailContoller = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   @override
   void dispose() {
@@ -49,12 +51,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     AnimatedContainer(
-                      height: _sheetCollapsed? _height / 5:_height/2,
+                      height: _sheetCollapsed ? _height / 5 : _height / 2,
                       width: _width,
                       duration: Duration(microseconds: 200000),
                       decoration: BoxDecoration(
-                        image: DecorationImage(image: AssetImage("assets/codecards.png"))
-                      ),
+                          image: DecorationImage(
+                              image: AssetImage("assets/codecards.png"))),
                     ),
                     Text(
                       'Login To Your Account',
@@ -74,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: LightGrey.withOpacity(0.7),
                       ),
                       child: TextFormField(
-                        controller: _emailContoller,
+                        controller: _emailController,
                         style: TextStyle(
                           color: White.withOpacity(0.7),
                           fontSize: 18,
@@ -153,21 +155,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     Container(
                       width: _width,
-                      child: Text(
-                        'Forgot password?',
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                            color: Colors.blueAccent[100].withOpacity(0.8),
-                            fontSize: 17),
+                      child: GestureDetector(
+                        onTap: () => _forgotPass(context),
+                        child: Text(
+                          'Forgot password?',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              color: Colors.blueAccent[100].withOpacity(0.8),
+                              fontSize: 17),
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    InkWell(
-                      onTap: () => _login(context),
-                      child: ClipPath(
-                        clipper: LoginClipper(),
+                    ClipPath(
+                      clipper: LoginClipper(),
+                      child: InkWell(
+                        onTap: () => _login(context),
                         child: Container(
                           width: _width / 1.7,
                           height: _height / 12,
@@ -286,22 +291,49 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _login(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+
     String url = 'http://192.168.0.105:8000/login';
-    var response = await http.post(url, body: {
-      'email': _emailContoller.text,
-      'password': _passwordContoller.text
-    });
-    if (response.statusCode == 202)
-      print(json.decode(response.body));
-    else {
+
+    if (_emailController.text.length > 0 &&
+        _passwordContoller.text.length > 0) {
+      var response = await http.post(url, body: {
+        'email': _emailController.text,
+        'password': _passwordContoller.text
+      });
+      if (response.statusCode == 202) {
+        await _saveUser(json.decode(response.body));
+        Navigator.pushNamed(context, 'menuDashBoard');
+      } else {
+        Flushbar(
+          icon: Icon(Icons.error_outline, color: Colors.redAccent),
+          leftBarIndicatorColor: Colors.redAccent,
+          message: json.decode(response.body)['error_message'],
+          duration: Duration(seconds: 3),
+          isDismissible: true,
+        )..show(context);
+      }
+    } else {
       Flushbar(
         icon: Icon(Icons.error_outline, color: Colors.redAccent),
         leftBarIndicatorColor: Colors.redAccent,
-        message: json.decode(response.body)['error_message'],
+        message: "Please fill all the fields!",
         duration: Duration(seconds: 3),
         isDismissible: true,
       )..show(context);
     }
+  }
+
+  Future<void> _saveUser(Map user) async {
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    String userEmail = user['email'];
+    String userName = user['username'].toString();
+    String userToken = user['token'];
+    String userAvatar = user['avatar'].toString();
+    _sprefs.setString('userEmail', userEmail);
+    _sprefs.setString('userName', userName);
+    _sprefs.setString('userToken', userToken);
+    _sprefs.setString('userAvatar', userAvatar);
   }
 
   void _bringUpSignUp(BuildContext context) {
@@ -317,10 +349,23 @@ class _RegisterPageState extends State<RegisterPage> {
                       BorderRadius.vertical(top: Radius.circular(25))),
               child: newSignUp());
         }).whenComplete(() {
-          setState(() {
-            _sheetCollapsed = true;
-          });
+      setState(() {
+        _sheetCollapsed = true;
+      });
     });
+  }
+
+  void _forgotPass(context) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            backgroundColor: Grey,
+            child: ForgotPassword(),
+          );
+        });
   }
 }
 
