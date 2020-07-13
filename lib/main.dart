@@ -32,6 +32,9 @@ void main() async {
   if (!prefs.containsKey(hintKey)) {
     await prefs.setInt(hintKey, 0);
   }
+  if (!prefs.containsKey('themeKey')) {
+    await prefs.setString('themeKey', "AppThemes.BluePop");
+  }
 
   await _checkInitialRoute().then((value) {
     runApp(MyApp(initialRoute: value ? 'menuDashBoard' : '/'));
@@ -126,7 +129,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeChanger>(
-          create: (_) => ThemeChanger(appThemeData[AppThemes.BluePop]),
+          create: (_) =>
+              ThemeChanger(appThemeData[prefs.getString('themeKey')]),
         ),
         ChangeNotifierProvider<UserRepository>(
           create: (_) => UserRepository(),

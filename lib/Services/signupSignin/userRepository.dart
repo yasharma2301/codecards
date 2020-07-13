@@ -145,6 +145,7 @@ class UserRepository with ChangeNotifier {
   void setUserEmail(email, _sprefs) async {
     userEmail = email;
     _sprefs.setString('userEmail', userEmail);
+    notifyListeners();
   }
 
   String getUserEmail() {
@@ -154,6 +155,7 @@ class UserRepository with ChangeNotifier {
   void setUserName(username, _sprefs) async {
     userName = username;
     _sprefs.setString('userName', userName);
+    notifyListeners();
   }
 
   String getUserName() {
@@ -163,6 +165,7 @@ class UserRepository with ChangeNotifier {
   void setUserToken(token, _sprefs) async {
     userToken = token;
     _sprefs.setString('userToken', userToken);
+    notifyListeners();
   }
 
   String getUserToken() {
@@ -172,6 +175,7 @@ class UserRepository with ChangeNotifier {
   void setUserAvatar(avatar, _sprefs) async {
     userAvatar = avatar;
     _sprefs.setString('userAvatar', userAvatar);
+    notifyListeners();
   }
 
   String getUserAvatar() {
