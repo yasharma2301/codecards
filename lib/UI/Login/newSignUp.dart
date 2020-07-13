@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flushbar/flushbar.dart';
 import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 
 class newSignUp extends StatefulWidget {
   @override
@@ -11,12 +13,14 @@ class newSignUp extends StatefulWidget {
 
 class _newSignUpState extends State<newSignUp> {
   bool passwordVisible = true, passwordEmpty = true;
-  TextEditingController _passwordContoller = TextEditingController();
-  TextEditingController _password2Contoller = TextEditingController();
-  TextEditingController _emailContoller = TextEditingController();
-  TextEditingController _usernameContoller = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _password2Controller = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    UserRepository _userProvider = Provider.of<UserRepository>(context);
+
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Container(
@@ -50,7 +54,8 @@ class _newSignUpState extends State<newSignUp> {
                   color: LightGrey.withOpacity(0.7),
                 ),
                 child: TextFormField(
-                  controller: _emailContoller,
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(
                     color: White.withOpacity(0.7),
                     fontSize: 18,
@@ -76,7 +81,7 @@ class _newSignUpState extends State<newSignUp> {
                   color: LightGrey.withOpacity(0.7),
                 ),
                 child: TextFormField(
-                  controller: _usernameContoller,
+                  controller: _usernameController,
                   style: TextStyle(
                     color: White.withOpacity(0.7),
                     fontSize: 18,
@@ -102,7 +107,7 @@ class _newSignUpState extends State<newSignUp> {
                   color: LightGrey.withOpacity(0.7),
                 ),
                 child: TextFormField(
-                  controller: _passwordContoller,
+                  controller: _passwordController,
                   obscureText: passwordVisible,
                   style: TextStyle(
                     color: White.withOpacity(0.7),
@@ -157,7 +162,7 @@ class _newSignUpState extends State<newSignUp> {
                   color: LightGrey.withOpacity(0.7),
                 ),
                 child: TextFormField(
-                  controller: _password2Contoller,
+                  controller: _password2Controller,
                   obscureText: true,
                   style: TextStyle(
                     color: White.withOpacity(0.7),
@@ -179,7 +184,8 @@ class _newSignUpState extends State<newSignUp> {
               ),
               InkWell(
                 onTap: () {
-                  _signUp(context);
+                  if (!_userProvider.isLoading())
+                    _signUp(context, _userProvider);
                 },
                 child: ClipPath(
                   clipper: SignUpClipper(),
@@ -187,19 +193,26 @@ class _newSignUpState extends State<newSignUp> {
                     width: _width / 1.7,
                     height: _height / 12,
                     color: Color(0xFFF95A5F).withOpacity(0.8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Sign Up",
-                          style: TextStyle(color: White, fontSize: 20),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Icon(Icons.arrow_forward, color: White)
-                      ],
-                    ),
+                    child: _userProvider.isLoading()
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              valueColor: AlwaysStoppedAnimation<Color>(White),
+                            ),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Sign Up",
+                                style: TextStyle(color: White, fontSize: 20),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Icon(Icons.arrow_forward, color: White),
+                            ],
+                          ),
                   ),
                 ),
               ),
@@ -213,27 +226,22 @@ class _newSignUpState extends State<newSignUp> {
     );
   }
 
-  Future<void> _signUp(BuildContext context) async {
+  Future<void> _signUp(BuildContext context, _userProvider) async {
     FocusScope.of(context).unfocus();
 
-    String url = 'http://192.168.0.105:8000/register';
+    _userProvider.registerUser(_emailController.text, _usernameController.text,
+        _passwordController.text, _password2Controller.text);
 
-    var response = await http.post(url, body: {
-      'email': _emailContoller.text,
-      'username': _usernameContoller.text,
-      'password': _passwordContoller.text,
-      'password2': _password2Contoller.text,
-      'avatar': ''
-    });
+    Map response = _userProvider.getResponse();
 
-    if (response.statusCode == 201) {
-      print(response.body);
+    if (response['responseCode'] == 201) {
+      print(response['responseMessage']);
       Navigator.pop(context);
     } else {
       Flushbar(
         icon: Icon(Icons.error_outline, color: Colors.redAccent),
         leftBarIndicatorColor: Colors.redAccent,
-        message: json.decode(response.body)['error_message'],
+        message: response['responseMessage'],
         duration: Duration(seconds: 3),
         isDismissible: true,
       )..show(context);

@@ -1,3 +1,4 @@
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
 import 'package:dough/dough.dart';
@@ -6,7 +7,6 @@ import 'package:vibration/vibration.dart';
 import 'menu_item.dart';
 import 'dart:math' as math;
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 
 class Menu extends StatefulWidget {
@@ -45,6 +45,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     final AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
+    final UserRepository _userProvider = Provider.of<UserRepository>(context);
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -162,7 +163,7 @@ class _MenuState extends State<Menu> {
                                   if (await Vibration.hasVibrator()) {
                                     Vibration.vibrate(duration: 5);
                                   }
-                                  _logout();
+                                  _userProvider.userLogout();
                                   Navigator.pushNamed(context, '/');
                                 },
                           child: Row(
@@ -198,14 +199,5 @@ class _MenuState extends State<Menu> {
         ),
       ),
     );
-  }
-
-  Future<void> _logout() async {
-    SharedPreferences _sprefs = await SharedPreferences.getInstance();
-    _sprefs.remove('userToken');
-    _sprefs.remove('userEmail');
-    _sprefs.remove('userName');
-    _sprefs.remove('userAvatar');
-    print(_sprefs.getKeys());
   }
 }

@@ -1,3 +1,4 @@
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:codecards/UI/Login/ForgotPassword.dart';
@@ -9,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flushbar/flushbar.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -19,12 +20,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   double _height, _width;
   bool passwordVisible = true, passwordEmpty = true;
-  TextEditingController _passwordContoller = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
 
   @override
   void dispose() {
-    _passwordContoller.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -32,6 +33,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    UserRepository _userProvider = Provider.of<UserRepository>(context);
+
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return WillPopScope(
@@ -77,13 +80,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       child: TextFormField(
                         controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
                         style: TextStyle(
                           color: White.withOpacity(0.7),
                           fontSize: 18,
                         ),
                         decoration: InputDecoration(
                             icon: Icon(
-                              Icons.person_outline,
+                              Icons.mail_outline,
                               color: Grey,
                             ),
                             border: InputBorder.none,
@@ -104,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: LightGrey.withOpacity(0.7),
                       ),
                       child: TextFormField(
-                        controller: _passwordContoller,
+                        controller: _passwordController,
                         obscureText: passwordVisible,
                         style: TextStyle(
                           color: White.withOpacity(0.7),
@@ -172,24 +176,35 @@ class _RegisterPageState extends State<RegisterPage> {
                     ClipPath(
                       clipper: LoginClipper(),
                       child: InkWell(
-                        onTap: () => _login(context),
+                        onTap: () => _userProvider.isLoading()
+                            ? {}
+                            : _login(context, _userProvider),
                         child: Container(
                           width: _width / 1.7,
                           height: _height / 12,
                           color: Color(0xFFF95A5F).withOpacity(0.8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Login",
-                                style: TextStyle(color: White, fontSize: 20),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Icon(Icons.arrow_forward, color: White)
-                            ],
-                          ),
+                          child: _userProvider.isLoading()
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              White)),
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Login",
+                                      style:
+                                          TextStyle(color: White, fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Icon(Icons.arrow_forward, color: White)
+                                  ],
+                                ),
                         ),
                       ),
                     ),
@@ -290,50 +305,23 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<void> _login(BuildContext context) async {
+  Future<void> _login(BuildContext context, _userProvider) async {
     FocusScope.of(context).unfocus();
+    print("Hello");
+    _userProvider.loginUser(_emailController.text, _passwordController.text);
+    Map response = _userProvider.getResponse();
 
-    String url = 'http://192.168.0.105:8000/login';
-
-    if (_emailController.text.length > 0 &&
-        _passwordContoller.text.length > 0) {
-      var response = await http.post(url, body: {
-        'email': _emailController.text,
-        'password': _passwordContoller.text
-      });
-      if (response.statusCode == 202) {
-        await _saveUser(json.decode(response.body));
-        Navigator.pushNamed(context, 'menuDashBoard');
-      } else {
-        Flushbar(
-          icon: Icon(Icons.error_outline, color: Colors.redAccent),
-          leftBarIndicatorColor: Colors.redAccent,
-          message: json.decode(response.body)['error_message'],
-          duration: Duration(seconds: 3),
-          isDismissible: true,
-        )..show(context);
-      }
+    if (response['responseCode'] == 202) {
+      Navigator.pushNamed(context, 'menuDashBoard');
     } else {
       Flushbar(
         icon: Icon(Icons.error_outline, color: Colors.redAccent),
         leftBarIndicatorColor: Colors.redAccent,
-        message: "Please fill all the fields!",
+        message: response['responseMessage'],
         duration: Duration(seconds: 3),
         isDismissible: true,
       )..show(context);
     }
-  }
-
-  Future<void> _saveUser(Map user) async {
-    SharedPreferences _sprefs = await SharedPreferences.getInstance();
-    String userEmail = user['email'];
-    String userName = user['username'].toString();
-    String userToken = user['token'];
-    String userAvatar = user['avatar'].toString();
-    _sprefs.setString('userEmail', userEmail);
-    _sprefs.setString('userName', userName);
-    _sprefs.setString('userToken', userToken);
-    _sprefs.setString('userAvatar', userAvatar);
   }
 
   void _bringUpSignUp(BuildContext context) {
