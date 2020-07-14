@@ -103,11 +103,15 @@ class _SettingsState extends State<Settings> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("Settings",
-                          style: TextStyle(
-                              color: White,
-                              fontSize: 40,
-                              fontWeight: FontWeight.w300)),
+                      Text(
+                        "Settings".toUpperCase(),
+                        style: TextStyle(
+                            color: White,
+                            fontSize: 30,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Montserrat'),
+                      ),
                       GestureDetector(
                         onTap: () async {
                           if (await Vibration.hasVibrator()) {

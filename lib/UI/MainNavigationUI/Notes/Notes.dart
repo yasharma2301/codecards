@@ -42,45 +42,7 @@ class _NotesState extends State<Notes> with SingleTickerProviderStateMixin {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Grey,
-        body: Stack(
-          children: [
-            Positioned(
-              top: 10,
-              left: 25,
-              child: AnimatedBuilder(
-                animation: animation,
-                builder: (BuildContext context, Widget child) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        controller.forward();
-                      });
-                    },
-                    child: Text(
-                      'Hey You!',
-                      style: TextStyle(
-                          color: animation.value,
-                          fontSize: 36,
-                          fontFamily: 'Nunito Black'),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              top: 50,
-              left: 25,
-              child: Text(
-                'Add a note for quick access.',
-                style: TextStyle(
-                    color: LightGrey.withOpacity(0.5),
-                    fontSize: 24,
-                    fontFamily: 'Nunito Black'),
-              ),
-            ),
-            Notes2()
-          ],
-        )
+        body: Notes2()
       ),
     );
   }
@@ -114,3 +76,23 @@ class _NotesState extends State<Notes> with SingleTickerProviderStateMixin {
 //  );
 //}
 //}
+
+//AnimatedBuilder(
+//animation: animation,
+//builder: (BuildContext context, Widget child) {
+//return GestureDetector(
+//onTap: () {
+//setState(() {
+//controller.forward();
+//});
+//},
+//child: Text(
+//'Hey You!',
+//style: TextStyle(
+//color: animation.value,
+//fontSize: 36,
+//fontFamily: 'Nunito Black'),
+//),
+//);
+//},
+//),

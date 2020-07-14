@@ -1,4 +1,6 @@
 import 'package:codecards/Services/adProvider.dart';
+import 'package:codecards/Services/notesServices/noteData.dart';
+import 'package:codecards/Services/notesServices/noteModel.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:codecards/Shared/themes.dart';
@@ -7,14 +9,16 @@ import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:codecards/UI/TempLogin/tempLogin.dart';
-import 'package:codecards/UI/TempLogin/tempSignUp.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'UI/OnBoard/onBoardNew.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'UI/Settings/Contact_US/Contact_US.dart';
 
 SharedPreferences prefs;
@@ -23,6 +27,10 @@ const String hintKey = 'hint';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDirectory =
+  await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(NoteModelAdapter());
   Admob.initialize("com.example.codecards");
   prefs = await SharedPreferences.getInstance();
 
@@ -39,8 +47,12 @@ void main() async {
   await _checkInitialRoute().then((value) {
     runApp(MyApp(initialRoute: value ? 'menuDashBoard' : '/'));
   });
-
   // runApp(MyApp());
+}
+
+Future _initHive() async {
+  var dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
 }
 
 Future<bool> _checkInitialRoute() async {
@@ -52,6 +64,7 @@ class MyApp extends StatefulWidget {
   final String initialRoute;
 
   const MyApp({Key key, this.initialRoute}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -128,6 +141,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<NoteData>(
+          create: (_)=>NoteData(),
+        ),
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) =>
               ThemeChanger(appThemeData[prefs.getString('themeKey')]),
@@ -154,6 +170,7 @@ class MyHomePage extends StatelessWidget {
   final String initialRoute;
 
   const MyHomePage({Key key, this.initialRoute}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);

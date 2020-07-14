@@ -17,11 +17,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Container(
-      height: _height / 3,
+      height: _height / 2.8,
       width: _width,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             "Find Your Account",
@@ -34,14 +35,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           Text(
             "Enter the email address linked to your account.",
             style: TextStyle(color: White.withOpacity(0.5), fontSize: 16),
+            textAlign: TextAlign.center,
           ),
           SizedBox(
             height: 25,
           ),
           Container(
             width: _width - 125,
-            padding: EdgeInsets.symmetric(horizontal: 18),
-            height: _height / 15,
+            padding: EdgeInsets.symmetric(horizontal: 18,),
+            height: _height / 12.5,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               color: LightGrey.withOpacity(0.7),
@@ -65,12 +67,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
           InkWell(
               onTap: _sendRequest,
               child: Ink(
                 width: _width - 125,
-                height: _height / 15,
+                height: _height / 16,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: Colors.redAccent.withOpacity(0.7),

@@ -266,7 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       title: "Connect with Google",
                       icon: FontAwesomeIcons.google,
                       color: Color(0xFFF95A5F),
-                      function: () {},
+                      function: () {Navigator.pushNamed(context, 'menuDashBoard');},
                     ),
                     Divider(
                       color: Colors.transparent,

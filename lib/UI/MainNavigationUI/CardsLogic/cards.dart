@@ -36,8 +36,8 @@ class _CardsStackState extends State<CardsStack>
                 totalNum: welcomeImages.length,
                 stackNum: 3,
                 swipeEdge: 4.0,
-                maxWidth: MediaQuery.of(context).size.width * 0.95,
-                maxHeight: MediaQuery.of(context).size.width * 0.95,
+                maxWidth: MediaQuery.of(context).size.width ,
+                maxHeight: MediaQuery.of(context).size.width,
                 minWidth: MediaQuery.of(context).size.width * 0.85,
                 minHeight: MediaQuery.of(context).size.width * 0.85,
                 cardBuilder: (context, index) => Container(
