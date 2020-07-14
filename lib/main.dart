@@ -8,10 +8,8 @@ import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
-import 'package:codecards/UI/TempLogin/tempLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -47,13 +45,8 @@ void main() async {
   await _checkInitialRoute().then((value) {
     runApp(MyApp(initialRoute: value ? 'menuDashBoard' : '/'));
   });
-  // runApp(MyApp());
 }
 
-Future _initHive() async {
-  var dir = await getApplicationDocumentsDirectory();
-  Hive.init(dir.path);
-}
 
 Future<bool> _checkInitialRoute() async {
   SharedPreferences _sprefs = await SharedPreferences.getInstance();
@@ -182,8 +175,6 @@ class MyHomePage extends StatelessWidget {
       initialRoute: initialRoute,
       routes: {
         '/': (context) => OnBoardNew(),
-        //'/': (context) => SignUpTemp(),
-        'loginTemp': (context) => LoginTemp(),
         'login': (context) => LoginScreen(),
         'menuDashBoard': (context) => MenuDashboardPage(),
         '/settings2': (context) => Settings(),
@@ -194,35 +185,3 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class Trials extends StatefulWidget {
-  @override
-  _TrialsState createState() => _TrialsState();
-}
-
-class _TrialsState extends State<Trials> {
-  TimeOfDay time = TimeOfDay(hour: 11, minute: 20);
-
-  // TimeOfDay picked;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: RaisedButton(
-        onPressed: () async {
-          // showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2040));
-          TimeOfDay picked =
-              await showTimePicker(context: context, initialTime: time);
-          setState(() {
-            time = picked;
-          });
-        },
-        color: Colors.deepPurpleAccent,
-        splashColor: Colors.purpleAccent,
-        child: Text(
-          time.format(context),
-          style: TextStyle(color: Colors.white, fontSize: 30),
-        ),
-      ),
-    );
-  }
-}

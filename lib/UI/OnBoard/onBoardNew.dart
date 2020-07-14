@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:codecards/Shared/fade_animation.dart';
 import 'package:codecards/UI/Login/newLoginPage.dart';
-import 'package:codecards/UI/OnBoard/onBoardingScreen.dart';
-import 'package:codecards/UI/TempLogin/tempSignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';

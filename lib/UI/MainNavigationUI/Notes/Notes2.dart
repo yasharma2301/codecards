@@ -1,6 +1,4 @@
 import 'package:codecards/Services/notesServices/noteInherited.dart';
-import 'package:codecards/Services/notesServices/noteProvider.dart';
-import 'package:codecards/UI/MainNavigationUI/Notes/notes_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -53,16 +51,6 @@ class Notes2State extends State<Notes2> {
               ),
             ),
           ),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => NotesDialog(
-                  noteMode: NoteMode.Adding,
-                  noteModel: null,
-                ),
-              ),
-            );
-          },
         ),
         SizedBox(
           height: 10,
@@ -72,7 +60,7 @@ class Notes2State extends State<Notes2> {
           child: Container(
             height: MediaQuery.of(context).size.height / 1.45,
             child: FutureBuilder(
-              future: NoteProvider.getNoteList(),
+             // future: NoteProvider.getNoteList(),
               builder: (context, AsyncSnapshot snap) {
                 final notes = snap.data;
                 if (snap.hasData) {
@@ -111,16 +99,6 @@ _buildStoryPage(Map<String, dynamic> data, bool active, double width,
   final double offset = active ? 15 : 0;
   final double top = active ? 60 : 85;
   return GestureDetector(
-    onTap: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => NotesDialog(
-            noteMode: NoteMode.Editing,
-            noteModel: data,
-          ),
-        ),
-      );
-    },
     child: AnimatedContainer(
         duration: Duration(milliseconds: 500),
         curve: Curves.easeOutExpo,
@@ -145,10 +123,6 @@ _buildStoryPage(Map<String, dynamic> data, bool active, double width,
                 color: CupertinoColors.black,
                 size: 40,
               ),
-              onPressed: () {
-                ctrl.jumpToPage(currentIdx-1);
-                NoteProvider.deleteNote(data['id']);
-              },
             ),
             Text(data['title'],
                 style: TextStyle(fontSize: 40, color: Colors.white)),
