@@ -11,7 +11,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController _emailController = TextEditingController();
-
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -19,72 +19,117 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Container(
       height: _height / 2.8,
       width: _width,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "Find Your Account",
-            style: TextStyle(
-                color: White, fontSize: 22, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Enter the email address linked to your account.",
-            style: TextStyle(color: White.withOpacity(0.5), fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Container(
-            width: _width - 125,
-            padding: EdgeInsets.symmetric(horizontal: 18,),
-            height: _height / 12.5,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: LightGrey.withOpacity(0.7),
-            ),
-            child: Center(
-              child: TextFormField(
-                controller: _emailController,
-                style: TextStyle(
-                  color: White.withOpacity(0.7),
-                  fontSize: 18,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12)),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white24,
+                    offset: Offset(0, 0),
+                    blurRadius: 10,
+                  )
+                ],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
                 ),
-                decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.mail_outline,
-                      color: Grey,
-                    ),
-                    border: InputBorder.none,
-                    hintText: "Enter Email",
-                    hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.6), fontSize: 16)),
+                gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).primaryColorLight
+                    ],
+                    begin: FractionalOffset.topLeft,
+                    end: FractionalOffset.topRight,
+                    tileMode: TileMode.repeated),
+              ),
+              child: Center(
+                child: Text(
+                  'Find Your Account',
+                  style: TextStyle(
+                      color: Grey.withOpacity(0.9),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900),
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 15),
-          InkWell(
-              onTap: _sendRequest,
-              child: Ink(
-                width: _width - 125,
-                height: _height / 16,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: Colors.redAccent.withOpacity(0.7),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
                 ),
-                child: Center(
-                  child: Text(
-                    "Next",
-                    style: TextStyle(color: White, fontSize: 18),
+                Text(
+                  "Enter the email address linked to your account.",
+                  style: TextStyle(color: White.withOpacity(0.5), fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  width: _width - 125,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 18,
+                  ),
+                  height: _height / 12.5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: LightGrey.withOpacity(0.7),
+                  ),
+                  child: Center(
+                    child: TextFormField(
+                      controller: _emailController,
+                      style: TextStyle(
+                        color: White.withOpacity(0.7),
+                        fontSize: 18,
+                      ),
+                      decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.mail_outline,
+                            color: Grey,
+                          ),
+                          border: InputBorder.none,
+                          hintText: "Enter Email",
+                          hintStyle: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 16)),
+                    ),
                   ),
                 ),
-              ))
-        ],
+                SizedBox(height: 15),
+                InkWell(
+                    onTap: _sendRequest,
+                    child: Ink(
+                      width: _width - 125,
+                      height: _height / 16,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Theme.of(context).primaryColor.withOpacity(0.9),
+                      ),
+                      child: loading?Center(
+                        child: CircularProgressIndicator(
+                            strokeWidth: 1,
+                            valueColor:
+                            new AlwaysStoppedAnimation<Color>(
+                                White)),
+                      ):Center(
+                        child: Text(
+                          "Next",
+                          style: TextStyle(color: White, fontSize: 18),
+                        ),
+                      ),
+                    ))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -92,7 +137,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   void _sendRequest() async {
     FocusScope.of(context).unfocus();
 
-    String url = 'http://192.168.0.105:8000/reset_password/';
+    String url = 'http://192.168.0.7:8000/reset_password/';
     String email = _emailController.text;
 
     Pattern pattern =
@@ -100,26 +145,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     RegExp regex = new RegExp(pattern);
 
     if (regex.hasMatch(email)) {
+      loading = true;
       var response = await http.post(url, body: {'email': email});
       if (response.statusCode == 200) {
         Navigator.pop(context);
+        loading = false;
         Flushbar(
+          backgroundColor: Colors.blueGrey[900],
           icon: Icon(Icons.tag_faces, color: Colors.greenAccent),
           leftBarIndicatorColor: Colors.greenAccent,
           message: json.decode(response.body)['message'],
           duration: Duration(seconds: 3),
           isDismissible: true,
         )..show(context);
-      } else
+      } else {
         Flushbar(
+          backgroundColor: Colors.blueGrey[900],
           icon: Icon(Icons.error_outline, color: Colors.redAccent),
           leftBarIndicatorColor: Colors.redAccent,
           message: json.decode(response.body)['error'].first,
           duration: Duration(seconds: 3),
           isDismissible: true,
         )..show(context);
+      }
     } else {
       Flushbar(
+        backgroundColor: Colors.blueGrey[900],
         icon: Icon(Icons.error_outline, color: Colors.redAccent),
         leftBarIndicatorColor: Colors.redAccent,
         message: "Please provide a valid email address!",

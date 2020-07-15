@@ -28,8 +28,7 @@ class UserRepository with ChangeNotifier {
       'assets/images/uncle.PNG',
     ];
     avatars.shuffle();
-
-    final String url = 'http://192.168.0.105:8000/register';
+    final String url = 'http://192.168.0.7:8000/register';
     if (email == "" || username == "" || password == "" || password2 == "") {
       setResponse("Please Fill all the fields!", 400);
     } else {
@@ -51,8 +50,6 @@ class UserRepository with ChangeNotifier {
 
       if (result.statusCode == 201) {
         setUser(UserResponse.fromJson(newUser));
-        print(user.username);
-        print(user.token);
         await setResponse(newUser['error_message'], 201);
       } else {
         try {
@@ -63,10 +60,11 @@ class UserRepository with ChangeNotifier {
       }
       setLoading(false);
     }
+    return (isUser());
   }
 
-  Future<void> loginUser(email, password) async {
-    final String url = 'http://192.168.0.105:8000/login';
+  Future<bool> loginUser(email, password) async {
+    final String url = 'http://192.168.0.7:8000/login';
 
     if (email == "" || password == "") {
       setResponse("Please Fill all the fields!", 400);
@@ -91,6 +89,7 @@ class UserRepository with ChangeNotifier {
       }
       setLoading(false);
     }
+    return isUser();
   }
 
   Future<void> userLogout() async {

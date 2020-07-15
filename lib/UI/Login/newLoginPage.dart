@@ -1,15 +1,13 @@
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:codecards/UI/Login/ForgotPassword.dart';
 import 'package:codecards/UI/Login/newSignUp.dart';
 import 'package:codecards/UI/Login/newSocialButton.dart';
+import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/OnBoard/onBoardNew.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:flushbar/flushbar.dart';
-import 'dart:convert';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -33,7 +31,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    UserRepository _userProvider = Provider.of<UserRepository>(context);
+    UserRepository _userProvider =
+        Provider.of<UserRepository>(context, listen: false);
 
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
@@ -165,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           'Forgot password?',
                           textAlign: TextAlign.end,
                           style: TextStyle(
-                              color: Colors.blueAccent[100].withOpacity(0.8),
+                              color:  Colors.blueAccent[100].withOpacity(0.9),
                               fontSize: 17),
                         ),
                       ),
@@ -175,18 +174,26 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     ClipPath(
                       clipper: LoginClipper(),
-                      child: InkWell(
-                        onTap: () => _userProvider.isLoading()
-                            ? {}
-                            : _login(context, _userProvider),
+                      child: GestureDetector(
+                        onTap: () =>
+                            _userProvider.isLoading() ? {} : _login(context),
                         child: Container(
                           width: _width / 1.7,
                           height: _height / 12,
-                          color: Color(0xFFF95A5F).withOpacity(0.8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).primaryColorLight
+                                ],
+                                begin: FractionalOffset.topLeft,
+                                end: FractionalOffset.topRight,
+                                tileMode: TileMode.repeated),
+                          ),
                           child: _userProvider.isLoading()
                               ? Center(
                                   child: CircularProgressIndicator(
-                                      strokeWidth: 3,
+                                      strokeWidth: 1,
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
                                               White)),
@@ -225,7 +232,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Text(
                                 "Create one Now!",
                                 style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     color: Colors.blueAccent[100]),
                               ),
                             )
@@ -266,7 +273,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       title: "Connect with Google",
                       icon: FontAwesomeIcons.google,
                       color: Color(0xFFF95A5F),
-                      function: () {Navigator.pushNamed(context, 'menuDashBoard');},
+                      function: () {
+                        Navigator.pushNamed(context, 'menuDashBoard');
+                      },
                     ),
                     Divider(
                       color: Colors.transparent,
@@ -305,23 +314,34 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<void> _login(BuildContext context, _userProvider) async {
-    FocusScope.of(context).unfocus();
-    print("Hello");
-    _userProvider.loginUser(_emailController.text, _passwordController.text);
-    Map response = _userProvider.getResponse();
+  Future<void> _login(BuildContext context) async {
+    UserRepository _userProvider =
+        Provider.of<UserRepository>(context, listen: false);
 
-    if (response['responseCode'] == 202) {
-      Navigator.pushNamed(context, 'menuDashBoard');
-    } else {
-      Flushbar(
-        icon: Icon(Icons.error_outline, color: Colors.redAccent),
-        leftBarIndicatorColor: Colors.redAccent,
-        message: response['responseMessage'],
-        duration: Duration(seconds: 3),
-        isDismissible: true,
-      )..show(context);
-    }
+    FocusScope.of(context).unfocus();
+    _userProvider
+        .loginUser(_emailController.text, _passwordController.text)
+        .then((value) {
+      if (value) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => MenuDashboardPage()),
+                (route) => false);
+      }
+      else{
+        Map response = _userProvider.getResponse();
+        Flushbar(
+          backgroundColor: Colors.blueGrey[900],
+          icon: Icon(Icons.error_outline, color: Colors.redAccent),
+          leftBarIndicatorColor: Colors.redAccent,
+          message: response['responseMessage'],
+          duration: Duration(seconds: 3),
+          isDismissible: true,
+        )..show(context).whenComplete((){
+          _userProvider.setLoading(false);
+        });
+      }
+    });
   }
 
   void _bringUpSignUp(BuildContext context) {
@@ -330,8 +350,10 @@ class _RegisterPageState extends State<RegisterPage> {
     });
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext bc) {
           return Container(
+              height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(25))),
