@@ -274,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: FontAwesomeIcons.google,
                       color: Color(0xFFF95A5F),
                       function: () {
-                        Navigator.pushNamed(context, 'menuDashBoard');
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MenuDashboardPage()));
                       },
                     ),
                     Divider(

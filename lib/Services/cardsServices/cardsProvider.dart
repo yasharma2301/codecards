@@ -4,33 +4,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'cardResponseModel.dart';
 
-class CardsProvider extends ChangeNotifier {
-  // Temporary use
-  List<CardsResults> cardsList;
-  bool loading = false;
+class CardsProvider with ChangeNotifier {
+  List<CardsResults> cardsList = [];
   int count;
+  bool loadMore = false;
   String errorMessage;
   String next;
-  String previous;
-  final String getUrl = 'http://127.0.0.1:8000/cards/list?page=';
+  final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
-  Future<List<CardsResults>> getCards(int page) async {
+  Future<List<CardsResults>> callCards(int page) async {
     String url = getUrl + '$page';
-    setLoading(true);
     Response response = await get(url);
-    setLoading(false);
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final jsonDecoded = await jsonDecode(response.body);
       var cardResponse = CardsResponse.fromJson(jsonDecoded);
       List<CardsResults> cardResult = cardResponse.results;
       setNext(cardResponse.next);
-      setPrevious(cardResponse.previous);
-      setCount(cardResponse.count);
-      // either this or appendToCardList() method ko use kar sakte hain I guess append wala better hoga
-      // abhi to bass future list pass kar rahe
+      // setCount(cardResponse.count);
+      appendToCardList(cardResult);
       return cardResult;
     } else {
-      print(response.body);
       Map<String, dynamic> result = json.decode(response.body);
       try {
         // check here! (didn't check if result fails what's the json response) as in details hai ya error
@@ -41,15 +34,17 @@ class CardsProvider extends ChangeNotifier {
     }
   }
 
-  void appendToCardList(value){
-    value.forEach((element) {cardsList.add(element);});
+  int returnCardListLength() {
+    return cardsList.length;
+  }
+
+  void appendToCardList(value) {
+    value.forEach((element) {
+      cardsList.add(element);
+    });
     notifyListeners();
   }
 
-  void setCardList(value) {
-    cardsList = value;
-    notifyListeners();
-  }
 
   List<CardsResults> getCardList() {
     return cardsList;
@@ -64,15 +59,6 @@ class CardsProvider extends ChangeNotifier {
     return next;
   }
 
-  void setPrevious(value) {
-    previous = value;
-    notifyListeners();
-  }
-
-  String getPrevious() {
-    return previous;
-  }
-
   void setCount(value) {
     count = value;
     notifyListeners();
@@ -82,13 +68,13 @@ class CardsProvider extends ChangeNotifier {
     return count;
   }
 
-  void setLoading(value) {
-    loading = value;
+  void setLoadMore(value) {
+    loadMore = value;
     notifyListeners();
   }
 
-  bool isLoading() {
-    return loading;
+  bool getLoadMore() {
+    return loadMore;
   }
 
   void setMessage(value) {

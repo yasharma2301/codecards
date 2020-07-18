@@ -11,6 +11,7 @@ import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Services/cardsServices/cardsProvider.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,7 +27,7 @@ const String hintKey = 'hint';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory =
-  await path_provider.getApplicationDocumentsDirectory();
+      await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(NoteModelAdapter());
   Admob.initialize("com.example.codecards");
@@ -46,7 +47,6 @@ void main() async {
     runApp(MyApp(initialRoute: value ? 'menuDashBoard' : '/'));
   });
 }
-
 
 Future<bool> _checkInitialRoute() async {
   SharedPreferences _sprefs = await SharedPreferences.getInstance();
@@ -134,8 +134,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<CardsProvider>(
+          create: (_) => CardsProvider(),
+        ),
         ChangeNotifierProvider<NoteData>(
-          create: (_)=>NoteData(),
+          create: (_) => NoteData(),
         ),
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) =>
@@ -152,7 +155,6 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: Builder(builder: (BuildContext context) {
-        // BuildContext rootContext = context;
         return MyHomePage(initialRoute: widget.initialRoute);
       }),
     );
@@ -184,4 +186,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
