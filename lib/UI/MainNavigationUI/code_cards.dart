@@ -22,6 +22,8 @@ class CodeCards extends StatefulWidget with NavigationStates {
 class _CodeCardsState extends State<CodeCards> {
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return LayoutBuilder(
       builder: (context, constraints) {
         double currentWidth = constraints.constrainWidth();
@@ -93,58 +95,132 @@ class _CodeCardsState extends State<CodeCards> {
                       ],
                     ),
                     Expanded(
-                      child: Stack(
-                        children: [
-                          IgnorePointer(
-                            ignoring: border == true ? true : false,
-                            child: Container(
-                              child: CardsStack(),
+                      child: Container(
+                        child: Stack(
+                          children: [
+                            IgnorePointer(
+                              ignoring: border == true ? true : false,
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: 75,top: 10),
+                                child: CardsStack(),
+                              ),
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: GestureDetector(
-                                onTap: () {
-                                  _bringUpNotesSheet(context);
-                                },
-                                child: Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.white24,
-                                        offset: Offset(0, 0),
-                                        blurRadius: 10,
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 0),
+                                child: Padding(
+                                  padding: border == true
+                                      ? EdgeInsets.symmetric(horizontal: 25)
+                                      : EdgeInsets.symmetric(horizontal: 0),
+                                  child: Stack(
+                                    children: [
+//                                      Align(
+//                                        alignment: Alignment.bottomCenter,
+//                                        child: Container(
+//                                          height: 55,
+//                                          decoration: BoxDecoration(
+//                                              borderRadius: BorderRadius.only(
+//                                                topLeft: Radius.circular(20),
+//                                                topRight: Radius.circular(20),
+//                                              ),
+//                                              color:
+//                                                  LightGrey.withOpacity(0.4)),
+//                                          child: Row(
+//                                            mainAxisAlignment:
+//                                                MainAxisAlignment.spaceBetween,
+//                                            children: [
+//                                              Padding(
+//                                                padding: EdgeInsets.only(
+//                                                    left: border == true
+//                                                        ? 5
+//                                                        : 25),
+//                                                child: IconCardButton(
+//                                                  iconData: Icons.thumb_down,
+//                                                  color: Theme.of(context)
+//                                                      .primaryColorLight,
+//                                                  buttonTag: 'Nope',
+//                                                  buttonFunction: () {
+//                                                    print('nope');
+//                                                  },
+//                                                ),
+//                                              ),
+//                                              Padding(
+//                                                padding:
+//                                                    EdgeInsets.only(right: 25),
+//                                                child: IconCardButton(
+//                                                  iconData: Icons.thumb_up,
+//                                                  color: Theme.of(context)
+//                                                      .primaryColorLight,
+//                                                  buttonTag: 'Like',
+//                                                  buttonFunction: () {
+//                                                    print('like');
+//                                                  },
+//                                                ),
+//                                              ),
+//                                            ],
+//                                          ),
+//                                        ),
+//                                      ),
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(bottom: 5),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _bringUpNotesSheet(context);
+                                            },
+                                            child: Container(
+                                              height: 60,
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.white24,
+                                                    offset: Offset(0, 0),
+                                                    blurRadius: 7,
+                                                  )
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(12),
+                                                    bottomLeft:
+                                                        Radius.circular(12),
+                                                    topRight:
+                                                        Radius.circular(12),
+                                                    bottomRight:
+                                                        Radius.circular(12)),
+                                                gradient: LinearGradient(
+                                                    colors: [
+                                                      Theme.of(context)
+                                                          .primaryColor,
+                                                      Theme.of(context)
+                                                          .primaryColorLight
+                                                    ],
+                                                    begin: FractionalOffset
+                                                        .topLeft,
+                                                    end: FractionalOffset
+                                                        .bottomRight,
+                                                    tileMode:
+                                                        TileMode.repeated),
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: White,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       )
                                     ],
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(12),
-                                        bottomLeft: Radius.circular(12),
-                                        topRight: Radius.circular(12),
-                                        bottomRight: Radius.circular(12)),
-                                    gradient: LinearGradient(
-                                        colors: [
-                                          Theme.of(context).primaryColor,
-                                          Theme.of(context).primaryColorLight
-                                        ],
-                                        begin: FractionalOffset.topLeft,
-                                        end: FractionalOffset.bottomRight,
-                                        tileMode: TileMode.repeated),
-                                  ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.add,
-                                      color: White,
-                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -294,46 +370,6 @@ class _CodeCardsState extends State<CodeCards> {
                         ),
                       ),
                     ),
-//                    Positioned(
-//                      left: -width/3.5,
-//                      top: height/3-80,
-//                      child: Transform.rotate(
-//                        angle: -pi/2,
-//                        child: Row(
-//                          mainAxisSize: MainAxisSize.min,
-//                          children: [
-//                            FlatButton(
-//                              onPressed: () {},
-//                              child: Container(
-//                                height: 30,
-//                                width: 100,
-//                                child: Center(
-//                                  child: Text(
-//                                    'Starred',
-//                                    style: TextStyle(
-//                                        color: Colors.white, fontSize: 20),
-//                                  ),
-//                                ),
-//                              ),
-//                            ),
-//                            FlatButton(
-//                              onPressed: () {},
-//                              child: Container(
-//                                height: 30,
-//                                width: 100,
-//                                child: Center(
-//                                  child: Text(
-//                                    'Notes',
-//                                    style: TextStyle(
-//                                        color: Colors.white, fontSize: 20),
-//                                  ),
-//                                ),
-//                              ),
-//                            ),
-//                          ],
-//                        ),
-//                      ),
-//                    )
                   ],
                 ),
               ),
@@ -341,6 +377,51 @@ class _CodeCardsState extends State<CodeCards> {
           },
         );
       },
+    );
+  }
+}
+
+class IconCardButton extends StatelessWidget {
+  final IconData iconData;
+  final String buttonTag;
+  final Function buttonFunction;
+  final Color color;
+
+  const IconCardButton(
+      {Key key, this.iconData, this.buttonTag, this.buttonFunction, this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: buttonFunction,
+      child: Container(
+        height: 40,
+        width: 100,
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.2),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(
+              iconData,
+              color: color,
+            ),
+            Text(
+              buttonTag,
+              style: TextStyle(
+                  color: color, fontSize: 16, fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

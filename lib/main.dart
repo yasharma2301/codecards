@@ -11,6 +11,7 @@ import 'package:codecards/UI/Settings/settings2.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Services/cardsServices/cardsProvider.dart';
 import 'UI/Login/loginScreen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
@@ -133,6 +134,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<CardsProvider>(
+          create: (_) => CardsProvider(),
+        ),
         ChangeNotifierProvider<NoteData>(
           create: (_) => NoteData(),
         ),
@@ -156,7 +160,6 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: Builder(builder: (BuildContext context) {
-        // BuildContext rootContext = context;
         return MyHomePage(initialRoute: widget.initialRoute);
       }),
     );
