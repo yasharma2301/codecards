@@ -164,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           'Forgot password?',
                           textAlign: TextAlign.end,
                           style: TextStyle(
-                              color:  Colors.blueAccent[100].withOpacity(0.9),
+                              color: Colors.blueAccent[100].withOpacity(0.9),
                               fontSize: 17),
                         ),
                       ),
@@ -319,6 +319,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Provider.of<UserRepository>(context, listen: false);
 
     FocusScope.of(context).unfocus();
+
     _userProvider
         .loginUser(_emailController.text, _passwordController.text)
         .then((value) {
@@ -326,9 +327,8 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => MenuDashboardPage()),
-                (route) => false);
-      }
-      else{
+            (route) => false);
+      } else {
         Map response = _userProvider.getResponse();
         Flushbar(
           backgroundColor: Colors.blueGrey[900],
@@ -337,9 +337,9 @@ class _RegisterPageState extends State<RegisterPage> {
           message: response['responseMessage'],
           duration: Duration(seconds: 3),
           isDismissible: true,
-        )..show(context).whenComplete((){
-          _userProvider.setLoading(false);
-        });
+        )..show(context).whenComplete(() {
+            _userProvider.setLoading(false);
+          });
       }
     });
   }

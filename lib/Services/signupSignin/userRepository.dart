@@ -14,6 +14,16 @@ class UserRepository with ChangeNotifier {
 
   String userEmail, userName, userToken, userAvatar;
 
+  UserRepository(
+      {this.userEmail, this.userName, this.userToken, this.userAvatar}) {
+    setUser(UserResponse.fromJson({
+      'email': this.userEmail,
+      'username': this.userName,
+      'avatar': this.userAvatar,
+      'token': this.userAvatar
+    }));
+  }
+
   Future<bool> registerUser(email, username, password, password2) async {
     List avatars = [
       'assets/images/boss.PNG',
@@ -28,7 +38,8 @@ class UserRepository with ChangeNotifier {
       'assets/images/uncle.PNG',
     ];
     avatars.shuffle();
-    final String url = 'http://192.168.0.7:8000/register';
+    // final String url = 'http://192.168.0.7:8000/register';
+    final String url = 'http://192.168.0.105:8000/register';
     if (email == "" || username == "" || password == "" || password2 == "") {
       setResponse("Please Fill all the fields!", 400);
     } else {
@@ -44,9 +55,6 @@ class UserRepository with ChangeNotifier {
       var result = await http.post(url, body: body);
 
       Map newUser = json.decode(result.body);
-      print(body);
-      print(newUser);
-      print(result.statusCode);
 
       if (result.statusCode == 201) {
         setUser(UserResponse.fromJson(newUser));
@@ -64,7 +72,8 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<bool> loginUser(email, password) async {
-    final String url = 'http://192.168.0.7:8000/login';
+    // final String url = 'http://192.168.0.7:8000/login';
+    final String url = 'http://192.168.0.105:8000/login';
 
     if (email == "" || password == "") {
       setResponse("Please Fill all the fields!", 400);
@@ -76,6 +85,8 @@ class UserRepository with ChangeNotifier {
       var result = await http.post(url, body: body);
 
       Map postResponse = json.decode(result.body);
+
+      print(postResponse);
 
       if (result.statusCode == 202) {
         setUser(UserResponse.fromJson(postResponse));
@@ -138,7 +149,7 @@ class UserRepository with ChangeNotifier {
   }
 
   bool isUser() {
-    return user != null ? true : false;
+    return user.token != null ? true : false;
   }
 
   void setUserEmail(email, _sprefs) async {
@@ -152,8 +163,25 @@ class UserRepository with ChangeNotifier {
   }
 
   void setUserName(username, _sprefs) async {
-    userName = username;
-    _sprefs.setString('userName', userName);
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+
+    setLoading(true);
+
+    final String url = 'http://192.168.0.105:8000/update-account/';
+    var response = await http.put(url, body: {
+      'username': username,
+      'token': userToken,
+    });
+    Map responseBody = json.decode(response.body);
+    if (response.statusCode == 202) {
+      await setResponse(responseBody['message'], 202);
+      userName = username;
+      _sprefs.setString('userName', userName);
+    } else {
+      await setResponse(responseBody['error_message'], response.statusCode);
+    }
+
+    setLoading(false);
     notifyListeners();
   }
 

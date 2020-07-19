@@ -26,7 +26,7 @@ const String hintKey = 'hint';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory =
-  await path_provider.getApplicationDocumentsDirectory();
+      await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(NoteModelAdapter());
   Admob.initialize("com.example.codecards");
@@ -46,7 +46,6 @@ void main() async {
     runApp(MyApp(initialRoute: value ? 'menuDashBoard' : '/'));
   });
 }
-
 
 Future<bool> _checkInitialRoute() async {
   SharedPreferences _sprefs = await SharedPreferences.getInstance();
@@ -135,14 +134,19 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<NoteData>(
-          create: (_)=>NoteData(),
+          create: (_) => NoteData(),
         ),
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) =>
               ThemeChanger(appThemeData[prefs.getString('themeKey')]),
         ),
         ChangeNotifierProvider<UserRepository>(
-          create: (_) => UserRepository(),
+          create: (_) => UserRepository(
+            userEmail: prefs.getString('userEmail'),
+            userName: prefs.getString('userName'),
+            userAvatar: prefs.getString('userAvatar'),
+            userToken: prefs.getString('userToken'),
+          ),
         ),
         ChangeNotifierProvider<AvatarChanger>(
           create: (_) => AvatarChanger(prefs.getString(avatarKey)),
@@ -184,4 +188,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
