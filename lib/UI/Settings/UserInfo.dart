@@ -7,12 +7,10 @@ import 'package:codecards/Services/signupSignin/userRepository.dart';
 
 class UserInfo extends StatefulWidget {
   final double width;
-  final String username;
   final BuildContext settingsContext;
 
   UserInfo({
     this.width,
-    this.username,
     this.settingsContext,
   });
 
@@ -27,9 +25,6 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
-    // setState(() {
-    //   editedUsername = _userProvider.getUserName();
-    // });
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -49,7 +44,7 @@ class _UserInfoState extends State<UserInfo> {
                   color: LightGrey.withOpacity(0.7),
                 ),
                 child: TextFormField(
-                  initialValue: widget.username ?? "hello",
+                  initialValue: _userProvider.getUserName() ?? "hello",
                   // controller: _usernameController,
                   readOnly: !_editing,
                   style: TextStyle(
@@ -84,8 +79,9 @@ class _UserInfoState extends State<UserInfo> {
                                   if (_userProvider.getUserName() !=
                                           editedUsername &&
                                       editedUsername != "") {
-                                    _userProvider.setUserName(
-                                        editedUsername, null);
+                                    await _userProvider.setUserName(
+                                        editedUsername, null,
+                                        update: true);
 
                                     Map response = _userProvider.getResponse();
                                     Flushbar(

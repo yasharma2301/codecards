@@ -124,7 +124,7 @@ class _SettingsState extends State<Settings> {
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
                                             image: AssetImage(
-                                                avatarChanger.getAvatar()),
+                                                _userProvider.getUserAvatar()),
                                             fit: BoxFit.cover)),
                                   ),
                                 ),
@@ -155,7 +155,6 @@ class _SettingsState extends State<Settings> {
                 // SetUsername(width:width,height: height,),
                 UserInfo(
                   width: width,
-                  username: _userProvider.getUserName(),
                   settingsContext: context,
                 ),
                 ThemeSelector(),

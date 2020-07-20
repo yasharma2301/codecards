@@ -20,7 +20,7 @@ class UserRepository with ChangeNotifier {
       'email': this.userEmail,
       'username': this.userName,
       'avatar': this.userAvatar,
-      'token': this.userAvatar
+      'token': this.userToken
     }));
   }
 
@@ -85,8 +85,6 @@ class UserRepository with ChangeNotifier {
       var result = await http.post(url, body: body);
 
       Map postResponse = json.decode(result.body);
-
-      print(postResponse);
 
       if (result.statusCode == 202) {
         setUser(UserResponse.fromJson(postResponse));
@@ -162,26 +160,32 @@ class UserRepository with ChangeNotifier {
     return userEmail;
   }
 
-  void setUserName(username, _sprefs) async {
-    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+  Future<void> setUserName(username, _sprefs, {update = false}) async {
+    if (update) {
+      SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
-    setLoading(true);
+      setLoading(true);
 
-    final String url = 'http://192.168.0.105:8000/update-account/';
-    var response = await http.put(url, body: {
-      'username': username,
-      'token': userToken,
-    });
-    Map responseBody = json.decode(response.body);
-    if (response.statusCode == 202) {
-      await setResponse(responseBody['message'], 202);
+      final String url = 'http://192.168.0.105:8000/update-account/';
+      var response = await http.put(url, body: {
+        'username': username,
+        'token': userToken,
+      });
+      Map responseBody = json.decode(response.body);
+      if (response.statusCode == 202) {
+        await setResponse(responseBody['message'], 202);
+        userName = username;
+        _sprefs.setString('userName', userName);
+      } else {
+        await setResponse(responseBody['error_message'], response.statusCode);
+      }
+
+      setLoading(false);
+    } else {
       userName = username;
       _sprefs.setString('userName', userName);
-    } else {
-      await setResponse(responseBody['error_message'], response.statusCode);
     }
 
-    setLoading(false);
     notifyListeners();
   }
 
@@ -199,9 +203,32 @@ class UserRepository with ChangeNotifier {
     return userToken;
   }
 
-  void setUserAvatar(avatar, _sprefs) async {
-    userAvatar = avatar;
-    _sprefs.setString('userAvatar', userAvatar);
+  void setUserAvatar(avatar, _sprefs, {update = false}) async {
+    if (update) {
+      SharedPreferences _sprefs = await SharedPreferences.getInstance();
+
+      setLoading(true);
+
+      final String url = 'http://192.168.0.105:8000/update-account/';
+      var response = await http.put(url, body: {
+        'avatar': avatar,
+        'token': userToken,
+      });
+      Map responseBody = json.decode(response.body);
+      if (response.statusCode == 202) {
+        await setResponse(responseBody['message'], 202);
+        userAvatar = avatar;
+        _sprefs.setString('userAvatar', userAvatar);
+      } else {
+        await setResponse(responseBody['error_message'], response.statusCode);
+      }
+
+      setLoading(false);
+    } else {
+      userAvatar = avatar;
+      _sprefs.setString('userAvatar', userAvatar);
+    }
+
     notifyListeners();
   }
 
