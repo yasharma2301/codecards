@@ -298,13 +298,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_tindercard:
-    dependency: "direct main"
-    description:
-      name: flutter_tindercard
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.8"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -640,7 +633,7 @@ packages:
     source: hosted
     version: "2.0.5"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
@@ -742,6 +735,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  swipe_stack:
+    dependency: "direct main"
+    description:
+      name: swipe_stack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:

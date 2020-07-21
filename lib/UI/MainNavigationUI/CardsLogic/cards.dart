@@ -1,10 +1,10 @@
+import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
-import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:provider/provider.dart';
+import 'package:swipe_stack/swipe_stack.dart';
 
 class CardsStack extends StatefulWidget {
   @override
@@ -12,86 +12,93 @@ class CardsStack extends StatefulWidget {
 }
 
 class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
-  CardController _controller;
-  int page = 1;
-  CardController get controller => _controller;
+  List<CardsResults> results;
+  List<int> maxResults = [];
+
+  @override
+  void initState() {
+    results = [];
+    maxResults.addAll(List.generate(50, (index) => index));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var cardProvider = Provider.of<CardsProvider>(context,listen: false);
+    final bloc = Provider.of<CardsBloc>(context);
     return Container(
-        child: FutureBuilder(
-          future: cardProvider.callCards(page),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return TinderSwapCard(
-                orientation: AmassOrientation.BOTTOM,
-                totalNum: cardProvider.returnCardListLength(),
-                stackNum: 3,
-                swipeEdge: 2.0,
-                maxWidth: MediaQuery.of(context).size.width,
-                maxHeight: MediaQuery.of(context).size.height,
-                minWidth: MediaQuery.of(context).size.width * 0.9,
-                minHeight: MediaQuery.of(context).size.height * 0.95,
-                cardBuilder: (context, index) => Container(
-                  decoration: BoxDecoration(
-                    color: LightGrey,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.white)
-                  ),
-                  child: Center(
-                      child: Text(
-                        cardProvider.getCardList()[index].question,
-                    style: TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  )),
-                ),
-                cardController: _controller,
-                swipeUpdateCallback:
-                    (DragUpdateDetails details, Alignment align) {
-                  /// Get swiping card's alignment
-                  if (align.x < 0) {
-                    ///Card is LEFT swiping
-                  } else if (align.x > 0) {
-                    ///Card is RIGHT swiping
-                  }
-                },
-                swipeCompleteCallback:
-                    (CardSwipeOrientation orientation, int index) {
-                      if(index==5){
-                        print('5th swiped');
-                       // page+=1;
-                      }
-                  print('$orientation $index');
-                },
-              );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 1,
-                ),
-              );
-            }
-          },
-        ));
+      child: StreamBuilder<List<CardsResults>>(
+        stream: bloc.stream,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CardsResults>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 1,
+              ),
+            );
+          }
+          results.addAll(snapshot.data);
+          return SwipeStack(
+            children: results.map(
+              (CardsResults cardsResult) {
+                return SwiperItem(
+                  builder: (SwiperPosition position, double progress) {
+                    return Material(
+                      elevation: 4,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: LightGrey,
+                          border: Border.all(width: 1,color: Grey),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              cardsResult.hint,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20),
+                            ),
+                            Text(
+                              cardsResult.question,
+                              style: TextStyle(color: Colors.blue, fontSize: 8),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ).toList(),
+            visibleCount: 3,
+            stackFrom: StackFrom.Top,
+            translationInterval: 6,
+            scaleInterval: 0.03,
+            onEnd: () => debugPrint("onEnd"),
+            onSwipe: (int index, SwiperPosition position) {
+              debugPrint("onSwipe $index $position");
+              results.removeAt(index);
+              print(results.length);
+              if (index == 0) {
+                print('calling The Provider Bloc');
+                bloc.sink.add(index);
+              }
+            },
+            onRewind: (int index, SwiperPosition position) =>
+                debugPrint("onRewind $index $position"),
+          );
+        },
+      ),
+    );
   }
 }
-
-//child: FutureBuilder(
-//future: Provider.of<CardsProvider>(context).callCards(1),
-//builder: (context, snapshot) {
-//if(snapshot.hasData){
-//return ListView.builder(
-//scrollDirection: Axis.vertical,
-//shrinkWrap: true,
-//itemBuilder: (context, index) {
-//return ListTile(subtitle: Text('a'),);
-//},
-//itemCount: 8
-//);
-//}
-//else{
-//return Container();
-//}
-//},
-//),

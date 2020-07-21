@@ -134,6 +134,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<CardsBloc>(
+          dispose: (context, bloc) => bloc.dispose(),
+          create: (BuildContext context) => CardsBloc(),
+        ),
         ChangeNotifierProvider<CardsProvider>(
           create: (_) => CardsProvider(),
         ),
