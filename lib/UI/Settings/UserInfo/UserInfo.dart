@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flushbar/flushbar.dart';
 
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/FlushBar.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 
 class UserInfo extends StatefulWidget {
@@ -25,6 +25,7 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
+    FlushBar flushBar = FlushBar(context: context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -76,35 +77,30 @@ class _UserInfoState extends State<UserInfo> {
                                     _editing = false;
                                   });
 
+                                  if (editedUsername == "") {
+                                    flushBar.showErrorFlushBar(
+                                      "Username cannot be blank",
+                                    );
+                                    return;
+                                  }
+
                                   if (_userProvider.getUserName() !=
-                                          editedUsername &&
-                                      editedUsername != "") {
+                                      editedUsername) {
                                     await _userProvider.setUserName(
                                         editedUsername, null,
                                         update: true);
 
                                     Map response = _userProvider.getResponse();
-                                    Flushbar(
-                                      icon: response['responseCode'] == 202
-                                          ? Icon(
-                                              Icons.check,
-                                              color: Colors.greenAccent,
-                                            )
-                                          : Icon(
-                                              Icons.error_outline,
-                                              color: Colors.redAccent,
-                                            ),
-                                      leftBarIndicatorColor:
-                                          response['responseCode'] == 202
-                                              ? Colors.greenAccent
-                                              : Colors.redAccent,
-                                      message: response['responseMessage'],
-                                      duration: Duration(seconds: 1),
-                                      isDismissible: true,
-                                    )..show(widget.settingsContext)
-                                          .whenComplete(() {
-                                        _userProvider.setLoading(false);
-                                      });
+
+                                    if (response['responseCode'] == 202) {
+                                      flushBar.showSuccessFlushBar(
+                                        response['responseMessage'],
+                                      );
+                                    } else {
+                                      flushBar.showErrorFlushBar(
+                                        response['responseMessage'],
+                                      );
+                                    }
                                   }
                                 },
                               )

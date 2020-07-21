@@ -1,10 +1,9 @@
-import 'package:codecards/Services/signupSignin/userRepository.dart';
-import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'avatar_provider.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/delayed_animation.dart';
 
 class Avatar extends StatefulWidget {
   @override

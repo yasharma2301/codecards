@@ -1,5 +1,6 @@
-//import 'package:codecards/Services/notesServices/noteModel.dart';
 //import 'package:flutter/material.dart';
+
+//import 'package:codecards/Services/notesServices/noteModel.dart';
 //
 //class NoteInheritedWidget extends InheritedWidget {
 //  final notes = [];

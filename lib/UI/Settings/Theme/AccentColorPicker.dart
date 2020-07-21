@@ -1,14 +1,15 @@
-import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
-import 'package:codecards/Shared/themes.dart';
 import 'package:provider/provider.dart';
 
-class ColorPicker extends StatefulWidget {
+import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/themes.dart';
+
+class AccentColorPicker extends StatefulWidget {
   @override
-  _ColorPickerState createState() => _ColorPickerState();
+  _AccentColorPickerState createState() => _AccentColorPickerState();
 }
 
-class _ColorPickerState extends State<ColorPicker> {
+class _AccentColorPickerState extends State<AccentColorPicker> {
   @override
   Widget build(BuildContext context) {
     ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);

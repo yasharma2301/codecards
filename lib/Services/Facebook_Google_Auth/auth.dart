@@ -11,6 +11,9 @@ class FacebookAuth {
   Future<void> login() async {
     final result = await fbLogin.logIn(['email']);
 
+    // To remove annoying inforation
+    print(_isLoggedIn);
+
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
@@ -51,7 +54,7 @@ class GoogleAuth {
 
   Future<void> handleSignIn() async {
     try {
-      await _googleSignIn.signIn().then((value) => _currentUser=value);
+      await _googleSignIn.signIn().then((value) => _currentUser = value);
       print(_currentUser);
 //      _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
 //        print(account);

@@ -1,14 +1,14 @@
-import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:flushbar/flushbar.dart';
+import 'package:codecards/Shared/FlushBar.dart';
 
 class ContactUs extends StatefulWidget {
   ContactUs({Key key}) : super(key: key);
@@ -75,6 +75,8 @@ class _ContactUsState extends State<ContactUs>
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
+    FlushBar flushBar = FlushBar(context: context);
 
     final picker = ImagePicker();
 
@@ -361,25 +363,19 @@ class _ContactUsState extends State<ContactUs>
                       Map response = await _sendQuery();
                       if (response['success']) {
                         Navigator.pop(context, response);
+
+                        flushBar.showSuccessFlushBar(
+                          "Your query has been recorded and our team will contact you soon. Thank you.",
+                        );
                       } else {
-                        Flushbar(
-                          icon: Icon(Icons.error_outline,
-                              color: Colors.redAccent),
-                          leftBarIndicatorColor: Colors.redAccent,
-                          message: response['message'],
-                          duration: Duration(seconds: 3),
-                          isDismissible: true,
-                        )..show(context);
+                        flushBar.showErrorFlushBar(
+                          response['message'],
+                        );
                       }
                     } else {
-                      Flushbar(
-                        icon:
-                            Icon(Icons.error_outline, color: Colors.redAccent),
-                        leftBarIndicatorColor: Colors.redAccent,
-                        message: "Please enter a valid Email Address!",
-                        duration: Duration(seconds: 2),
-                        isDismissible: true,
-                      )..show(context);
+                      flushBar.showErrorFlushBar(
+                        "Please enter a valid Email Address!",
+                      );
                     }
                   },
                   child: Ink(
@@ -474,10 +470,10 @@ class _ContactUsState extends State<ContactUs>
       ..fields['details'] = descriptionController.text;
 
     if (_image != null) {
-      String screenshot_name = _image.path.split('/').last;
+      String screenshotName = _image.path.split('/').last;
       request.files.add(http.MultipartFile(
           'screenshot', _image.readAsBytes().asStream(), _image.lengthSync(),
-          filename: screenshot_name));
+          filename: screenshotName));
     } else
       request.fields['screenshot'] = '';
     var response = await request.send();

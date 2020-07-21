@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
+import 'package:codecards/routes/slideFromRight.dart';
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
-import 'package:codecards/routes/slideFromRight.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'Bloc/navigation_bloc.dart';
 import 'CardsLogic/cards.dart';
 import 'Notes/noteTile.dart';
@@ -22,8 +23,6 @@ class CodeCards extends StatefulWidget with NavigationStates {
 class _CodeCardsState extends State<CodeCards> {
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return LayoutBuilder(
       builder: (context, constraints) {
         double currentWidth = constraints.constrainWidth();
@@ -101,7 +100,7 @@ class _CodeCardsState extends State<CodeCards> {
                             IgnorePointer(
                               ignoring: border == true ? true : false,
                               child: Container(
-                                padding: EdgeInsets.only(bottom: 75,top: 10),
+                                padding: EdgeInsets.only(bottom: 75, top: 10),
                                 child: CardsStack(),
                               ),
                             ),

@@ -1,38 +1,45 @@
-import 'package:codecards/Shared/Colors.dart';
-
-import 'Bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 
+import 'package:codecards/Shared/Colors.dart';
+import 'Bloc/navigation_bloc.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
+
 final Color backGroundColor = Color(0xFF1c2129);
 
-class DeveloperStory extends StatelessWidget with NavigationStates{
+class DeveloperStory extends StatelessWidget with NavigationStates {
   final Function onMenuTap;
   const DeveloperStory({Key key, this.onMenuTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()  {
-        return Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> MenuDashboardPage()));
+      onWillPop: () {
+        return Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => MenuDashboardPage()));
       },
       child: LayoutBuilder(
-        builder: (context,constraints){
+        builder: (context, constraints) {
           double currentWidth = constraints.constrainWidth();
           double maxWidth = MediaQuery.of(context).size.width;
           bool border;
-          if(maxWidth==currentWidth){
-            border=false;
-          }else{
-            border=true;
+          if (maxWidth == currentWidth) {
+            border = false;
+          } else {
+            border = true;
           }
           return Container(
             padding: EdgeInsets.only(left: 16, right: 16, top: 40),
             decoration: BoxDecoration(
-                boxShadow: [BoxShadow(color: PopBlue.withOpacity(0.5),blurRadius: 8,spreadRadius: 1)],
-                borderRadius: border? BorderRadius.circular(40):BorderRadius.circular(0),
-                color: backGroundColor
-            ),
+                boxShadow: [
+                  BoxShadow(
+                      color: PopBlue.withOpacity(0.5),
+                      blurRadius: 8,
+                      spreadRadius: 1)
+                ],
+                borderRadius: border
+                    ? BorderRadius.circular(40)
+                    : BorderRadius.circular(0),
+                color: backGroundColor),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               physics: ClampingScrollPhysics(),

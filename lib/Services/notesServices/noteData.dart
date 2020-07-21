@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+
 import 'noteModel.dart';
 
 class NoteData extends ChangeNotifier {
@@ -13,19 +14,18 @@ class NoteData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<NoteModel>> getNoteList() async{
+  Future<List<NoteModel>> getNoteList() async {
     var box = await Hive.openBox<NoteModel>(_boxName);
     _noteModel = box.values.toList();
     return _noteModel;
   }
 
   //Work Here ---!Incomplete!---
-  Future<List<NoteModel>> getStarFilter() async{
+  Future<List<NoteModel>> getStarFilter() async {
     var box = await Hive.openBox<NoteModel>(_boxName);
-   _noteModel = box.values.where((element) => element.starred==true);
+    _noteModel = box.values.where((element) => element.starred == true);
     return _noteModel;
   }
-
 
   NoteModel getNote(index) {
     return _noteModel[index];

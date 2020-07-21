@@ -1,14 +1,15 @@
-import 'package:codecards/Services/signupSignin/userRepository.dart';
-import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/UI/Login/ForgotPassword.dart';
-import 'package:codecards/UI/Login/newSignUp.dart';
-import 'package:codecards/UI/Login/newSocialButton.dart';
-import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
-import 'package:codecards/UI/OnBoard/onBoardNew.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:provider/provider.dart';
+
+import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/FlushBar.dart';
+import 'package:codecards/UI/OnBoard/Login/ForgotPassword.dart';
+import 'package:codecards/UI/OnBoard/Login/newSignUp.dart';
+import 'package:codecards/UI/OnBoard/Login/newSocialButton.dart';
+import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
+import 'package:codecards/UI/OnBoard/onBoardNew.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -43,6 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: Scaffold(
         backgroundColor: Grey,
+        resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -317,6 +319,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> _login(BuildContext context) async {
     FocusScope.of(context).unfocus();
+    FlushBar flushBar = FlushBar(context: context);
 
     if (_emailController.text.length > 5 &&
         _passwordController.text.length > 3) {
@@ -333,26 +336,16 @@ class _RegisterPageState extends State<RegisterPage> {
               (route) => false);
         } else {
           Map response = _userProvider.getResponse();
-          Flushbar(
-            backgroundColor: Colors.blueGrey[900],
-            icon: Icon(Icons.error_outline, color: Colors.redAccent),
-            leftBarIndicatorColor: Colors.redAccent,
-            message: response['responseMessage'],
-            duration: Duration(seconds: 3),
-            isDismissible: true,
-          )..show(context).whenComplete(() {
-              _userProvider.setLoading(false);
-            });
+          flushBar.showErrorFlushBar(response['responseMessage']);
+          _userProvider.setLoading(false);
+          print(_userProvider.isLoading());
+          //     .whenComplete(() {
+          //   _userProvider.setLoading(false);
+          // });
         }
       });
     } else {
-      Flushbar(
-        icon: Icon(Icons.error_outline, color: Colors.redAccent),
-        leftBarIndicatorColor: Colors.redAccent,
-        message: "Please provide a valid email and password!",
-        duration: Duration(seconds: 3),
-        isDismissible: true,
-      )..show(context);
+      flushBar.showErrorFlushBar("Please provide a valid email and password!");
     }
   }
 
@@ -369,7 +362,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(25))),
-              child: newSignUp());
+              child: NewSignUp());
         }).whenComplete(() {
       setState(() {
         _sheetCollapsed = true;

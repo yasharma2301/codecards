@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 const Color Grey = const Color(0xFF1c2129);
 const Color LightGrey = const Color(0xFF435370);
 const Color Yellow = const Color(0xFFFFE135);
@@ -12,4 +13,3 @@ const Color PopBlue = const Color(0xFF7e7dd2);
 const Color LightPopBlue = const Color(0xFF9797cf);
 const Color DarkBlue = const Color(0xFF3b3a9b);
 const Color SeaGreen = const Color(0xFF20b2aa);
-

@@ -1,8 +1,5 @@
-import 'package:codecards/Services/notesServices/noteInherited.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
 class Notes2 extends StatefulWidget {
@@ -30,16 +27,17 @@ class Notes2State extends State<Notes2> {
         });
       }
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         FlatButton(
+          onPressed: () {},
           child: Container(
             color: Colors.white,
             height: 50,
@@ -60,7 +58,7 @@ class Notes2State extends State<Notes2> {
           child: Container(
             height: MediaQuery.of(context).size.height / 1.45,
             child: FutureBuilder(
-             // future: NoteProvider.getNoteList(),
+              // future: NoteProvider.getNoteList(),
               builder: (context, AsyncSnapshot snap) {
                 final notes = snap.data;
                 if (snap.hasData) {
@@ -73,15 +71,17 @@ class Notes2State extends State<Notes2> {
                         returnWidget = _buildTagPage();
                       } else if (notes.length >= currentIdx) {
                         bool active = currentIdx == currentPage;
-                        returnWidget = _buildStoryPage(
-                            notes[currentIdx - 1], active, width, context,ctrl,currentIdx);
+                        returnWidget = _buildStoryPage(notes[currentIdx - 1],
+                            active, width, context, ctrl, currentIdx);
                       }
                       return returnWidget;
                     },
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(strokeWidth: 1,),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
                   );
                 }
               },
@@ -94,7 +94,7 @@ class Notes2State extends State<Notes2> {
 }
 
 _buildStoryPage(Map<String, dynamic> data, bool active, double width,
-    BuildContext context,PageController ctrl,currentIdx) {
+    BuildContext context, PageController ctrl, currentIdx) {
   final double blur = active ? 30 : 0;
   final double offset = active ? 15 : 0;
   final double top = active ? 60 : 85;
@@ -118,6 +118,7 @@ _buildStoryPage(Map<String, dynamic> data, bool active, double width,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
+              onPressed: () {},
               icon: Icon(
                 Icons.delete,
                 color: CupertinoColors.black,

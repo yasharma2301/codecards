@@ -1,6 +1,7 @@
-import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import 'package:codecards/Shared/Colors.dart';
 
 class RateUs extends StatefulWidget {
   @override
@@ -14,7 +15,6 @@ class _RateUsState extends State<RateUs> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
 
     return Container(
       width: size.width,
@@ -82,9 +82,8 @@ class _RateUsState extends State<RateUs> {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Comments...",
-                        hintStyle: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white54)),
+                        hintStyle:
+                            TextStyle(fontSize: 18, color: Colors.white54)),
                   ),
                 ),
               ),

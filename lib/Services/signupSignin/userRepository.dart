@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import 'package:codecards/Services/signupSignin/userModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:codecards/Services/signupSignin/userModel.dart';
 
 class UserRepository with ChangeNotifier {
   UserResponse user;
@@ -68,6 +70,7 @@ class UserRepository with ChangeNotifier {
       }
       setLoading(false);
     }
+    setLoading(false);
     return (isUser());
   }
 
@@ -98,6 +101,7 @@ class UserRepository with ChangeNotifier {
       }
       setLoading(false);
     }
+    setLoading(false);
     return isUser();
   }
 
@@ -140,6 +144,7 @@ class UserRepository with ChangeNotifier {
     responseMessage = message;
     responseCode = code;
     notifyListeners();
+    return null;
   }
 
   Map getResponse() {
@@ -147,7 +152,7 @@ class UserRepository with ChangeNotifier {
   }
 
   bool isUser() {
-    return user.token != null ? true : false;
+    return user == null ? false : user.token == null ? false : true;
   }
 
   void setUserEmail(email, _sprefs) async {

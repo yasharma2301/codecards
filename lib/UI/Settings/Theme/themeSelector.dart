@@ -1,5 +1,6 @@
-import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
+
+import 'package:codecards/Shared/Colors.dart';
 
 class ThemeSelector extends StatefulWidget {
   ThemeSelector({Key key}) : super(key: key);
@@ -84,8 +85,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                     height: 80,
                     width: width / 2 + 20,
                     decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).primaryColorLight,
+                      color: Theme.of(context).primaryColorLight,
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(8),
                         topRight: Radius.circular(8),

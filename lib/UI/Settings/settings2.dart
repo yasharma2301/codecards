@@ -1,24 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/Shared/themes.dart';
-import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
+import 'package:codecards/Shared/FlushBar.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/UI/Settings/Contact_US/Contact_US.dart';
 import 'package:codecards/UI/Settings/RateUs/rateUs.dart';
-import 'package:codecards/UI/Settings/UserInfo.dart';
+import 'package:codecards/UI/Settings/UserInfo/UserInfo.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
+import 'AdMob/adTile.dart';
 import 'Avatar/avatar.dart';
-import 'package:codecards/Services/signupSignin/userRepository.dart';
-import 'Theme/ColorPicker.dart';
-import 'adTile.dart';
-import 'themeSelector.dart';
+import 'Theme/AccentColorPicker.dart';
+import 'Theme/themeSelector.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -30,7 +26,6 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    final AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
 
     var height = MediaQuery.of(context).size.height;
@@ -245,7 +240,7 @@ class _SettingsState extends State<Settings> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             backgroundColor: Grey,
-            child: ColorPicker(),
+            child: AccentColorPicker(),
           );
         });
   }
@@ -266,14 +261,12 @@ class _SettingsState extends State<Settings> {
   void _goToContactUs(BuildContext context) async {
     dynamic instance = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => ContactUs()));
+    FlushBar flushBar = FlushBar(context: context);
+
     if (instance != null) {
-      Flushbar(
-        icon: Icon(Icons.check_circle_outline, color: Colors.greenAccent),
-        leftBarIndicatorColor: Colors.greenAccent,
-        message: instance['message'],
-        duration: Duration(seconds: 3),
-        isDismissible: true,
-      )..show(context);
+      flushBar.showSuccessFlushBar(
+        instance['message'],
+      );
     }
   }
 }

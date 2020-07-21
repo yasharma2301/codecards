@@ -1,8 +1,9 @@
-import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-import 'package:uni_links/uni_links.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'GithubHttpService.dart';
 import 'GithubModels.dart';
@@ -12,6 +13,7 @@ const String _clientSecret = '8c406a75c2d65afa5b38399efcb90b6825a261d1';
 const String _redirectUri = 'codecards://callback';
 
 class GithubLogin {
+  // ignore: cancel_subscriptions
   StreamSubscription _stream = getLinksStream().listen((String link) {
     _checkDeepLink(link);
   }, cancelOnError: true);

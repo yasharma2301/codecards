@@ -1,11 +1,13 @@
 import 'dart:io';
-import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/Shared/delayed_animation.dart';
-import 'package:codecards/Shared/fade_animation.dart';
-import 'package:codecards/UI/Login/newLoginPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:codecards/Shared/fade_animation.dart';
+import 'package:codecards/UI/OnBoard/Login/newLoginPage.dart';
 
 class OnBoardNew extends StatefulWidget {
   @override

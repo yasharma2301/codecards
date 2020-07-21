@@ -1,19 +1,18 @@
-import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flushbar/flushbar.dart';
-import 'dart:convert';
 import 'package:provider/provider.dart';
-import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'package:flutter/cupertino.dart';
 
-class newSignUp extends StatefulWidget {
+import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Shared/FlushBar.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
+
+class NewSignUp extends StatefulWidget {
   @override
-  _newSignUpState createState() => _newSignUpState();
+  _NewSignUpState createState() => _NewSignUpState();
 }
 
-class _newSignUpState extends State<newSignUp> {
+class _NewSignUpState extends State<NewSignUp> {
   bool passwordVisible = true, passwordEmpty = true;
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _password2Controller = TextEditingController();
@@ -309,6 +308,7 @@ class _newSignUpState extends State<newSignUp> {
         Provider.of<UserRepository>(context, listen: false);
 
     FocusScope.of(context).unfocus();
+    FlushBar flushBar = FlushBar(context: context);
 
     _userProvider
         .registerUser(_emailController.text, _usernameController.text,
@@ -321,16 +321,13 @@ class _newSignUpState extends State<newSignUp> {
             (route) => false);
       } else {
         Map response = _userProvider.getResponse();
-        Flushbar(
-          backgroundColor: Colors.blueGrey[900],
-          icon: Icon(Icons.error_outline, color: Colors.redAccent),
-          leftBarIndicatorColor: Colors.redAccent,
-          message: response['responseMessage'],
-          duration: Duration(seconds: 3),
-          isDismissible: true,
-        )..show(context).whenComplete(() {
-            _userProvider.setLoading(false);
-          });
+        flushBar
+            .showErrorFlushBar(
+          response['responseMessage'],
+        )
+            .whenComplete(() {
+          _userProvider.setLoading(false);
+        });
       }
     });
   }

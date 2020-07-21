@@ -1,14 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:codecards/routes/slideFromRight.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/CardsLogic/cards.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
-import 'package:codecards/routes/slideFromRight.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
   final Function onMenuTap;
   final bool border;
-  const MainPage({Key key, this.onMenuTap,this.border}) : super(key: key);
+  const MainPage({Key key, this.onMenuTap, this.border}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -21,7 +22,9 @@ class _MainPageState extends State<MainPage> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: widget.border==true? EdgeInsets.only(top: 30,left: 15):EdgeInsets.only(top: 30),
+        padding: widget.border == true
+            ? EdgeInsets.only(top: 30, left: 15)
+            : EdgeInsets.only(top: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +33,9 @@ class _MainPageState extends State<MainPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: widget.border==true? EdgeInsets.only(left: 0):EdgeInsets.only(left: 12),
+                  padding: widget.border == true
+                      ? EdgeInsets.only(left: 0)
+                      : EdgeInsets.only(left: 12),
                   child: IconButton(
                     splashColor: LightPopBlue.withOpacity(0.5),
                     hoverColor: LightPopBlue,
@@ -63,7 +68,7 @@ class _MainPageState extends State<MainPage> {
             ),
             Expanded(
               child: IgnorePointer(
-                ignoring: widget.border==true?true:false,
+                ignoring: widget.border == true ? true : false,
                 child: Container(
                   child: CardsStack(),
                 ),

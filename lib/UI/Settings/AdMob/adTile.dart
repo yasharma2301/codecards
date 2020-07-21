@@ -1,8 +1,9 @@
-import 'package:admob_flutter/admob_flutter.dart';
-import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/main.dart';
 import 'package:flutter/material.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:codecards/main.dart';
+import 'package:codecards/Shared/Colors.dart';
 
 class AdTile extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _AdTileState extends State<AdTile> {
   Future<void> _incrementHint(int reward) async {
     int current = await _getIntFromSharedPref();
     // For test
-     int newCurrent = current + (reward ~/ 10);
+    int newCurrent = current + (reward ~/ 10);
     // Real
     // int newCurrent = current + reward;
     setState(() {
@@ -42,11 +43,10 @@ class _AdTileState extends State<AdTile> {
     });
   }
 
-
   AdmobReward createReward() {
     return AdmobReward(
-      // Test adUnitId : ca-app-pub-3940256099942544/5224354917
-      // Production adUnitId : ca-app-pub-4588981695409423/1796109547
+        // Test adUnitId : ca-app-pub-3940256099942544/5224354917
+        // Production adUnitId : ca-app-pub-4588981695409423/1796109547
         adUnitId: "ca-app-pub-3940256099942544/5224354917",
         listener: (AdmobAdEvent event, Map<String, dynamic> args) {
           if (event == AdmobAdEvent.loaded) {
@@ -55,7 +55,7 @@ class _AdTileState extends State<AdTile> {
           if (event == AdmobAdEvent.closed) {
             _admobReward.dispose();
           }
-          if (event == AdmobAdEvent.failedToLoad){
+          if (event == AdmobAdEvent.failedToLoad) {
             print('failed to load the ad.');
           }
           if (event == AdmobAdEvent.rewarded) {
@@ -110,11 +110,12 @@ class _AdTileState extends State<AdTile> {
                             default:
                               if (snapshot.hasError) {
                                 print(snapshot.error);
-                                return Text('0',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.w700),
+                                return Text(
+                                  '0',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w700),
                                 );
                               } else {
                                 return Text(

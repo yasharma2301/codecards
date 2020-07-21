@@ -1,10 +1,11 @@
-import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
-import 'package:codecards/Services/cardsServices/cardsProvider.dart';
-import 'package:codecards/Shared/Colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swipe_stack/swipe_stack.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
+import 'package:codecards/Services/cardsServices/cardsProvider.dart';
+import 'package:codecards/Shared/Colors.dart';
 
 class CardsStack extends StatefulWidget {
   @override
@@ -24,7 +25,6 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -53,26 +53,34 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                       elevation: 4,
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
                         decoration: BoxDecoration(
                           color: LightGrey,
-                          border: Border.all(width: 1,color: Grey),
+                          border: Border.all(width: 1, color: Grey),
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              cardsResult.hint,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  cardsResult.hint,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 20),
+                                ),
+                                Text(
+                                  cardsResult.question,
+                                  style: TextStyle(
+                                      color: Colors.blue, fontSize: 20),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                            Text(
-                              cardsResult.question,
-                              style: TextStyle(color: Colors.blue, fontSize: 8),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     );

@@ -1,10 +1,11 @@
-import 'package:codecards/Services/notesServices/noteData.dart';
-import 'package:codecards/Services/notesServices/noteModel.dart';
-import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:codecards/Services/notesServices/noteData.dart';
+import 'package:codecards/Services/notesServices/noteModel.dart';
+import 'package:codecards/Shared/Colors.dart';
 import 'noteView.dart';
+
 class NoteTile extends StatefulWidget {
   final int titleIndex;
 
@@ -77,7 +78,7 @@ class _NoteTileState extends State<NoteTile> {
                     children: [
                       Container(
                           decoration:
-                          BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                              BoxDecoration(shape: BoxShape.circle, boxShadow: [
                             BoxShadow(
                                 color: curNote.starred == true
                                     ? Colors.white12
@@ -98,16 +99,16 @@ class _NoteTileState extends State<NoteTile> {
                               print(curNote.starred);
                               Provider.of<NoteData>(context, listen: false)
                                   .editNote(
-                                  note: NoteModel(
-                                      title: curNote.title,
-                                      description: curNote.description,
-                                      starred: curNote.starred == true
-                                          ? false
-                                          : true,
-                                      createdDateTime:
-                                      curNote.createdDateTime,
-                                      updatedDateTime: DateTime.now()),
-                                  noteKey: curNote.key);
+                                      note: NoteModel(
+                                          title: curNote.title,
+                                          description: curNote.description,
+                                          starred: curNote.starred == true
+                                              ? false
+                                              : true,
+                                          createdDateTime:
+                                              curNote.createdDateTime,
+                                          updatedDateTime: DateTime.now()),
+                                      noteKey: curNote.key);
                             },
                           )),
                     ],

@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Services/notesServices/noteModel.dart';
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/UI/Login/newLoginPage.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:codecards/UI/OnBoard/Login/newLoginPage.dart';
+
 enum NoteModes { Editing, Adding }
 
 class NoteView extends StatefulWidget {
@@ -61,6 +63,7 @@ class _NoteViewState extends State<NoteView> {
 
     return Consumer<NoteData>(
       builder: (context, noteData, child) {
+        // ignore: unused_local_variable
         NoteModel _currentNote = noteData.getActiveNote();
         return Scaffold(
           backgroundColor: Grey,
@@ -143,7 +146,7 @@ class _NoteViewState extends State<NoteView> {
                           color: Grey, borderRadius: BorderRadius.circular(6)),
                       child: Container(
                         padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
                           color: LightGrey.withOpacity(0.7),

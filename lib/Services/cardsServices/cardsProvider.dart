@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:rxdart/rxdart.dart';
+
 import 'cardResponseModel.dart';
 
 class CardsProvider with ChangeNotifier {
@@ -34,6 +36,7 @@ class CardsProvider with ChangeNotifier {
       } catch (e) {
         print(e.toString());
       }
+      return null;
     }
   }
 
@@ -102,7 +105,8 @@ class CardsProvider with ChangeNotifier {
 }
 
 class CardsApiCall {
-  final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
+  // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page) async {
     String url = getUrl + '$page';
@@ -123,7 +127,6 @@ class CardsBloc {
   int pageNumber = 1;
   ReplaySubject<List<CardsResults>> _subject = ReplaySubject();
   final ReplaySubject<int> _controller = ReplaySubject();
-
 
   Stream<List<CardsResults>> get stream => _subject.stream;
   Sink<int> get sink => _controller.sink;
@@ -146,6 +149,4 @@ class CardsBloc {
     _controller.close();
     _subject.close();
   }
-
 }
-
