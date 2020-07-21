@@ -1,3 +1,4 @@
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class Avatar extends StatefulWidget {
 }
 
 class _AvatarState extends State<Avatar> {
-  final List<String> _listItem = [
+  final List<String> _listItems = [
     'assets/images/boss.PNG',
     'assets/images/amie.PNG',
     'assets/images/astro.PNG',
@@ -26,8 +27,8 @@ class _AvatarState extends State<Avatar> {
 
   @override
   Widget build(BuildContext context) {
-    AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
-    String _selected = avatarChanger.getAvatar();
+    UserRepository _userProvider = Provider.of<UserRepository>(context);
+    String _selected = _userProvider.getUserAvatar();
 
     return Scaffold(
       backgroundColor: Grey,
@@ -61,14 +62,15 @@ class _AvatarState extends State<Avatar> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Material(
-                                color: Colors.transparent,
-                                child: Text(
-                                  "Select an Avatar",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                              color: Colors.transparent,
+                              child: Text(
+                                "Select an Avatar",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                             SizedBox(
                               height: 15,
                             ),
@@ -87,13 +89,17 @@ class _AvatarState extends State<Avatar> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      children: _listItem
+                      children: _listItems
                           .map((item) => GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    _selected = item;
-                                    avatarChanger.setAvatar(_selected);
-                                  });
+                                  setState(
+                                    () {
+                                      _selected = item;
+                                      _userProvider.setUserAvatar(
+                                          _selected, null,
+                                          update: true);
+                                    },
+                                  );
                                 },
                                 child: Card(
                                   color: Colors.transparent,

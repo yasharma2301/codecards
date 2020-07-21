@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flushbar/flushbar.dart';
+
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 
 class UserInfo extends StatefulWidget {
   final double width;
-  final String username;
+  final BuildContext settingsContext;
 
-  UserInfo({this.width, this.username});
+  UserInfo({
+    this.width,
+    this.settingsContext,
+  });
 
   @override
   _UserInfoState createState() => _UserInfoState();
 }
 
 class _UserInfoState extends State<UserInfo> {
+  bool _editing = false;
+  String editedUsername = "";
+
   @override
   Widget build(BuildContext context) {
+    final UserRepository _userProvider = Provider.of<UserRepository>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Container(
@@ -26,22 +38,93 @@ class _UserInfoState extends State<UserInfo> {
             Padding(
               padding: const EdgeInsets.only(top: 20, right: 15, left: 15),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                padding: EdgeInsets.symmetric(horizontal: 18),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: LightGrey.withOpacity(0.7),
                 ),
                 child: TextFormField(
-                  initialValue: widget.username,
+                  initialValue: _userProvider.getUserName() ?? "hello",
+                  // controller: _usernameController,
+                  readOnly: !_editing,
                   style: TextStyle(
                     color: White.withOpacity(0.7),
-                    fontSize: 18,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Enter Username",
-                      hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.6), fontSize: 16)),
+                    border: InputBorder.none,
+                    labelText: "Username",
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).primaryColor.withOpacity(0.8),
+                      fontSize: 18,
+                    ),
+                    suffixIcon: _userProvider.isLoading()
+                        ? CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).primaryColor,
+                            ),
+                          )
+                        : _editing
+                            ? IconButton(
+                                icon: Icon(
+                                  Icons.check,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () async {
+                                  setState(() {
+                                    _editing = false;
+                                  });
+
+                                  if (_userProvider.getUserName() !=
+                                          editedUsername &&
+                                      editedUsername != "") {
+                                    await _userProvider.setUserName(
+                                        editedUsername, null,
+                                        update: true);
+
+                                    Map response = _userProvider.getResponse();
+                                    Flushbar(
+                                      icon: response['responseCode'] == 202
+                                          ? Icon(
+                                              Icons.check,
+                                              color: Colors.greenAccent,
+                                            )
+                                          : Icon(
+                                              Icons.error_outline,
+                                              color: Colors.redAccent,
+                                            ),
+                                      leftBarIndicatorColor:
+                                          response['responseCode'] == 202
+                                              ? Colors.greenAccent
+                                              : Colors.redAccent,
+                                      message: response['responseMessage'],
+                                      duration: Duration(seconds: 1),
+                                      isDismissible: true,
+                                    )..show(widget.settingsContext)
+                                          .whenComplete(() {
+                                        _userProvider.setLoading(false);
+                                      });
+                                  }
+                                },
+                              )
+                            : IconButton(
+                                icon: Icon(
+                                  Icons.mode_edit,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _editing = true;
+                                  });
+                                },
+                              ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      editedUsername = value;
+                    });
+                  },
                 ),
               ),
             ),

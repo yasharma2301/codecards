@@ -1,3 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/UI/Settings/Avatar/avatar_provider.dart';
@@ -5,18 +14,11 @@ import 'package:codecards/UI/Settings/Contact_US/Contact_US.dart';
 import 'package:codecards/UI/Settings/RateUs/rateUs.dart';
 import 'package:codecards/UI/Settings/UserInfo.dart';
 import 'package:codecards/UI/Settings/settings2Tile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vibration/vibration.dart';
 import 'Avatar/avatar.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'Theme/ColorPicker.dart';
 import 'adTile.dart';
 import 'themeSelector.dart';
-import 'package:flushbar/flushbar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class Settings extends StatefulWidget {
   @override
@@ -25,28 +27,11 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   String currentTheme = "dark";
-  String _userName = '';
-  String _userAvatar = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _getSavedUser().then((user) {
-      setState(() {
-        _userName = user[0];
-        _userAvatar = user[1];
-      });
-    });
-  }
-
-  Future<List> _getSavedUser() async {
-    SharedPreferences _sprefs = await SharedPreferences.getInstance();
-    return [_sprefs.getString('userName'), _sprefs.getString('userAvatar')];
-  }
 
   @override
   Widget build(BuildContext context) {
     final AvatarChanger avatarChanger = Provider.of<AvatarChanger>(context);
+    final UserRepository _userProvider = Provider.of<UserRepository>(context);
 
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -139,7 +124,7 @@ class _SettingsState extends State<Settings> {
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
                                             image: AssetImage(
-                                                avatarChanger.getAvatar()),
+                                                _userProvider.getUserAvatar()),
                                             fit: BoxFit.cover)),
                                   ),
                                 ),
@@ -168,7 +153,10 @@ class _SettingsState extends State<Settings> {
                   height: 10,
                 ),
                 // SetUsername(width:width,height: height,),
-                UserInfo(width: width, username: _userName),
+                UserInfo(
+                  width: width,
+                  settingsContext: context,
+                ),
                 ThemeSelector(),
                 SizedBox(
                   height: 20,

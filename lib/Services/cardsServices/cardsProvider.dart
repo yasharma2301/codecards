@@ -13,7 +13,8 @@ class CardsProvider with ChangeNotifier {
   bool loadMore = false;
   String errorMessage;
   String next;
-  final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
+  // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> callCards(int page) async {
     String url = getUrl + '$page';

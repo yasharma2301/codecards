@@ -149,7 +149,12 @@ class _MyAppState extends State<MyApp> {
               ThemeChanger(appThemeData[prefs.getString('themeKey')]),
         ),
         ChangeNotifierProvider<UserRepository>(
-          create: (_) => UserRepository(),
+          create: (_) => UserRepository(
+            userEmail: prefs.getString('userEmail'),
+            userName: prefs.getString('userName'),
+            userAvatar: prefs.getString('userAvatar'),
+            userToken: prefs.getString('userToken'),
+          ),
         ),
         ChangeNotifierProvider<AvatarChanger>(
           create: (_) => AvatarChanger(prefs.getString(avatarKey)),

@@ -164,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           'Forgot password?',
                           textAlign: TextAlign.end,
                           style: TextStyle(
-                              color:  Colors.blueAccent[100].withOpacity(0.9),
+                              color: Colors.blueAccent[100].withOpacity(0.9),
                               fontSize: 17),
                         ),
                       ),
@@ -274,7 +274,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: FontAwesomeIcons.google,
                       color: Color(0xFFF95A5F),
                       function: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MenuDashboardPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MenuDashboardPage()));
                       },
                     ),
                     Divider(
@@ -315,33 +316,44 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _login(BuildContext context) async {
-    UserRepository _userProvider =
-        Provider.of<UserRepository>(context, listen: false);
-
     FocusScope.of(context).unfocus();
-    _userProvider
-        .loginUser(_emailController.text, _passwordController.text)
-        .then((value) {
-      if (value) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => MenuDashboardPage()),
-                (route) => false);
-      }
-      else{
-        Map response = _userProvider.getResponse();
-        Flushbar(
-          backgroundColor: Colors.blueGrey[900],
-          icon: Icon(Icons.error_outline, color: Colors.redAccent),
-          leftBarIndicatorColor: Colors.redAccent,
-          message: response['responseMessage'],
-          duration: Duration(seconds: 3),
-          isDismissible: true,
-        )..show(context).whenComplete((){
-          _userProvider.setLoading(false);
-        });
-      }
-    });
+
+    if (_emailController.text.length > 5 &&
+        _passwordController.text.length > 3) {
+      UserRepository _userProvider =
+          Provider.of<UserRepository>(context, listen: false);
+
+      _userProvider
+          .loginUser(_emailController.text, _passwordController.text)
+          .then((value) {
+        if (value) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MenuDashboardPage()),
+              (route) => false);
+        } else {
+          Map response = _userProvider.getResponse();
+          Flushbar(
+            backgroundColor: Colors.blueGrey[900],
+            icon: Icon(Icons.error_outline, color: Colors.redAccent),
+            leftBarIndicatorColor: Colors.redAccent,
+            message: response['responseMessage'],
+            duration: Duration(seconds: 3),
+            isDismissible: true,
+          )..show(context).whenComplete(() {
+              _userProvider.setLoading(false);
+            });
+        }
+      });
+    } else {
+      Flushbar(
+        icon: Icon(Icons.error_outline, color: Colors.redAccent),
+        leftBarIndicatorColor: Colors.redAccent,
+        message: "Please provide a valid email and password!",
+        duration: Duration(seconds: 3),
+        isDismissible: true,
+      )..show(context);
+    }
   }
 
   void _bringUpSignUp(BuildContext context) {
