@@ -14,16 +14,22 @@ class UserRepository with ChangeNotifier {
   String responseMessage;
   int responseCode;
 
-  String userEmail, userName, userToken, userAvatar;
+  String userEmail, userName, userToken, userAvatar, pageOffset, questionOffset;
 
   UserRepository(
       {this.userEmail, this.userName, this.userToken, this.userAvatar}) {
-    setUser(UserResponse.fromJson({
-      'email': this.userEmail,
-      'username': this.userName,
-      'avatar': this.userAvatar,
-      'token': this.userToken
-    }));
+    setUser(
+      UserResponse.fromJson(
+        {
+          'email': this.userEmail,
+          'username': this.userName,
+          'avatar': this.userAvatar,
+          'token': this.userToken,
+          'page_offset': this.pageOffset,
+          'question_offset': this.questionOffset
+        },
+      ),
+    );
   }
 
   Future<bool> registerUser(email, username, password, password2) async {
@@ -40,8 +46,9 @@ class UserRepository with ChangeNotifier {
       'assets/images/uncle.PNG',
     ];
     avatars.shuffle();
-    // final String url = 'http://192.168.0.7:8000/register';
-    final String url = 'http://192.168.0.105:8000/register';
+
+    final String url = 'http://192.168.0.7:8000/register';
+    // final String url = 'http://192.168.0.105:8000/register';
     if (email == "" || username == "" || password == "" || password2 == "") {
       setResponse("Please Fill all the fields!", 400);
     } else {
@@ -51,7 +58,9 @@ class UserRepository with ChangeNotifier {
         'username': username,
         'password': password,
         'password2': password2,
-        'avatar': avatars.first
+        'avatar': avatars.first,
+        'page_offset': "1",
+        'question_offset': "0"
       };
 
       var result = await http.post(url, body: body);
@@ -75,8 +84,8 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<bool> loginUser(email, password) async {
-    // final String url = 'http://192.168.0.7:8000/login';
-    final String url = 'http://192.168.0.105:8000/login';
+    final String url = 'http://192.168.0.7:8000/login';
+    // final String url = 'http://192.168.0.105:8000/login';
 
     if (email == "" || password == "") {
       setResponse("Please Fill all the fields!", 400);
@@ -115,9 +124,30 @@ class UserRepository with ChangeNotifier {
     userEmail = userName = userToken = userAvatar = null;
   }
 
-  void setLoading(value) {
-    loading = value;
-    notifyListeners();
+  Future<Map<int, int>> getPageDetails() async {
+    final String url = 'http://192.168.0.7:8000/get-page/';
+    String token;
+    getUserToken().then((value) {
+      token = value;
+    });
+    var response = await http.post(url, body: {'token': token});
+    Map responseBody = json.decode(response.body);
+    if (response.statusCode == 202) {
+      return responseBody;
+    }
+    throw Exception();
+  }
+
+  String getUserAvatar() {
+    return userAvatar;
+  }
+
+  UserResponse getUser() {
+    return user;
+  }
+
+  Map getResponse() {
+    return {'responseMessage': responseMessage, 'responseCode': responseCode};
   }
 
   bool isLoading() {
@@ -127,7 +157,6 @@ class UserRepository with ChangeNotifier {
   void setUser(value) async {
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     user = value;
-
     setUserEmail(user.email, _sprefs);
     setUserName(user.username, _sprefs);
     setUserToken(user.token, _sprefs);
@@ -136,8 +165,9 @@ class UserRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  UserResponse getUser() {
-    return user;
+  void setLoading(value) {
+    loading = value;
+    notifyListeners();
   }
 
   Future<void> setResponse(message, code) {
@@ -147,8 +177,12 @@ class UserRepository with ChangeNotifier {
     return null;
   }
 
-  Map getResponse() {
-    return {'responseMessage': responseMessage, 'responseCode': responseCode};
+  String getUserEmail() {
+    return userEmail;
+  }
+
+  String getUserName() {
+    return userName;
   }
 
   bool isUser() {
@@ -161,17 +195,13 @@ class UserRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  String getUserEmail() {
-    return userEmail;
-  }
-
   Future<void> setUserName(username, _sprefs, {update = false}) async {
     if (update) {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-
-      final String url = 'http://192.168.0.105:8000/update-account/';
+      final String url = 'http://192.168.0.7:8000/update-account/';
+      //final String url = 'http://192.168.0.105:8000/update-account/';
       var response = await http.put(url, body: {
         'username': username,
         'token': userToken,
@@ -194,18 +224,15 @@ class UserRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  String getUserName() {
-    return userName;
-  }
-
   void setUserToken(token, _sprefs) async {
     userToken = token;
     _sprefs.setString('userToken', userToken);
     notifyListeners();
   }
 
-  String getUserToken() {
-    return userToken;
+  Future<String> getUserToken() async {
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    return _sprefs.getString('userToken');
   }
 
   void setUserAvatar(avatar, _sprefs, {update = false}) async {
@@ -213,8 +240,8 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-
-      final String url = 'http://192.168.0.105:8000/update-account/';
+      final String url = 'http://192.168.0.7:8000/update-account/';
+      //final String url = 'http://192.168.0.105:8000/update-account/';
       var response = await http.put(url, body: {
         'avatar': avatar,
         'token': userToken,
@@ -237,7 +264,107 @@ class UserRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  String getUserAvatar() {
-    return userAvatar;
+  void incrementQuestionDetails() async {
+    final String url = 'http://192.168.0.7:8000/update-account/';
+    //final String url = 'http://192.168.0.105:8000/update-account/';
+    int questionOffset;
+    getPageDetails().then((value) {
+      questionOffset = value['question_offset'] + 1;
+    });
+    var response = await http.put(url, body: {
+      'question_offset': questionOffset,
+      'token': userToken,
+    });
+    Map responseBody = json.decode(response.body);
+    if (response.statusCode == 202) {
+      await setResponse(responseBody['message'], 202);
+    } else {
+      await setResponse(responseBody['error_message'], response.statusCode);
+    }
+  }
+
+  void incrementPageDetails() async {
+    final String url = 'http://192.168.0.7:8000/update-account/';
+    //final String url = 'http://192.168.0.105:8000/update-account/';
+    int pageOffset;
+    getPageDetails().then((value) {
+      pageOffset = value['page_offset'] + 1;
+    });
+    var response = await http.put(url, body: {
+      'page_offset': pageOffset,
+      'token': userToken,
+    });
+    Map responseBody = json.decode(response.body);
+    if (response.statusCode == 202) {
+      await setResponse(responseBody['message'], 202);
+    } else {
+      await setResponse(responseBody['error_message'], response.statusCode);
+    }
+  }
+}
+
+class PageInformation {
+  Future<String> getUserToken() async {
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    return _sprefs.getString('userToken');
+  }
+
+  Future<Map<dynamic, dynamic>> getPageDetails() {
+    final String url = 'http://192.168.0.7:8000/get-page/';
+    getUserToken().then((value) async {
+      var response = await http.post(url, body: {"token": value});
+      Map responseBody = json.decode(response.body);
+      if (response.statusCode == 202) {
+        return responseBody;
+      } else {
+        throw Exception();
+      }
+    },);
+  }
+
+  void incrementPageDetails() async {
+    final String url = 'http://192.168.0.7:8000/update-account/';
+    //final String url = 'http://192.168.0.105:8000/update-account/';
+    String token;
+    getPageDetails().then((value) {
+      int pageOffset;
+      pageOffset = value['page_offset'] + 1;
+      getUserToken().then((value) async {
+        token = value;
+        var response = await http.put(url, body: {
+          'page_offset': pageOffset,
+          'token': token,
+        });
+        Map responseBody = json.decode(response.body);
+        if (response.statusCode == 202) {
+          print(responseBody['error_message']);
+        } else {
+          print(responseBody['message']);
+        }
+      });
+    });
+  }
+
+  void incrementQuestionDetails() async {
+    final String url = 'http://192.168.0.7:8000/update-account/';
+    //final String url = 'http://192.168.0.105:8000/update-account/';
+    int questionOffset;
+    String token;
+    getPageDetails().then((value) {
+      questionOffset = value['question_offset'] + 1;
+    });
+    getUserToken().then((value) {
+      token = value;
+    });
+    var response = await http.put(url, body: {
+      'question_offset': questionOffset,
+      'token': token,
+    });
+    Map responseBody = json.decode(response.body);
+    if (response.statusCode == 202) {
+      print(responseBody['error_message']);
+    } else {
+      print(responseBody['message']);
+    }
   }
 }

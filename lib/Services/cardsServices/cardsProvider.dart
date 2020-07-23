@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class CardsProvider with ChangeNotifier {
   String errorMessage;
   String next;
   final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
+
   // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> callCards(int page) async {
@@ -105,8 +107,9 @@ class CardsProvider with ChangeNotifier {
 }
 
 class CardsApiCall {
-  final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
-  // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  //final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
+
+   final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page) async {
     String url = getUrl + '$page';
@@ -124,15 +127,22 @@ class CardsApiCall {
 
 class CardsBloc {
   final CardsApiCall api = CardsApiCall();
-  int pageNumber = 1;
+  final PageInformation pageDetails = PageInformation();
+
   ReplaySubject<List<CardsResults>> _subject = ReplaySubject();
   final ReplaySubject<int> _controller = ReplaySubject();
-
+  int pageNumber =1 ;
   Stream<List<CardsResults>> get stream => _subject.stream;
+
   Sink<int> get sink => _controller.sink;
 
   CardsBloc() {
-    _subject.addStream(Stream.fromFuture(CardsApiCall().getCards(pageNumber)));
+//    int page;
+//    pageDetails.getPageDetails().then((value) {
+//      page = value['page_offset'].toInt();
+//    }).whenComplete(() => print(page));
+    _subject
+        .addStream(Stream.fromFuture(CardsApiCall().getCards(pageNumber)));
     _controller.listen((value) => loadMore(value));
   }
 
