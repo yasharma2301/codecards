@@ -44,12 +44,6 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
               ),
             );
           }
-//          PageInformation().getPageDetails().then((value)  {
-//            int question = value['question_offset'];
-//          });
-//          for (int i = 9; i > -1; i--) {
-//
-//          }
           results.addAll(snapshot.data);
           return SwipeStack(
             children: results.map(
@@ -100,6 +94,7 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
             translationInterval: 6,
             scaleInterval: 0.03,
             onEnd: () {
+              PageInformation().incrementQuestionDetails(10);
               bloc.sink.add(0);
             },
             onSwipe: (int index, SwiperPosition position) {

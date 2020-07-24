@@ -60,7 +60,7 @@ class UserRepository with ChangeNotifier {
         'password2': password2,
         'avatar': avatars.first,
         'page_offset': "1",
-        'question_offset': "0"
+        'question_offset': "10"
       };
 
       var result = await http.post(url, body: body);
