@@ -35,6 +35,7 @@ class CardsResults {
   String hint;
   String company;
   String tags;
+  int id;
 
   CardsResults({this.question, this.hint, this.company, this.tags});
 
@@ -43,6 +44,7 @@ class CardsResults {
     hint = json['hint'];
     company = json['company'];
     tags = json['tags'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +53,7 @@ class CardsResults {
     data['hint'] = this.hint;
     data['company'] = this.company;
     data['tags'] = this.tags;
+    data['id'] = this.id;
     return data;
   }
 }

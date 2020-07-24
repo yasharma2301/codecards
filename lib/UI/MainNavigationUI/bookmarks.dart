@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Bloc/navigation_bloc.dart';
 
 import 'package:codecards/Shared/Colors.dart';
+import 'Bookmarks/BookmarksListing.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
 
 final Color backGroundColor = Color(0xFF1c2129);
@@ -68,6 +69,7 @@ class BookMarks extends StatelessWidget with NavigationStates {
                         ),
                       ],
                     ),
+                    BookmarksListing(),
                   ],
                 ),
               ),

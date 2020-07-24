@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
 
 class CardsStack extends StatefulWidget {
@@ -31,6 +32,8 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<CardsBloc>(context);
+    final _userProvider = Provider.of<UserRepository>(context);
+
     return Container(
       child: StreamBuilder<List<CardsResults>>(
         stream: bloc.stream,
@@ -95,6 +98,13 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
             onEnd: () => debugPrint("onEnd"),
             onSwipe: (int index, SwiperPosition position) {
               debugPrint("onSwipe $index $position");
+
+              if (position == SwiperPosition.Right) {
+                bloc.addBookmark(
+                  results[index].id,
+                  _userProvider.userToken,
+                );
+              }
               results.removeAt(index);
               print(results.length);
               if (index == 0) {

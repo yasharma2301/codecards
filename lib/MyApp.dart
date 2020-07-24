@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:codecards/MyHomePage.dart';
 import 'package:codecards/Shared/themes.dart';
 import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'Services/bookmarServices/bookmarkProvider.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
@@ -53,6 +54,11 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider<HintCounter>(
           create: (_) => HintCounter(widget.prefs.getInt('hint')),
+        ),
+        ChangeNotifierProvider<BookmarkProvider>(
+          create: (_) => BookmarkProvider(
+            widget.prefs.getString('userToken'),
+          ),
         )
       ],
       child: Builder(builder: (BuildContext context) {

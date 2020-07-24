@@ -107,9 +107,9 @@ class CardsProvider with ChangeNotifier {
 }
 
 class CardsApiCall {
-  //final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
+  final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
 
-  final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page) async {
     String url = getUrl + '$page';
@@ -137,9 +137,9 @@ class CardsBloc {
 
   Sink<int> get sink => _controller.sink;
 
-   void create() async{
+  void create() async {
     int page;
-    Future<Map<String,dynamic>> x = PageInformation().getPageDetails();
+    Future<Map<String, dynamic>> x = PageInformation().getPageDetails();
     print(x);
 //    pageDetails.getPageDetails().then((value) {
 //      page = value['page_offset'].toInt();
@@ -164,5 +164,19 @@ class CardsBloc {
   void dispose() {
     _controller.close();
     _subject.close();
+  }
+
+  Future<void> addBookmark(int cardID, String userToken) async {
+    print([cardID, userToken]);
+    final String bookmarkURL = 'http://192.168.0.105:8000/bookmarks/';
+    var body = {
+      'cardID': cardID.toString(),
+      'userToken': userToken,
+    };
+    var response = await post(
+      bookmarkURL,
+      body: body,
+    );
+    print(response.body);
   }
 }
