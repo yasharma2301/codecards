@@ -111,14 +111,17 @@ class CardsApiCall {
 
   // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
-  Future<List<CardsResults>> getCards(int page) async {
+  Future<List<CardsResults>> getCards(int page, int start, int end) async {
     String url = getUrl + '$page';
     Response response = await get(url);
     if (response.statusCode == 200) {
       final jsonDecoded = await jsonDecode(response.body);
       var cardResponse = CardsResponse.fromJson(jsonDecoded);
       List<CardsResults> cardResult = cardResponse.results;
-      return cardResult;
+      print(
+          'fetched only ${cardResult.sublist(start, end).length} number of results');
+      List<CardsResults> revResults = cardResult.reversed.toList();
+      return revResults.sublist(start, end);
     } else {
       throw Exception();
     }
@@ -137,27 +140,22 @@ class CardsBloc {
 
   Sink<int> get sink => _controller.sink;
 
-  void create() async {
-    int page;
-    Future<Map<String, dynamic>> x = PageInformation().getPageDetails();
-    print(x);
-//    pageDetails.getPageDetails().then((value) {
-//      page = value['page_offset'].toInt();
-//    }).whenComplete(() => print(page));
-  }
-
   CardsBloc() {
-    create();
-    _subject.addStream(Stream.fromFuture(CardsApiCall().getCards(pageNumber)));
-    _controller.listen((value) => loadMore(value));
+    pageDetails.getPageDetails().then((value) {
+      _subject.addStream(Stream.fromFuture(CardsApiCall()
+          .getCards(value['page_offset'], 0, value['question_offset'])));
+      _controller.listen((value) => loadMore(value));
+    });
   }
 
   Future<void> loadMore([int number]) async {
     if (number == 0) {
-      print('called?');
-      pageNumber += 1;
-      List<CardsResults> list = await api.getCards(pageNumber);
-      _subject.sink.add(list);
+      pageDetails.getPageDetails().then((p) {
+        pageDetails.incrementPageDetails(p['page_offset']).then((v) async {
+          List<CardsResults> list = await api.getCards(v, 0, 10);
+          _subject.sink.add(list);
+        });
+      });
     }
   }
 
