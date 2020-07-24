@@ -1,3 +1,4 @@
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swipe_stack/swipe_stack.dart';
@@ -43,6 +44,12 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
               ),
             );
           }
+//          PageInformation().getPageDetails().then((value)  {
+//            int question = value['question_offset'];
+//          });
+//          for (int i = 9; i > -1; i--) {
+//
+//          }
           results.addAll(snapshot.data);
           return SwipeStack(
             children: results.map(
@@ -92,15 +99,13 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
             stackFrom: StackFrom.Top,
             translationInterval: 6,
             scaleInterval: 0.03,
-            onEnd: () => debugPrint("onEnd"),
+            onEnd: () {
+              bloc.sink.add(0);
+            },
             onSwipe: (int index, SwiperPosition position) {
-              debugPrint("onSwipe $index $position");
+              PageInformation().incrementQuestionDetails(index);
               results.removeAt(index);
               print(results.length);
-              if (index == 0) {
-                print('calling The Provider Bloc');
-                bloc.sink.add(index);
-              }
             },
             onRewind: (int index, SwiperPosition position) =>
                 debugPrint("onRewind $index $position"),

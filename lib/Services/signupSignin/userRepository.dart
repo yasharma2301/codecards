@@ -304,69 +304,52 @@ class UserRepository with ChangeNotifier {
 }
 
 class PageInformation {
-  Future<String> getUserToken() async {
-    SharedPreferences _sprefs = await SharedPreferences.getInstance();
-    return _sprefs.getString('userToken');
-  }
-
-  Future<Map<String, dynamic>> getPageDetails() async{
+  Future<Map<String, dynamic>> getPageDetails() async {
     final String url = 'http://192.168.0.7:8000/get-page/';
-    getUserToken().then((value) async {
-      print(value);
-      var response = await http.post(url, body: {"token": value});
-      Map responseBody = json.decode(response.body);
-      if (response.statusCode == 202) {
-        print('returned');
-        return responseBody;
-      } else {
-        throw Exception();
-      }
-    },);
+    //final String url = 'http://192.168.0.105:8000/get-page/';
+    Map responseBody;
+    var response;
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    String token = _sprefs.getString('userToken');
+    response = await http.post(url, body: {"token": token});
+    responseBody = json.decode(response.body);
+    if (response.statusCode == 202) {
+      return responseBody;
+    } else {
+      throw Exception('Could\'nt get Future');
+    }
   }
 
-  void incrementPageDetails() async {
+  Future<int> incrementPageDetails(int previousPage) async {
     final String url = 'http://192.168.0.7:8000/update-account/';
     //final String url = 'http://192.168.0.105:8000/update-account/';
-    String token;
-    getPageDetails().then((value) {
-      int pageOffset;
-      pageOffset = value['page_offset'] + 1;
-      getUserToken().then((value) async {
-        token = value;
-        var response = await http.put(url, body: {
-          'page_offset': pageOffset,
-          'token': token,
-        });
-        Map responseBody = json.decode(response.body);
-        if (response.statusCode == 202) {
-          print(responseBody['error_message']);
-        } else {
-          print(responseBody['message']);
-        }
-      });
-    });
-  }
-
-  void incrementQuestionDetails() async {
-    final String url = 'http://192.168.0.7:8000/update-account/';
-    //final String url = 'http://192.168.0.105:8000/update-account/';
-    int questionOffset;
-    String token;
-    getPageDetails().then((value) {
-      questionOffset = value['question_offset'] + 1;
-    });
-    getUserToken().then((value) {
-      token = value;
-    });
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    String token = _sprefs.getString('userToken');
+    int increment = previousPage + 1;
     var response = await http.put(url, body: {
-      'question_offset': questionOffset,
       'token': token,
+      'page_offset': increment.toString(),
     });
     Map responseBody = json.decode(response.body);
     if (response.statusCode == 202) {
-      print(responseBody['error_message']);
+      return increment;
     } else {
-      print(responseBody['message']);
+      print(responseBody['error_message']);
+    }
+  }
+
+  void incrementQuestionDetails(int index) async {
+    final String url = 'http://192.168.0.7:8000/update-account/';
+    //final String url = 'http://192.168.0.105:8000/update-account/';
+    SharedPreferences _sprefs = await SharedPreferences.getInstance();
+    String token = _sprefs.getString('userToken');
+    var response = await http.put(url, body: {
+      'token': token,
+      'question_offset': index.toString(),
+    });
+    Map responseBody = json.decode(response.body);
+    if (response.statusCode != 202) {
+      print(responseBody['error_message']);
     }
   }
 }
