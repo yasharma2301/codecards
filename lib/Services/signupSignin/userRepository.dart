@@ -309,12 +309,14 @@ class PageInformation {
     return _sprefs.getString('userToken');
   }
 
-  Future<Map<dynamic, dynamic>> getPageDetails() {
+  Future<Map<String, dynamic>> getPageDetails() async{
     final String url = 'http://192.168.0.7:8000/get-page/';
     getUserToken().then((value) async {
+      print(value);
       var response = await http.post(url, body: {"token": value});
       Map responseBody = json.decode(response.body);
       if (response.statusCode == 202) {
+        print('returned');
         return responseBody;
       } else {
         throw Exception();

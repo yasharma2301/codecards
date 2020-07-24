@@ -109,7 +109,7 @@ class CardsProvider with ChangeNotifier {
 class CardsApiCall {
   //final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
 
-   final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page) async {
     String url = getUrl + '$page';
@@ -127,22 +127,28 @@ class CardsApiCall {
 
 class CardsBloc {
   final CardsApiCall api = CardsApiCall();
-  final PageInformation pageDetails = PageInformation();
+  PageInformation pageDetails = PageInformation();
 
   ReplaySubject<List<CardsResults>> _subject = ReplaySubject();
   final ReplaySubject<int> _controller = ReplaySubject();
-  int pageNumber =1 ;
+  int pageNumber = 1;
+
   Stream<List<CardsResults>> get stream => _subject.stream;
 
   Sink<int> get sink => _controller.sink;
 
-  CardsBloc() {
-//    int page;
+   void create() async{
+    int page;
+    Future<Map<String,dynamic>> x = PageInformation().getPageDetails();
+    print(x);
 //    pageDetails.getPageDetails().then((value) {
 //      page = value['page_offset'].toInt();
 //    }).whenComplete(() => print(page));
-    _subject
-        .addStream(Stream.fromFuture(CardsApiCall().getCards(pageNumber)));
+  }
+
+  CardsBloc() {
+    create();
+    _subject.addStream(Stream.fromFuture(CardsApiCall().getCards(pageNumber)));
     _controller.listen((value) => loadMore(value));
   }
 
