@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swipe_stack/swipe_stack.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
-import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
+import 'hintDialog.dart';
 
 class CardsStack extends StatefulWidget {
   @override
@@ -15,21 +14,6 @@ class CardsStack extends StatefulWidget {
 }
 
 class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
-  List<CardsResults> results;
-  List<int> maxResults = [];
-
-  @override
-  void initState() {
-    results = [];
-    maxResults.addAll(List.generate(50, (index) => index));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<CardsBloc>(context);
@@ -47,9 +31,8 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
               ),
             );
           }
-          results.addAll(snapshot.data);
           return SwipeStack(
-            children: results.map(
+            children: snapshot.data.map(
               (CardsResults cardsResult) {
                 return SwiperItem(
                   builder: (SwiperPosition position, double progress) {
@@ -71,8 +54,14 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
+                                IconButton(
+                                    icon: Icon(Icons.lightbulb_outline),
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      _showHintDialog(hint: cardsResult.hint);
+                                    }),
                                 Text(
-                                  cardsResult.hint,
+                                  cardsResult.id.toString(),
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 20),
                                 ),
@@ -102,16 +91,15 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
             },
             onSwipe: (int index, SwiperPosition position) {
               debugPrint("onSwipe $index $position");
-
               if (position == SwiperPosition.Right) {
                 bloc.addBookmark(
-                  results[index].id,
+                  snapshot.data[index].id,
                   _userProvider.userToken,
                 );
               }
               PageInformation().incrementQuestionDetails(index);
-              results.removeAt(index);
-              print(results.length);
+              snapshot.data.removeAt(index);
+              print(snapshot.data.length);
             },
             onRewind: (int index, SwiperPosition position) =>
                 debugPrint("onRewind $index $position"),
@@ -119,5 +107,20 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
         },
       ),
     );
+  }
+
+  void _showHintDialog({String hint}) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            backgroundColor: Colors.transparent,
+            child: HintDialog(
+              hint: hint,
+            ),
+          );
+        });
   }
 }

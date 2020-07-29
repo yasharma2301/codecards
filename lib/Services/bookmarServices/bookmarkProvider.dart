@@ -13,7 +13,8 @@ class BookmarkProvider with ChangeNotifier {
   }
 
   getBookmarks(String userToken) async {
-    final String url = 'http://192.168.0.105:8000/bookmarks/';
+//    final String url = 'http://192.168.0.105:8000/bookmarks/';
+    final String url = 'http://192.168.0.7:8000/bookmarks/';
 
     var response = await http.get(
       url,

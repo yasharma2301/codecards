@@ -34,9 +34,6 @@ class _MyAppState extends State<MyApp> {
           dispose: (context, bloc) => bloc.dispose(),
           create: (BuildContext context) => CardsBloc(),
         ),
-        ChangeNotifierProvider<CardsProvider>(
-          create: (_) => CardsProvider(),
-        ),
         ChangeNotifierProvider<NoteData>(
           create: (_) => NoteData(),
         ),
