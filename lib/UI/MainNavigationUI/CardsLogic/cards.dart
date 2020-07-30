@@ -24,7 +24,7 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
         stream: bloc.stream,
         builder:
             (BuildContext context, AsyncSnapshot<List<CardsResults>> snapshot) {
-          if (!snapshot.hasData) {
+          if (!snapshot.hasData || snapshot.data.length == 0) {
             return Center(
               child: CircularProgressIndicator(
                 strokeWidth: 1,
@@ -97,7 +97,11 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                   _userProvider.userToken,
                 );
               }
-              PageInformation().incrementQuestionDetails(index);
+              if (index == 0) {
+                PageInformation().incrementQuestionDetails(10);
+              } else {
+                PageInformation().incrementQuestionDetails(index);
+              }
               snapshot.data.removeAt(index);
               print(snapshot.data.length);
             },

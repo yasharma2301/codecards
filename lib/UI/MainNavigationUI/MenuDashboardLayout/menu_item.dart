@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'package:codecards/Shared/Colors.dart';
+import 'package:codecards/Services/bookmarServices/bookmarkProvider.dart';
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
 
 class Menuitem extends StatefulWidget {
@@ -32,6 +34,8 @@ class Menuitem extends StatefulWidget {
 class _MenuitemState extends State<Menuitem> {
   @override
   Widget build(BuildContext context) {
+    BookmarkProvider bookmarkProvider = Provider.of<BookmarkProvider>(context);
+
     return GestureDetector(
         onTap: widget.isCollapsed
             ? null
@@ -41,6 +45,10 @@ class _MenuitemState extends State<Menuitem> {
                 }
                 BlocProvider.of<NavigationBloc>(context).add(widget.navigateTo);
                 widget.onMenuItemClicked();
+                if (widget.navigateTo == NavigationEvents.BookmarksClickEvent) {
+                  bookmarkProvider.getBookmarks();
+                }
+                ;
               },
         child: Container(
           height: 40,

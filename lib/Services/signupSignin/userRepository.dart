@@ -47,8 +47,8 @@ class UserRepository with ChangeNotifier {
     ];
     avatars.shuffle();
 
-     final String url = 'http://192.168.0.7:8000/register';
-    //final String url = 'http://192.168.0.105:8000/register';
+    //  final String url = 'http://192.168.0.7:8000/register';
+    final String url = 'http://192.168.0.105:8000/register';
     if (email == "" || username == "" || password == "" || password2 == "") {
       setResponse("Please Fill all the fields!", 400);
     } else {
@@ -84,8 +84,8 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<bool> loginUser(email, password) async {
-     final String url = 'http://192.168.0.7:8000/login';
-    //final String url = 'http://192.168.0.105:8000/login';
+    // final String url = 'http://192.168.0.7:8000/login';
+    final String url = 'http://192.168.0.105:8000/login';
 
     if (email == "" || password == "") {
       setResponse("Please Fill all the fields!", 400);
@@ -125,8 +125,8 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<Map<int, int>> getPageDetails() async {
-     final String url = 'http://192.168.0.7:8000/get-page/';
-    //final String url = 'http://192.168.0.105:8000/get-page/';
+    // final String url = 'http://192.168.0.7:8000/get-page/';
+    final String url = 'http://192.168.0.105:8000/get-page/';
 
     String token;
     getUserToken().then((value) {
@@ -202,8 +202,8 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-       final String url = 'http://192.168.0.7:8000/update-account/';
-      //final String url = 'http://192.168.0.105:8000/update-account/';
+      // final String url = 'http://192.168.0.7:8000/update-account/';
+      final String url = 'http://192.168.0.105:8000/update-account/';
 
       var response = await http.put(url, body: {
         'username': username,
@@ -243,8 +243,8 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-       final String url = 'http://192.168.0.7:8000/update-account/';
-      //final String url = 'http://192.168.0.105:8000/update-account/';
+      // final String url = 'http://192.168.0.7:8000/update-account/';
+      final String url = 'http://192.168.0.105:8000/update-account/';
       var response = await http.put(url, body: {
         'avatar': avatar,
         'token': userToken,
@@ -268,8 +268,8 @@ class UserRepository with ChangeNotifier {
   }
 
   void incrementQuestionDetails() async {
-     final String url = 'http://192.168.0.7:8000/update-account/';
-    //final String url = 'http://192.168.0.105:8000/update-account/';
+    // final String url = 'http://192.168.0.7:8000/update-account/';
+    final String url = 'http://192.168.0.105:8000/update-account/';
     int questionOffset;
     getPageDetails().then((value) {
       questionOffset = value['question_offset'] + 1;
@@ -287,8 +287,8 @@ class UserRepository with ChangeNotifier {
   }
 
   void incrementPageDetails() async {
-     final String url = 'http://192.168.0.7:8000/update-account/';
-   // final String url = 'http://192.168.0.105:8000/update-account/';
+    // final String url = 'http://192.168.0.7:8000/update-account/';
+    final String url = 'http://192.168.0.105:8000/update-account/';
     int pageOffset;
     getPageDetails().then((value) {
       pageOffset = value['page_offset'] + 1;
@@ -308,8 +308,8 @@ class UserRepository with ChangeNotifier {
 
 class PageInformation {
   Future<Map<String, dynamic>> getPageDetails() async {
-    final String url = 'http://192.168.0.7:8000/get-page/';
-    //final String url = 'http://192.168.0.105:8000/get-page/';
+    // final String url = 'http://192.168.0.7:8000/get-page/';
+    final String url = 'http://192.168.0.105:8000/get-page/';
     Map responseBody;
     var response;
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
@@ -324,8 +324,8 @@ class PageInformation {
   }
 
   Future<int> incrementPageDetails(int previousPage) async {
-    final String url = 'http://192.168.0.7:8000/update-account/';
-    //final String url = 'http://192.168.0.105:8000/update-account/';
+    // final String url = 'http://192.168.0.7:8000/update-account/';
+    final String url = 'http://192.168.0.105:8000/update-account/';
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     String token = _sprefs.getString('userToken');
     int increment = previousPage + 1;
@@ -342,8 +342,8 @@ class PageInformation {
   }
 
   void incrementQuestionDetails(int index) async {
-    final String url = 'http://192.168.0.7:8000/update-account/';
-    //final String url = 'http://192.168.0.105:8000/update-account/';
+    // final String url = 'http://192.168.0.7:8000/update-account/';
+    final String url = 'http://192.168.0.105:8000/update-account/';
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     String token = _sprefs.getString('userToken');
     var response = await http.put(url, body: {

@@ -23,6 +23,8 @@ class BookMarks extends StatelessWidget with NavigationStates {
         builder: (context, constraints) {
           double currentWidth = constraints.constrainWidth();
           double maxWidth = MediaQuery.of(context).size.width;
+          double currentHeight = constraints.constrainHeight();
+          double maxHeight = MediaQuery.of(context).size.height;
           bool border;
           if (maxWidth == currentWidth) {
             border = false;
@@ -43,36 +45,37 @@ class BookMarks extends StatelessWidget with NavigationStates {
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(0),
                 color: backGroundColor),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              physics: ClampingScrollPhysics(),
-              child: Container(
-                child: Column(
+            child: Stack(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        IconButton(
-                          splashColor: LightPopBlue.withOpacity(0.8),
-                          hoverColor: LightPopBlue,
-                          icon: Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: onMenuTap,
-                        ),
-                        Text(
-                          "BookMarks",
-                          style: TextStyle(fontSize: 24.0, color: Colors.white),
-                        ),
-                      ],
+                    IconButton(
+                      splashColor: LightPopBlue.withOpacity(0.8),
+                      hoverColor: LightPopBlue,
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: onMenuTap,
                     ),
-                    BookmarksListing(),
+                    Text(
+                      "BookMarks",
+                      style: TextStyle(
+                        fontSize: 26.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
-              ),
+                Align(
+                  alignment: Alignment.center,
+                  child: BookmarksListing(),
+                ),
+              ],
             ),
           );
         },
