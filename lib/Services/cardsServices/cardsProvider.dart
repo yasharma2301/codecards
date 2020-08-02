@@ -6,9 +6,8 @@ import 'package:rxdart/rxdart.dart';
 import 'cardResponseModel.dart';
 
 class CardsApiCall {
-  final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
-
-  // final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  //final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
+   final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page, int start, int end) async {
     String url = getUrl + '$page';
@@ -21,12 +20,11 @@ class CardsApiCall {
         'start': start,
         'end': end,
       });
-      print(
-          'fetched only ${cardResult.sublist(start, end).length} number of results');
+      print('fetched only ${cardResult.sublist(start, end).length} number of results');
       List<CardsResults> revResults = cardResult.reversed.toList();
       return revResults.sublist(start, end);
     } else {
-      throw Exception();
+      throw Exception('Some error occurred. Could\'nt get cards.');
     }
   }
 }
@@ -37,7 +35,6 @@ class CardsBloc {
 
   ReplaySubject<List<CardsResults>> _subject = ReplaySubject();
   final ReplaySubject<int> _controller = ReplaySubject();
-  int pageNumber = 1;
 
   Stream<List<CardsResults>> get stream => _subject.stream;
 
@@ -69,8 +66,8 @@ class CardsBloc {
 
   Future<void> addBookmark(int cardID, String userToken) async {
     print([cardID, userToken]);
-    final String bookmarkURL = 'http://192.168.0.105:8000/bookmarks/';
-    // final String bookmarkURL = 'http://192.168.0.7:8000/bookmarks/';
+    //final String bookmarkURL = 'http://192.168.0.105:8000/bookmarks/';
+     final String bookmarkURL = 'http://192.168.0.7:8000/bookmarks/';
     var body = {
       'cardID': cardID.toString(),
       'userToken': userToken,

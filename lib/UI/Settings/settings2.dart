@@ -1,9 +1,10 @@
+import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/FlushBar.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
@@ -27,15 +28,16 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
-
+    HintCounter hintProvider = Provider.of<HintCounter>(context);
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Grey,
+      backgroundColor: darkTheme.getMode() == true ? Grey : Colors.white,
       body: Stack(
         children: [
           Container(
-            color: LightGrey.withOpacity(0.15),
+            color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.15):Colors.white,
           ),
           Positioned(
             left: -(height / 2 - width / 2),
@@ -44,7 +46,10 @@ class _SettingsState extends State<Settings> {
               height: height,
               width: height,
               decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: LightGrey.withOpacity(0.4)),
+                  shape: BoxShape.circle,
+                  color: darkTheme.getMode() == true
+                      ? LightGrey.withOpacity(0.4)
+                      : Colors.grey.withOpacity(0.35)),
             ),
           ),
           Positioned(
@@ -55,7 +60,9 @@ class _SettingsState extends State<Settings> {
               width: width * 1.6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: LightGrey.withOpacity(0.2),
+                color: darkTheme.getMode() == true
+                    ? LightGrey.withOpacity(0.2)
+                    : Colors.grey.withOpacity(0.1),
               ),
             ),
           ),
@@ -67,7 +74,9 @@ class _SettingsState extends State<Settings> {
               width: width * 0.6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: LightGrey.withOpacity(0.4),
+                color: darkTheme.getMode() == true
+                    ? LightGrey.withOpacity(0.4)
+                    : Colors.grey.withOpacity(0.2),
               ),
             ),
           ),
@@ -86,7 +95,7 @@ class _SettingsState extends State<Settings> {
                       Text(
                         "Settings".toUpperCase(),
                         style: TextStyle(
-                            color: White,
+                            color: darkTheme.getMode() == true ?White:Grey,
                             fontSize: 30,
                             letterSpacing: 2,
                             fontWeight: FontWeight.w600,
@@ -184,7 +193,9 @@ class _SettingsState extends State<Settings> {
                 SizedBox(
                   height: 10,
                 ),
-                AdTile(),
+                AdTile(
+                  hintCounter: hintProvider,
+                ),
               ],
             ),
           ),

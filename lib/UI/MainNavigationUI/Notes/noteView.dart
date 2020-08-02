@@ -1,6 +1,8 @@
+import 'package:codecards/Services/notesServices/noteAPIService.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'package:codecards/Shared/FlushBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Services/notesServices/noteModel.dart';
 import 'package:codecards/Shared/Colors.dart';
@@ -19,6 +21,7 @@ class NoteView extends StatefulWidget {
 }
 
 class _NoteViewState extends State<NoteView> {
+  NoteAPIServerClass noteAPIServerClass = NoteAPIServerClass();
   String title;
   String description;
   bool starred;
@@ -44,16 +47,22 @@ class _NoteViewState extends State<NoteView> {
 
   @override
   Widget build(BuildContext context) {
-    void _editAssociate(context) {
+    FlushBar flushBar = FlushBar(context: context);
+    UserRepository userRepository =
+        Provider.of<UserRepository>(context, listen: false);
+
+    void _editNote(context) {
+      NoteModel noteModel = NoteModel(
+          title: title,
+          description: description,
+          starred: starred,
+          createdDateTime: createdDateTime,
+          updatedDateTime: DateTime.now());
       Provider.of<NoteData>(context, listen: false).editNote(
-        note: NoteModel(
-            title: title,
-            description: description,
-            starred: starred,
-            createdDateTime: createdDateTime,
-            updatedDateTime: DateTime.now()),
+        note: noteModel,
         noteKey: widget.noteModel.key,
       );
+      noteAPIServerClass.updateNoteToServer(noteModel, userRepository.userToken, widget.noteModel.key);
 
       Navigator.pop(context);
     }
@@ -63,8 +72,6 @@ class _NoteViewState extends State<NoteView> {
 
     return Consumer<NoteData>(
       builder: (context, noteData, child) {
-        // ignore: unused_local_variable
-        NoteModel _currentNote = noteData.getActiveNote();
         return Scaffold(
           backgroundColor: Grey,
           body: Stack(
@@ -215,17 +222,26 @@ class _NoteViewState extends State<NoteView> {
                     GestureDetector(
                       onTap: () {
                         if (widget.noteMode == NoteModes.Editing) {
-                          _editAssociate(context);
+                          _editNote(context);
                         } else {
-                          Provider.of<NoteData>(context, listen: false).addNote(
-                            NoteModel(
+                          if (_titleController.text == '' ||
+                              _descriptionController.text == '') {
+                            flushBar.showErrorFlushBar(
+                              "All fields are mandatory.",
+                            );
+                          } else {
+                            NoteModel noteModel = NoteModel(
                                 title: _titleController.text,
                                 starred: false,
                                 description: _descriptionController.text,
                                 createdDateTime: DateTime.now(),
-                                updatedDateTime: DateTime.now()),
-                          );
-                          Navigator.of(context).pop();
+                                updatedDateTime: DateTime.now());
+                            noteData.addNote(noteModel).then((id) {
+                              noteAPIServerClass.postNoteToServer(
+                                  noteModel, userRepository.userToken, id);
+                            });
+                            Navigator.of(context).pop();
+                          }
                         }
                       },
                       child: ClipPath(

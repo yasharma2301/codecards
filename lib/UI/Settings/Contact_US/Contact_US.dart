@@ -462,6 +462,7 @@ class _ContactUsState extends State<ContactUs>
   }
 
   Future<Map> _sendQuery() async {
+   // String url = 'http://192.168.0.7:8000/contact-us/';
     String url = 'http://192.168.0.105:8000/contact-us/';
 
     var request = http.MultipartRequest('POST', Uri.parse(url))

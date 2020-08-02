@@ -1,3 +1,4 @@
+import 'package:codecards/Services/AdProvider/adProvider.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class CardsStack extends StatefulWidget {
 class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    final HintCounter hintProvider = Provider.of<HintCounter>(context);
     final bloc = Provider.of<CardsBloc>(context);
     final _userProvider = Provider.of<UserRepository>(context);
 
@@ -24,7 +26,7 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
         stream: bloc.stream,
         builder:
             (BuildContext context, AsyncSnapshot<List<CardsResults>> snapshot) {
-          if (!snapshot.hasData || snapshot.data.length == 0) {
+          if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(
                 strokeWidth: 1,
@@ -43,36 +45,51 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
                         decoration: BoxDecoration(
-                          color: LightGrey,
+                          color: Colors.white,
                           border: Border.all(width: 1, color: Grey),
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         child: Align(
                           alignment: Alignment.center,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                    icon: Icon(Icons.lightbulb_outline),
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      _showHintDialog(hint: cardsResult.hint);
-                                    }),
-                                Text(
-                                  cardsResult.id.toString(),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 20),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Positioned(
+                                right: 0,
+                                bottom: 0,
+                                child: Text(
+                                  cardsResult.company,
+                                  style: TextStyle(color: Grey, fontSize: 40),
                                 ),
-                                Text(
-                                  cardsResult.question,
-                                  style: TextStyle(
-                                      color: Colors.blue, fontSize: 20),
-                                  textAlign: TextAlign.center,
+                              ),
+                              SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    IconButton(
+                                        icon: Icon(Icons.lightbulb_outline),
+                                        color: Grey,
+                                        onPressed: () {
+                                          _showHintDialog(
+                                              hint: cardsResult.hint,
+                                              hintCounter: hintProvider);
+                                        }),
+                                    Text(
+                                      cardsResult.id.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                    Text(
+                                      cardsResult.question,
+                                      style: TextStyle(
+                                          color: Colors.blue, fontSize: 18),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -97,9 +114,9 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                   _userProvider.userToken,
                 );
               }
-              if (index == 0) {
+              if(index==0){
                 PageInformation().incrementQuestionDetails(10);
-              } else {
+              }else{
                 PageInformation().incrementQuestionDetails(index);
               }
               snapshot.data.removeAt(index);
@@ -113,18 +130,21 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
     );
   }
 
-  void _showHintDialog({String hint}) {
+  void _showHintDialog({String hint, HintCounter hintCounter}) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            backgroundColor: Colors.transparent,
-            child: HintDialog(
-              hint: hint,
-            ),
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        hintCounter.decreaseHints();
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: Colors.transparent,
+          child: HintDialog(
+            hintCount: hintCounter.getHint(),
+            hint: hint,
+          ),
+        );
+      },
+    );
   }
 }

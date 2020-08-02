@@ -1,8 +1,9 @@
+import 'package:codecards/Services/Themes/accentColorProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/Shared/themes.dart';
+import 'package:codecards/Shared/themesEnum.dart';
 
 class SetAccent extends StatelessWidget {
   final double width;

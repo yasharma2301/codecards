@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-
 import 'package:codecards/MyHomePage.dart';
-import 'package:codecards/Shared/themes.dart';
+import 'package:codecards/Shared/themesEnum.dart';
 import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'Services/Themes/accentColorProvider.dart';
+import 'Services/Themes/lightDarkThemeProvider.dart';
 import 'Services/bookmarServices/bookmarkProvider.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'main.dart';
 
 class MyApp extends StatefulWidget {
   final String initialRoute;
@@ -40,6 +43,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<ThemeChanger>(
           create: (_) =>
               ThemeChanger(appThemeData[widget.prefs.getString('themeKey')]),
+        ),
+        ChangeNotifierProvider<LightOrDarkTheme>(
+          create: (_) => LightOrDarkTheme(Hive.box(darkModeBox).get(mode)),
         ),
         ChangeNotifierProvider<UserRepository>(
           create: (_) => UserRepository(

@@ -1,8 +1,7 @@
-import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'package:codecards/Services/notesServices/noteAPIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-
 import 'package:codecards/routes/slideFromRight.dart';
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Shared/Colors.dart';
@@ -22,6 +21,8 @@ class CodeCards extends StatefulWidget with NavigationStates {
 }
 
 class _CodeCardsState extends State<CodeCards> {
+
+  NoteAPIServerClass noteAPIServerClass = NoteAPIServerClass();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -62,18 +63,15 @@ class _CodeCardsState extends State<CodeCards> {
                       children: [
                         Padding(
                           padding: border == true
-                              ? EdgeInsets.only(left: 0)
-                              : EdgeInsets.only(left: 12),
-                          child: IconButton(
-                            splashColor: LightPopBlue.withOpacity(0.5),
-                            hoverColor: LightPopBlue,
-                            highlightColor: Colors.transparent,
-                            icon: Icon(
+                              ? EdgeInsets.only(left: 5)
+                              : EdgeInsets.only(left: 16),
+                          child: GestureDetector(
+                            onTap: widget.onMenuTap,
+                            child: Icon(
                               Icons.menu,
                               color: Colors.white,
                               size: 30,
                             ),
-                            onPressed: widget.onMenuTap,
                           ),
                         ),
                         Padding(
@@ -115,53 +113,6 @@ class _CodeCardsState extends State<CodeCards> {
                                       : EdgeInsets.symmetric(horizontal: 0),
                                   child: Stack(
                                     children: [
-//                                      Align(
-//                                        alignment: Alignment.bottomCenter,
-//                                        child: Container(
-//                                          height: 55,
-//                                          decoration: BoxDecoration(
-//                                              borderRadius: BorderRadius.only(
-//                                                topLeft: Radius.circular(20),
-//                                                topRight: Radius.circular(20),
-//                                              ),
-//                                              color:
-//                                                  LightGrey.withOpacity(0.4)),
-//                                          child: Row(
-//                                            mainAxisAlignment:
-//                                                MainAxisAlignment.spaceBetween,
-//                                            children: [
-//                                              Padding(
-//                                                padding: EdgeInsets.only(
-//                                                    left: border == true
-//                                                        ? 5
-//                                                        : 25),
-//                                                child: IconCardButton(
-//                                                  iconData: Icons.thumb_down,
-//                                                  color: Theme.of(context)
-//                                                      .primaryColorLight,
-//                                                  buttonTag: 'Nope',
-//                                                  buttonFunction: () {
-//                                                    print('nope');
-//                                                  },
-//                                                ),
-//                                              ),
-//                                              Padding(
-//                                                padding:
-//                                                    EdgeInsets.only(right: 25),
-//                                                child: IconCardButton(
-//                                                  iconData: Icons.thumb_up,
-//                                                  color: Theme.of(context)
-//                                                      .primaryColorLight,
-//                                                  buttonTag: 'Like',
-//                                                  buttonFunction: () {
-//                                                    print('like');
-//                                                  },
-//                                                ),
-//                                              ),
-//                                            ],
-//                                          ),
-//                                        ),
-//                                      ),
                                       Align(
                                         alignment: Alignment.bottomCenter,
                                         child: Padding(

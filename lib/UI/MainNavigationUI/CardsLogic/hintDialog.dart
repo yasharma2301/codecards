@@ -1,10 +1,12 @@
+import 'dart:ui';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
 
 class HintDialog extends StatefulWidget {
   final String hint;
+  final int hintCount;
 
-  const HintDialog({Key key, this.hint}) : super(key: key);
+  const HintDialog({Key key, this.hint,this.hintCount}) : super(key: key);
 
   @override
   _HintDialogState createState() => _HintDialogState();

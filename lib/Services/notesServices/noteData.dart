@@ -6,13 +6,7 @@ import 'noteModel.dart';
 class NoteData extends ChangeNotifier {
   static const _boxName = 'notesBox';
   List<NoteModel> _noteModel = [];
-  NoteModel _activeNote;
-
-  void getNotes() async {
-    var box = await Hive.openBox<NoteModel>(_boxName);
-    _noteModel = box.values.toList();
-    notifyListeners();
-  }
+  int index;
 
   Future<List<NoteModel>> getNoteList() async {
     var box = await Hive.openBox<NoteModel>(_boxName);
@@ -20,22 +14,28 @@ class NoteData extends ChangeNotifier {
     return _noteModel;
   }
 
-  //Work Here ---!Incomplete!---
-  Future<List<NoteModel>> getStarFilter() async {
+  Future<List<NoteModel>> getStarFiltered() async {
     var box = await Hive.openBox<NoteModel>(_boxName);
-    _noteModel = box.values.where((element) => element.starred == true);
+    _noteModel = box.values.where((element) => element.starred = true);
     return _noteModel;
+  }
+
+  void putNoteAt(int index , NoteModel noteModel) async{
+    var box = await Hive.openBox<NoteModel>(_boxName);
+    // replace putAt with something else
+    box.putAt(index, noteModel);
   }
 
   NoteModel getNote(index) {
     return _noteModel[index];
   }
 
-  void addNote(NoteModel note) async {
+  Future<int> addNote(NoteModel note) async {
     var box = await Hive.openBox<NoteModel>(_boxName);
-    await box.add(note);
+    await box.add(note).then((value) {index = value;});
     _noteModel = box.values.toList();
     notifyListeners();
+    return index;
   }
 
   void deleteNote(key) async {
@@ -49,18 +49,7 @@ class NoteData extends ChangeNotifier {
     var box = await Hive.openBox<NoteModel>(_boxName);
     await box.put(noteKey, note);
     _noteModel = box.values.toList();
-    _activeNote = box.get(noteKey);
     notifyListeners();
-  }
-
-  void setActiveNote(key) async {
-    var box = await Hive.openBox<NoteModel>(_boxName);
-    _activeNote = box.get(key);
-    notifyListeners();
-  }
-
-  NoteModel getActiveNote() {
-    return _activeNote;
   }
 
   int get noteCount {

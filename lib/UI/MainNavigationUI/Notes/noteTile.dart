@@ -1,6 +1,7 @@
+import 'package:codecards/Services/notesServices/noteAPIService.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Services/notesServices/noteModel.dart';
 import 'package:codecards/Shared/Colors.dart';
@@ -16,8 +17,12 @@ class NoteTile extends StatefulWidget {
 }
 
 class _NoteTileState extends State<NoteTile> {
+  NoteAPIServerClass noteAPIServerClass = NoteAPIServerClass();
+
   @override
   Widget build(BuildContext context) {
+    UserRepository userRepository =
+        Provider.of<UserRepository>(context, listen: false);
     return Consumer<NoteData>(
       builder: (context, noteData, child) {
         NoteModel curNote = noteData.getNote(widget.titleIndex);
@@ -26,10 +31,10 @@ class _NoteTileState extends State<NoteTile> {
           key: UniqueKey(),
           onDismissed: (direction) {
             setState(() {
-              var note = Provider.of<NoteData>(context, listen: false)
-                  .getNote(widget.titleIndex)
-                  .key;
-              Provider.of<NoteData>(context, listen: false).deleteNote(note);
+              var noteKey = noteData.getNote(widget.titleIndex).key;
+              Provider.of<NoteData>(context, listen: false).deleteNote(noteKey);
+              noteAPIServerClass.deleteNoteFromServer(
+                  noteKey, userRepository.userToken);
             });
           },
           child: Padding(
@@ -47,8 +52,8 @@ class _NoteTileState extends State<NoteTile> {
                 ),
                 child: ListTile(
                   onTap: () {
-                    Provider.of<NoteData>(context, listen: false)
-                        .setActiveNote(curNote.key);
+//                    Provider.of<NoteData>(context, listen: false)
+//                        .setActiveNote(curNote.key);
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => NoteView(
@@ -77,40 +82,37 @@ class _NoteTileState extends State<NoteTile> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          decoration:
-                              BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                            BoxShadow(
-                                color: curNote.starred == true
-                                    ? Colors.white12
-                                    : Colors.transparent,
-                                blurRadius: 8)
-                          ]),
-                          child: IconButton(
-                            icon: Icon(
-                              curNote.starred == true
-                                  ? Icons.star
-                                  : Icons.star_border,
-                              size: 30,
+                        decoration:
+                            BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                          BoxShadow(
                               color: curNote.starred == true
-                                  ? Colors.yellow
-                                  : Grey,
-                            ),
-                            onPressed: () {
-                              print(curNote.starred);
-                              Provider.of<NoteData>(context, listen: false)
-                                  .editNote(
-                                      note: NoteModel(
-                                          title: curNote.title,
-                                          description: curNote.description,
-                                          starred: curNote.starred == true
-                                              ? false
-                                              : true,
-                                          createdDateTime:
-                                              curNote.createdDateTime,
-                                          updatedDateTime: DateTime.now()),
-                                      noteKey: curNote.key);
-                            },
-                          )),
+                                  ? Colors.white12
+                                  : Colors.transparent,
+                              blurRadius: 8)
+                        ]),
+                        child: IconButton(
+                          icon: Icon(
+                            curNote.starred == true
+                                ? Icons.star
+                                : Icons.star_border,
+                            size: 30,
+                            color:
+                                curNote.starred == true ? Colors.yellow : Grey,
+                          ),
+                          onPressed: () {
+                            NoteModel noteModel = NoteModel(
+                                title: curNote.title,
+                                description: curNote.description,
+                                starred: curNote.starred == true ? false : true,
+                                createdDateTime: curNote.createdDateTime,
+                                updatedDateTime: DateTime.now());
+                            noteData.editNote(
+                                note: noteModel,
+                                noteKey: curNote.key);
+                            noteAPIServerClass.updateNoteToServer(noteModel, userRepository.userToken, curNote.key);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

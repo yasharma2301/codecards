@@ -37,6 +37,7 @@ dependencies:
   rxdart: ^0.23.0
   swipe_stack: ^1.0.0
   carousel_slider: ^2.2.1
+  equatable: ^1.2.3
 
 dev_dependencies:
   flutter_test:

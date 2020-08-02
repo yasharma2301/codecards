@@ -1,6 +1,8 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codecards/Shared/Colors.dart';
+import 'package:provider/provider.dart';
 
 class ThemeSelector extends StatefulWidget {
   ThemeSelector({Key key}) : super(key: key);
@@ -10,11 +12,11 @@ class ThemeSelector extends StatefulWidget {
 }
 
 class _ThemeSelectorState extends State<ThemeSelector> {
-  bool _darkTheme = true;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 40;
-
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Stack(
@@ -27,9 +29,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                 child: InkWell(
                   splashColor: Theme.of(context).primaryColorLight,
                   onTap: () {
-                    setState(() {
-                      _darkTheme = true;
-                    });
+                    darkTheme.changeToDark();
                   },
                   child: Ink(
                     padding: EdgeInsets.only(left: 10),
@@ -41,7 +41,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                         bottomLeft: Radius.circular(8),
                         topLeft: Radius.circular(8),
                       ),
-                      border: _darkTheme
+                      border: darkTheme.getMode()==true
                           ? Border.all(color: White, width: 3)
                           : null,
                     ),
@@ -76,9 +76,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                 child: InkWell(
                   splashColor: Theme.of(context).primaryColor,
                   onTap: () {
-                    setState(() {
-                      _darkTheme = false;
-                    });
+                    darkTheme.changeToLight();
                   },
                   child: Ink(
                     padding: EdgeInsets.only(right: 10),
@@ -90,7 +88,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                         bottomRight: Radius.circular(8),
                         topRight: Radius.circular(8),
                       ),
-                      border: _darkTheme
+                      border: darkTheme.getMode()==true
                           ? null
                           : Border.all(color: White, width: 3),
                     ),
