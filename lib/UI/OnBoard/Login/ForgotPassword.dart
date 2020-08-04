@@ -146,7 +146,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
     FlushBar flushBar = FlushBar(context: context);
 
-    String url = 'http://192.168.0.105:8000/reset_password/';
+    String url = 'http://192.168.0.7:8000/reset_password/';
     // String url = 'http://192.168.0.7:8000/reset_password/';
     String email = _emailController.text;
 

@@ -14,6 +14,8 @@ class BookmarksListing extends StatefulWidget {
 }
 
 class _BookmarksListingState extends State<BookmarksListing> {
+  List bookmarks;
+
   @override
   Widget build(BuildContext context) {
     BookmarkProvider bookmarkProvider = Provider.of<BookmarkProvider>(context);
@@ -30,40 +32,98 @@ class _BookmarksListingState extends State<BookmarksListing> {
             child: CarouselSlider(
                 items: bookmarkProvider.bookmarks
                     .map(
-                      (e) => Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                        ),
+                      (bookmark) => Container(
                         width: MediaQuery.of(context).size.width - 100,
                         decoration: BoxDecoration(
                           color: LightGrey.withOpacity(0.8),
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Center(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                    icon: Icon(Icons.lightbulb_outline),
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      _showHintDialog(hint: e.hint);
-                                    }),
-                                Text(
-                                  e.id.toString(),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 20),
+                        child: Material(
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 10.0,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        IconButton(
+                                            icon: Icon(Icons.lightbulb_outline),
+                                            color: Colors.white,
+                                            onPressed: () {
+                                              _showHintDialog(
+                                                  hint: bookmark['hint']);
+                                            }),
+                                        Text(
+                                          "Question-${bookmark['id']}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          bookmark['question'],
+                                          style: TextStyle(
+                                              color: Colors.blue, fontSize: 20),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  e.question,
-                                  style: TextStyle(
-                                      color: Colors.blue, fontSize: 20),
-                                  textAlign: TextAlign.center,
+                              ),
+                              InkWell(
+                                splashColor: Red,
+                                onTap: () async {
+                                  await bookmarkProvider.deleteBookmark(
+                                    bookmark['bookmark_id'],
+                                    bookmark,
+                                  );
+                                },
+                                onLongPress: () {
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.delete_outline,
+                                            color: Red,
+                                          ),
+                                          SizedBox(
+                                            width: 15.0,
+                                          ),
+                                          Text("Delete Bookmark!"),
+                                        ],
+                                      ),
+                                      duration: Duration(
+                                        milliseconds: 600,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Ink(
+                                  padding: EdgeInsets.all(
+                                    20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: Icon(
+                                    Icons.delete_sweep,
+                                    color: Red,
+                                    size: 30.0,
+                                  ),
                                 ),
-                              ],
-                            ),
+                                // tooltip: "Delete this Bookmark",
+                              ),
+                            ],
                           ),
                         ),
                       ),
