@@ -38,6 +38,9 @@ dependencies:
   swipe_stack: ^1.0.0
   carousel_slider: ^2.2.1
   equatable: ^1.2.3
+  connectivity: ^0.4.9
+  swipedetector: ^1.2.0
+  share: ^0.6.4+3
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,9 @@ flutter:
          - asset: fonts/Montserrat-Regular.ttf
          - asset: fonts/Montserrat-Bold.ttf
            weight: 700
+    - family: Odin Rounded
+      fonts:
+        - asset: fonts/OdinRounded-Regular.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

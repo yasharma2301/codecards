@@ -1,3 +1,7 @@
+import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
+import 'package:codecards/Services/cardsServices/cardsProvider.dart';
+import 'package:codecards/Services/conectivityProvider/conectivityService.dart';
 import 'package:codecards/Services/notesServices/noteAPIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,8 +10,10 @@ import 'package:codecards/routes/slideFromRight.dart';
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/Settings/settings2.dart';
+import 'package:share/share.dart';
 import 'Bloc/navigation_bloc.dart';
 import 'CardsLogic/cards.dart';
+import 'CardsLogic/hintDialog.dart';
 import 'Notes/noteTile.dart';
 import 'Notes/noteView.dart';
 
@@ -21,10 +27,14 @@ class CodeCards extends StatefulWidget with NavigationStates {
 }
 
 class _CodeCardsState extends State<CodeCards> {
-
   NoteAPIServerClass noteAPIServerClass = NoteAPIServerClass();
+
   @override
   Widget build(BuildContext context) {
+    var connectionStatus = Provider.of<ConnectivityStatus>(context);
+
+    final bloc = Provider.of<CardsBloc>(context);
+    final HintCounter hintProvider = Provider.of<HintCounter>(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         double currentWidth = constraints.constrainWidth();
@@ -93,91 +103,199 @@ class _CodeCardsState extends State<CodeCards> {
                       ],
                     ),
                     Expanded(
-                      child: Container(
-                        child: Stack(
-                          children: [
-                            IgnorePointer(
-                              ignoring: border == true ? true : false,
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: 75, top: 10),
-                                child: CardsStack(),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: 0),
-                                child: Padding(
-                                  padding: border == true
-                                      ? EdgeInsets.symmetric(horizontal: 25)
-                                      : EdgeInsets.symmetric(horizontal: 0),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.bottomCenter,
+                      child: StreamBuilder<List<CardsResults>>(
+                          stream: bloc.stream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<CardsResults>> snapshot) {
+                            if (!snapshot.hasData || connectionStatus == ConnectivityStatus.Offline) {
+                              return Container(
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(bottom: 0),
                                         child: Padding(
-                                          padding: EdgeInsets.only(bottom: 5),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              _bringUpNotesSheet(context);
-                                            },
-                                            child: Container(
-                                              height: 60,
-                                              width: 60,
-                                              decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.white24,
-                                                    offset: Offset(0, 0),
-                                                    blurRadius: 7,
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(12),
-                                                    bottomLeft:
-                                                        Radius.circular(12),
-                                                    topRight:
-                                                        Radius.circular(12),
-                                                    bottomRight:
-                                                        Radius.circular(12)),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Theme.of(context)
-                                                          .primaryColor,
-                                                      Theme.of(context)
-                                                          .primaryColorLight
-                                                    ],
-                                                    begin: FractionalOffset
-                                                        .topLeft,
-                                                    end: FractionalOffset
-                                                        .bottomRight,
-                                                    tileMode:
-                                                        TileMode.repeated),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 15),
+                                          child: Row(
+                                            mainAxisAlignment: border == true
+                                                ? MainAxisAlignment.spaceBetween
+                                                : MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              RoundIconButton.small(
+                                                icon: Icons.clear,
+                                                iconSize: 22,
+                                                onPressed: () {},
                                               ),
-                                              child: Center(
-                                                child: Icon(
-                                                  Icons.add,
-                                                  color: White,
-                                                ),
+                                              RoundIconButton.large(
+                                                iconSize: 26,
+                                                icon: Icons.lightbulb_outline,
+                                                onPressed: () {},
                                               ),
+                                              RoundIconButton.large(
+                                                iconSize: 28,
+                                                icon: Icons.add,
+                                                onPressed: () {
+                                                  _bringUpNotesSheet(context);
+                                                },
+                                              ),
+                                              RoundIconButton.large(
+                                                iconSize: 26,
+                                                icon: Icons.bookmark_border,
+                                                onPressed: () {},
+                                              ),
+                                              RoundIconButton.small(
+                                                icon: Icons.share,
+                                                iconSize: 22,
+                                                onPressed: () {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.75,
+                                        width: MediaQuery.of(context).size.width,
+                                        child: Center(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: LightGrey,width: 1),
+                                              borderRadius: BorderRadius.circular(8)
+                                            ),
+                                            child: Center(
+                                              child: CircularProgressIndicator(strokeWidth: 1,),
                                             ),
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                              );
+                            }
+                            return Container(
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 0),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 15),
+                                        child: Row(
+                                          mainAxisAlignment: border == true
+                                              ? MainAxisAlignment.spaceBetween
+                                              : MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            RoundIconButton.small(
+                                              icon: Icons.clear,
+                                              iconSize: 22,
+                                              onPressed: () {
+                                                swipeKey.currentState
+                                                    .swipeLeft();
+                                              },
+                                            ),
+                                            RoundIconButton.large(
+                                              iconSize: 26,
+                                              icon: Icons.lightbulb_outline,
+                                              onPressed: () {
+                                                _showHintDialog(
+                                                    context: context,
+                                                    hint: snapshot
+                                                        .data[swipeKey
+                                                            .currentState
+                                                            .currentIndex]
+                                                        .hint,
+                                                    hintCounter: hintProvider);
+                                              },
+                                            ),
+                                            RoundIconButton.large(
+                                              iconSize: 28,
+                                              icon: Icons.add,
+                                              onPressed: () {
+                                                _bringUpNotesSheet(context);
+                                              },
+                                            ),
+                                            RoundIconButton.large(
+                                              iconSize: 26,
+                                              icon: Icons.bookmark_border,
+                                              onPressed: () {
+                                                swipeKey.currentState
+                                                    .swipeRight();
+                                              },
+                                            ),
+                                            RoundIconButton.small(
+                                              icon: Icons.share,
+                                              iconSize: 22,
+                                              onPressed: () {
+                                                share(
+                                                    context,
+                                                    snapshot.data[swipeKey
+                                                        .currentState
+                                                        .currentIndex]);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  IgnorePointer(
+                                    ignoring: border == true ? true : false,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.8,
+                                      padding:
+                                          EdgeInsets.only(bottom: 0, top: 10),
+                                      child: CardsStack(
+                                        snapshot: snapshot,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                            );
+                          }),
                     )
                   ],
                 ),
               ),
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  void share(BuildContext context, CardsResults cardsResults) {
+    final RenderBox box = context.findRenderObject();
+    Share.share(
+        "Here is a question for you,\n\n${cardsResults.question}\n\nCan you help me solving this?\nDownload the CodeCards app today :{Play store link here}",
+        subject: 'CodeCards Question ${cardsResults.id}',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+
+  void _showHintDialog(
+      {String hint, BuildContext context, HintCounter hintCounter}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        hintCounter.decreaseHints();
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: Colors.transparent,
+          child: HintDialog(
+            hintCount: hintCounter.getHint(),
+            hint: hint,
           ),
         );
       },
@@ -332,47 +450,54 @@ class _CodeCardsState extends State<CodeCards> {
   }
 }
 
-class IconCardButton extends StatelessWidget {
-  final IconData iconData;
-  final String buttonTag;
-  final Function buttonFunction;
-  final Color color;
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final double size;
+  final double iconSize;
+  final VoidCallback onPressed;
 
-  const IconCardButton(
-      {Key key, this.iconData, this.buttonTag, this.buttonFunction, this.color})
-      : super(key: key);
+  RoundIconButton.large({this.icon, this.onPressed, this.iconSize})
+      : size = 62.0;
+
+  RoundIconButton.small({this.icon, this.onPressed, this.iconSize})
+      : size = 50.0;
+
+  RoundIconButton({
+    this.icon,
+    this.iconSize,
+    this.size,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: buttonFunction,
-      child: Container(
-        height: 40,
-        width: 100,
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
+    return Container(
+      width: size,
+      height: size,
+      decoration: new BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).primaryColorLight
+              ],
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomRight,
+              tileMode: TileMode.repeated),
+          boxShadow: [
+            BoxShadow(color: Colors.white12, blurRadius: 5.0),
+          ]),
+      child: RawMaterialButton(
+        shape: CircleBorder(),
+        elevation: 0.0,
+        child: Icon(
+          icon,
+          size: iconSize,
+          color: Colors.white,
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              iconData,
-              color: color,
-            ),
-            Text(
-              buttonTag,
-              style: TextStyle(
-                  color: color, fontSize: 16, fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
+        onPressed: onPressed,
       ),
     );
   }
 }
+

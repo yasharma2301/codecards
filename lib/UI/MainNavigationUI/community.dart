@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:swipedetector/swipedetector.dart';
 import 'Bloc/navigation_bloc.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
 
@@ -30,86 +31,93 @@ class Community extends StatelessWidget with NavigationStates {
           } else {
             border = true;
           }
-          return Container(
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: PopBlue.withOpacity(0.5),
-                      blurRadius: 8,
-                      spreadRadius: 1)
-                ],
-                borderRadius: border
-                    ? BorderRadius.circular(40)
-                    : BorderRadius.circular(0),
-                color: Grey),
+          return SwipeDetector(
+            onSwipeRight: onMenuTap,
+            swipeConfiguration: SwipeConfiguration(
+                horizontalSwipeMinDisplacement: 30
+            ),
             child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 12, right: 12, top: 30),
-                    child: Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              splashColor: LightPopBlue.withOpacity(0.8),
-                              hoverColor: LightPopBlue,
-                              icon: Icon(
-                                Icons.menu,
-                                color: Colors.white,
-                                size: 30,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: PopBlue.withOpacity(0.5),
+                        blurRadius: 8,
+                        spreadRadius: 1)
+                  ],
+                  borderRadius: border
+                      ? BorderRadius.circular(40)
+                      : BorderRadius.circular(0),
+                  color: Grey),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 8, right: 12, top: 30),
+                      child: Stack(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                splashColor: LightPopBlue.withOpacity(0.8),
+                                hoverColor: LightPopBlue,
+                                icon: Icon(
+                                  Icons.menu,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                onPressed: onMenuTap,
                               ),
-                              onPressed: onMenuTap,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              'COMMUNITY',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 23,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
+                              SizedBox(
+                                height: 10,
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height - 130,
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 15,
-                              child: Card1(),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                'COMMUNITY',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 23,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
                             ),
-                            Positioned(right: 10, top: 255, child: Card2()),
-                            Positioned(
-                              left: 0,
-                              top: 440,
-                              child: Card3(),
-                            ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height - 130,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 15,
+                                child: Card1(),
+                              ),
+                              Positioned(right: 10, top: 255, child: Card2()),
+                              Positioned(
+                                left: 0,
+                                top: 440,
+                                child: Card3(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -407,7 +415,7 @@ class Card3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DelayedAnimation(
-      delay: 550,
+      delay: 400,
       child: Container(
         height: MediaQuery.of(context).size.height / 4.7,
         width: 250,

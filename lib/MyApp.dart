@@ -11,6 +11,7 @@ import 'Services/bookmarServices/bookmarkProvider.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
 import 'package:codecards/Services/notesServices/noteData.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
+import 'Services/conectivityProvider/conectivityService.dart';
 import 'main.dart';
 
 class MyApp extends StatefulWidget {
@@ -62,6 +63,9 @@ class _MyAppState extends State<MyApp> {
           create: (_) => BookmarkProvider(
             widget.prefs.getString('userToken'),
           ),
+        ),
+        StreamProvider<ConnectivityStatus>(
+          create: (_) => ConnectivityService().stream,
         )
       ],
       child: Builder(builder: (BuildContext context) {
