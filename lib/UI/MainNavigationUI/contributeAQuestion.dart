@@ -77,7 +77,7 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: Text(
-                                'Settings',
+                                'Contribute',
                                 style: TextStyle(
                                     color: darkTheme.getMode() == true ?White:Grey,
                                     fontSize: 23,
