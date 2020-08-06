@@ -1,3 +1,4 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:codecards/Services/notesServices/noteAPIService.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/FlushBar.dart';
@@ -47,6 +48,8 @@ class _NoteViewState extends State<NoteView> {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
+
     FlushBar flushBar = FlushBar(context: context);
     UserRepository userRepository =
         Provider.of<UserRepository>(context, listen: false);
@@ -73,7 +76,7 @@ class _NoteViewState extends State<NoteView> {
     return Consumer<NoteData>(
       builder: (context, noteData, child) {
         return Scaffold(
-          backgroundColor: Grey,
+          backgroundColor: darkTheme.getMode() == true ?Grey:White,
           body: Stack(
             children: [
               Container(
@@ -87,7 +90,7 @@ class _NoteViewState extends State<NoteView> {
                   width: height,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: LightGrey.withOpacity(0.43),
+                    color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.43):Colors.grey.withOpacity(0.3),
                   ),
                 ),
               ),
@@ -99,7 +102,7 @@ class _NoteViewState extends State<NoteView> {
                   width: width * 1.6,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: LightGrey.withOpacity(0.2),
+                    color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.2):Colors.grey.withOpacity(0.23),
                   ),
                 ),
               ),
@@ -111,7 +114,7 @@ class _NoteViewState extends State<NoteView> {
                   width: width * 0.6,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: LightGrey.withOpacity(0.3),
+                    color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.3):Colors.grey.withOpacity(0.2),
                   ),
                 ),
               ),
@@ -133,7 +136,7 @@ class _NoteViewState extends State<NoteView> {
                                     ? "Edit notes".toUpperCase()
                                     : "Add a note".toUpperCase(),
                                 style: TextStyle(
-                                    color: White,
+                                    color: darkTheme.getMode() == true ? White:LightGrey,
                                     fontSize: 35,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat'),
@@ -146,73 +149,79 @@ class _NoteViewState extends State<NoteView> {
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      width: width - 50,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Grey, borderRadius: BorderRadius.circular(6)),
+                    Material(
+                      elevation: 30,
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                        width: width - 50,
+                        padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: LightGrey.withOpacity(0.7),
-                        ),
-                        child: TextFormField(
-                          controller: _titleController,
-                          onChanged: (v) {
-                            setState(() {
-                              title = v;
-                            });
-                          },
-                          cursorColor: Theme.of(context).primaryColorLight,
-                          style: TextStyle(
-                            color: White.withOpacity(0.9),
-                            fontSize: 18,
+                            color: darkTheme.getMode() == true ?Grey:White, borderRadius: BorderRadius.circular(6)),
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
                           ),
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter a title.",
-                              hintStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.7),
-                                  fontSize: 16)),
+                          child: TextFormField(
+                            controller: _titleController,
+                            onChanged: (v) {
+                              setState(() {
+                                title = v;
+                              });
+                            },
+                            cursorColor: Theme.of(context).primaryColorLight,
+                            style: TextStyle(
+                              color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,
+                              fontSize: 18,
+                            ),
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Enter a title.",
+                                hintStyle: TextStyle(
+                                    color: darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8),
+                                    fontSize: 16)),
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      width: width - 50,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Grey, borderRadius: BorderRadius.circular(6)),
+                    Material(
+                      elevation: 30,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        width: width - 50,
+                        padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: LightGrey.withOpacity(0.7),
-                        ),
-                        child: TextField(
-                          controller: _descriptionController,
-                          maxLines: 8,
-                          onChanged: (v) {
-                            setState(() {
-                              description = v;
-                            });
-                          },
-                          cursorColor: Theme.of(context).primaryColorLight,
-                          style: TextStyle(
-                              fontSize: 18, color: White.withOpacity(0.9)),
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Description.",
-                              alignLabelWithHint: true,
-                              hintStyle: TextStyle(
-                                  fontSize: 17,
-                                  height: 0.5,
-                                  color: Colors.white.withOpacity(0.7))),
-                          textCapitalization: TextCapitalization.sentences,
+                            color: darkTheme.getMode() == true ?Grey:White, borderRadius: BorderRadius.circular(6)),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
+                          ),
+                          child: TextField(
+                            controller: _descriptionController,
+                            maxLines: 8,
+                            onChanged: (v) {
+                              setState(() {
+                                description = v;
+                              });
+                            },
+                            cursorColor: Theme.of(context).primaryColorLight,
+                            style: TextStyle(
+                                fontSize: 18, color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey),
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Description.",
+                                alignLabelWithHint: true,
+                                hintStyle: TextStyle(
+                                    fontSize: 17,
+                                    height: 0.5,
+                                    color: darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8))),
+                            textCapitalization: TextCapitalization.sentences,
+                          ),
                         ),
                       ),
                     ),
@@ -271,18 +280,21 @@ class _NoteViewState extends State<NoteView> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Container(
-                    height: 40,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(50),
-                          bottomRight: Radius.circular(10)),
-                      color: Grey,
-                    ),
-                    child: Icon(
-                      Icons.keyboard_backspace,
-                      color: Colors.white,
+                  child: Material(
+                    elevation: 30,
+                    child: Container(
+                      height: 40,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            bottomRight: Radius.circular(10)),
+                        color: darkTheme.getMode() == true ?Grey:White,
+                      ),
+                      child: Icon(
+                        Icons.keyboard_backspace,
+                        color: darkTheme.getMode() == true ?Colors.white:Grey,
+                      ),
                     ),
                   ),
                 ),

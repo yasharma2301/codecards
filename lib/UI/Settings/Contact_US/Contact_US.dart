@@ -1,17 +1,20 @@
 import 'dart:io';
-
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
+import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:codecards/Shared/FlushBar.dart';
+import 'package:provider/provider.dart';
 
 class ContactUs extends StatefulWidget {
-  ContactUs({Key key}) : super(key: key);
+  final UserRepository userRepository;
+
+  const ContactUs({Key key, this.userRepository}) : super(key: key);
 
   @override
   _ContactUsState createState() => _ContactUsState();
@@ -51,7 +54,7 @@ class _ContactUsState extends State<ContactUs>
   @override
   void initState() {
     super.initState();
-
+    emailController.text = widget.userRepository.getUserEmail();
     controller =
         AnimationController(duration: Duration(milliseconds: 200), vsync: this);
 
@@ -75,7 +78,7 @@ class _ContactUsState extends State<ContactUs>
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     FlushBar flushBar = FlushBar(context: context);
 
     final picker = ImagePicker();
@@ -88,10 +91,9 @@ class _ContactUsState extends State<ContactUs>
         });
       }
     }
-
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Grey,
+      backgroundColor: darkTheme.getMode() == true ?Grey:White,
       body: Stack(
         children: [
           Container(
@@ -105,7 +107,7 @@ class _ContactUsState extends State<ContactUs>
               width: height,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: LightGrey.withOpacity(0.43),
+                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.43):Colors.grey.withOpacity(0.3),
               ),
             ),
           ),
@@ -117,7 +119,7 @@ class _ContactUsState extends State<ContactUs>
               width: width * 1.6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: LightGrey.withOpacity(0.2),
+                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.2):Colors.grey.withOpacity(0.23),
               ),
             ),
           ),
@@ -129,7 +131,7 @@ class _ContactUsState extends State<ContactUs>
               width: width * 0.6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: LightGrey.withOpacity(0.3),
+                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.3):Colors.grey.withOpacity(0.2),
               ),
             ),
           ),
@@ -155,7 +157,7 @@ class _ContactUsState extends State<ContactUs>
                             child: Text(
                               "Support".toUpperCase(),
                               style: TextStyle(
-                                  color: White,
+                                  color: darkTheme.getMode() == true ?White:LightGrey,
                                   fontSize: 35,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat'),
@@ -173,31 +175,34 @@ class _ContactUsState extends State<ContactUs>
                   delay: 50,
                   child: Column(
                     children: [
-                      Container(
-                        width: width - 50,
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Grey,
-                            borderRadius: BorderRadius.circular(6)),
+                      Material(
+                        elevation: 30,
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          width: width - 50,
+                          padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: LightGrey.withOpacity(0.7),
-                          ),
-                          child: TextFormField(
-                            controller: nameController,
-                            cursorColor: Theme.of(context).primaryColorLight,
-                            style: TextStyle(
-                              color: White.withOpacity(0.9),
-                              fontSize: 18,
+                              color: darkTheme.getMode() == true ?Grey:White,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
                             ),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Enter your name",
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context).primaryColorLight,
-                                    fontSize: 16)),
+                            child: TextFormField(
+                              controller: nameController,
+                              cursorColor: Theme.of(context).primaryColorLight,
+                              style: TextStyle(
+                                color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,
+                                fontSize: 18,
+                              ),
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  labelText: "Enter your name",
+                                  labelStyle: TextStyle(
+                                      color: darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8),
+                                      fontSize: 16)),
+                            ),
                           ),
                         ),
                       ),
@@ -206,41 +211,44 @@ class _ContactUsState extends State<ContactUs>
                       ),
                       Form(
                         key: _formKey,
-                        child: Container(
-                          width: width - 50,
-                          padding: EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                              color: Grey,
-                              borderRadius: BorderRadius.circular(6)),
+                        child: Material(
+                          elevation: 30,
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            width: width - 50,
+                            padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: LightGrey.withOpacity(0.7),
-                            ),
-                            child: TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              controller: emailController,
-                              cursorColor: Theme.of(context).primaryColorLight,
-                              style: TextStyle(
-                                color: White.withOpacity(0.9),
-                                fontSize: 20,
+                                color: darkTheme.getMode() == true ?Grey:White,
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
                               ),
-                              validator: (value) {
-                                Pattern pattern =
-                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                RegExp regex = new RegExp(pattern);
-                                return (!regex.hasMatch(value)) ? '' : null;
-                              },
-                              decoration: InputDecoration(
-                                  errorStyle: TextStyle(height: 0),
-                                  border: InputBorder.none,
-                                  labelText: "Email Address",
-                                  labelStyle: TextStyle(
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                      fontSize: 18,
-                                      height: 1)),
+                              child: TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                controller: emailController,
+                                cursorColor: Theme.of(context).primaryColorLight,
+                                style: TextStyle(
+                                  color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,
+                                  fontSize: 18,
+                                ),
+                                validator: (value) {
+                                  Pattern pattern =
+                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                  RegExp regex = new RegExp(pattern);
+                                  return (!regex.hasMatch(value)) ? '' : null;
+                                },
+                                decoration: InputDecoration(
+                                    errorStyle: TextStyle(height: 0),
+                                    border: InputBorder.none,
+                                    labelText: "Email Address",
+                                    labelStyle: TextStyle(
+                                        color:
+                                        darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8),
+                                        fontSize: 16,
+                                        height: 1)),
+                              ),
                             ),
                           ),
                         ),
@@ -248,33 +256,35 @@ class _ContactUsState extends State<ContactUs>
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        width: width - 50,
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Grey,
-                            borderRadius: BorderRadius.circular(6)),
+                      Material(
+                        elevation: 30,
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          width: width - 50,
+                          padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: LightGrey.withOpacity(0.7),
-                          ),
-                          child: TextFormField(
-                            controller: descriptionController,
-                            maxLines: 8,
-                            cursorColor: Theme.of(context).primaryColorLight,
-                            style: TextStyle(
-                                fontSize: 18, color: White.withOpacity(0.9)),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Describe your problem",
-                                labelStyle: TextStyle(
-                                    fontSize: 16,
-                                    height: 0.5,
-                                    color:
-                                        Theme.of(context).primaryColorLight)),
-                            textCapitalization: TextCapitalization.sentences,
+                              color: darkTheme.getMode() == true ?Grey:White,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
+                            ),
+                            child: TextFormField(
+                              controller: descriptionController,
+                              maxLines: 8,
+                              cursorColor: Theme.of(context).primaryColorLight,
+                              style: TextStyle(
+                                  fontSize: 18, color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,),
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Describe your problem/suggestion",
+                                  hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      height: 0.5,
+                                      color:darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8))),
+                              textCapitalization: TextCapitalization.sentences,
+                            ),
                           ),
                         ),
                       ),
@@ -287,14 +297,14 @@ class _ContactUsState extends State<ContactUs>
                     children: [
                       Divider(
                         height: 50,
-                        color: White,
-                        thickness: 0.3,
+                        color: darkTheme.getMode() == true ?White:Grey,
+                        thickness: 0.4,
                       ),
                       Text(
                         "Add a screenshot (optional) :",
                         style: TextStyle(
-                            color: White,
-                            fontSize: 17,
+                            color: darkTheme.getMode() == true ?White:Grey,
+                            fontSize: 18,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(
@@ -302,21 +312,25 @@ class _ContactUsState extends State<ContactUs>
                       ),
                       Row(
                         children: [
-                          InkWell(
-                            onTap: _getImage,
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              height: 180,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                  color: Grey.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: _image == null
-                                  ? Icon(
-                                      Icons.add,
-                                      color: Theme.of(context).primaryColor,
-                                    )
-                                  : Image.file(_image),
+                          Material(
+                            elevation: 20,
+                            child: InkWell(
+                              onTap: _getImage,
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                height: 180,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.5):Colors.grey.withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: _image == null
+                                    ? Icon(
+                                        Icons.add,
+                                        color: Theme.of(context).primaryColor,
+                                  size: 35,
+                                      )
+                                    : Image.file(_image),
+                              ),
                             ),
                           ),
                         ],
@@ -335,18 +349,21 @@ class _ContactUsState extends State<ContactUs>
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Container(
-                height: 40,
-                width: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(50),
-                      bottomRight: Radius.circular(10)),
-                  color: Grey,
-                ),
-                child: Icon(
-                  Icons.keyboard_backspace,
-                  color: Colors.white,
+              child: Material(
+                elevation: 30,
+                child: Container(
+                  height: 40,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                        bottomRight: Radius.circular(10)),
+                    color: darkTheme.getMode() == true ?Grey:White,
+                  ),
+                  child: Icon(
+                    Icons.keyboard_backspace,
+                    color: darkTheme.getMode() == true ?Colors.white:Grey,
+                  ),
                 ),
               ),
             ),

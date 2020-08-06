@@ -1,4 +1,5 @@
 import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
 import 'package:codecards/Services/conectivityProvider/conectivityService.dart';
@@ -32,7 +33,7 @@ class _CodeCardsState extends State<CodeCards> {
   @override
   Widget build(BuildContext context) {
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
-
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     final bloc = Provider.of<CardsBloc>(context);
     final HintCounter hintProvider = Provider.of<HintCounter>(context);
     return LayoutBuilder(
@@ -54,14 +55,14 @@ class _CodeCardsState extends State<CodeCards> {
                     spreadRadius: 1)
               ],
               borderRadius:
-                  border ? BorderRadius.circular(40) : BorderRadius.circular(0),
-              color: Grey),
+                  border ? BorderRadius.circular(30) : BorderRadius.circular(0),
+              color: darkTheme.getMode() == true ? Grey : White),
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: border == true
-                  ? EdgeInsets.only(top: 30, left: 15)
+                  ? EdgeInsets.only(top: 20)
                   : EdgeInsets.only(top: 30),
               child: Scaffold(
                 body: Column(
@@ -69,19 +70,34 @@ class _CodeCardsState extends State<CodeCards> {
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
                           padding: border == true
-                              ? EdgeInsets.only(left: 5)
-                              : EdgeInsets.only(left: 16),
+                              ? EdgeInsets.only(left: 25)
+                              : EdgeInsets.only(left: 15),
                           child: GestureDetector(
                             onTap: widget.onMenuTap,
                             child: Icon(
                               Icons.menu,
-                              color: Colors.white,
+                              color: darkTheme.getMode() == true
+                                  ? Colors.white
+                                  : Grey,
                               size: 30,
                             ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'CodeCards',
+                            style: TextStyle(
+                                color:
+                                    darkTheme.getMode() == true ? White : Grey,
+                                fontSize: 23,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                         Padding(
@@ -92,7 +108,9 @@ class _CodeCardsState extends State<CodeCards> {
                               highlightColor: Colors.transparent,
                               icon: Icon(
                                 Icons.settings,
-                                color: Colors.white,
+                                color: darkTheme.getMode() == true
+                                    ? Colors.white
+                                    : Grey,
                                 size: 25,
                               ),
                               onPressed: () {
@@ -107,69 +125,101 @@ class _CodeCardsState extends State<CodeCards> {
                           stream: bloc.stream,
                           builder: (BuildContext context,
                               AsyncSnapshot<List<CardsResults>> snapshot) {
-                            if (!snapshot.hasData || connectionStatus == ConnectivityStatus.Offline) {
+                            if (!snapshot.hasData ||
+                                connectionStatus ==
+                                    ConnectivityStatus.Offline) {
                               return Container(
                                 child: Stack(
                                   children: [
                                     Align(
                                       alignment: Alignment.bottomCenter,
                                       child: Padding(
-                                        padding: EdgeInsets.only(bottom: 0),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 15),
-                                          child: Row(
-                                            mainAxisAlignment: border == true
-                                                ? MainAxisAlignment.spaceBetween
-                                                : MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              RoundIconButton.small(
-                                                icon: Icons.clear,
-                                                iconSize: 22,
-                                                onPressed: () {},
-                                              ),
-                                              RoundIconButton.large(
-                                                iconSize: 26,
-                                                icon: Icons.lightbulb_outline,
-                                                onPressed: () {},
-                                              ),
-                                              RoundIconButton.large(
-                                                iconSize: 28,
-                                                icon: Icons.add,
-                                                onPressed: () {
-                                                  _bringUpNotesSheet(context);
-                                                },
-                                              ),
-                                              RoundIconButton.large(
-                                                iconSize: 26,
-                                                icon: Icons.bookmark_border,
-                                                onPressed: () {},
-                                              ),
-                                              RoundIconButton.small(
-                                                icon: Icons.share,
-                                                iconSize: 22,
-                                                onPressed: () {},
-                                              ),
-                                            ],
-                                          ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: border == false
+                                              ? [
+                                                  RoundIconButton.small(
+                                                    icon: Icons.clear,
+                                                    iconSize: 22,
+                                                    onPressed: () {},
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon:
+                                                        Icons.lightbulb_outline,
+                                                    onPressed: () {},
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 28,
+                                                    icon: Icons.add,
+                                                    onPressed: () {
+                                                      _bringUpNotesSheet(
+                                                          context, darkTheme);
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon: Icons.bookmark_border,
+                                                    onPressed: () {},
+                                                  ),
+                                                  RoundIconButton.small(
+                                                    icon: Icons.share,
+                                                    iconSize: 22,
+                                                    onPressed: () {},
+                                                  ),
+                                                ]
+                                              : [
+                                                  RoundIconButton.small(
+                                                    icon: Icons.clear,
+                                                    iconSize: 22,
+                                                    onPressed: () {},
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon:
+                                                        Icons.lightbulb_outline,
+                                                    onPressed: () {},
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 28,
+                                                    icon: Icons.add,
+                                                    onPressed: () {
+                                                      _bringUpNotesSheet(
+                                                          context, darkTheme);
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon: Icons.bookmark_border,
+                                                    onPressed: () {},
+                                                  ),
+                                                ],
                                         ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
                                       child: Container(
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.75,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         child: Center(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              border: Border.all(color: LightGrey,width: 1),
-                                              borderRadius: BorderRadius.circular(8)
-                                            ),
+                                                border: Border.all(
+                                                    color: LightGrey, width: 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
                                             child: Center(
-                                              child: CircularProgressIndicator(strokeWidth: 1,),
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 1,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -188,61 +238,106 @@ class _CodeCardsState extends State<CodeCards> {
                                       padding: EdgeInsets.only(bottom: 0),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 15),
+                                            horizontal: 13, vertical: 15),
                                         child: Row(
-                                          mainAxisAlignment: border == true
-                                              ? MainAxisAlignment.spaceBetween
-                                              : MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            RoundIconButton.small(
-                                              icon: Icons.clear,
-                                              iconSize: 22,
-                                              onPressed: () {
-                                                swipeKey.currentState
-                                                    .swipeLeft();
-                                              },
-                                            ),
-                                            RoundIconButton.large(
-                                              iconSize: 26,
-                                              icon: Icons.lightbulb_outline,
-                                              onPressed: () {
-                                                _showHintDialog(
-                                                    context: context,
-                                                    hint: snapshot
-                                                        .data[swipeKey
-                                                            .currentState
-                                                            .currentIndex]
-                                                        .hint,
-                                                    hintCounter: hintProvider);
-                                              },
-                                            ),
-                                            RoundIconButton.large(
-                                              iconSize: 28,
-                                              icon: Icons.add,
-                                              onPressed: () {
-                                                _bringUpNotesSheet(context);
-                                              },
-                                            ),
-                                            RoundIconButton.large(
-                                              iconSize: 26,
-                                              icon: Icons.bookmark_border,
-                                              onPressed: () {
-                                                swipeKey.currentState
-                                                    .swipeRight();
-                                              },
-                                            ),
-                                            RoundIconButton.small(
-                                              icon: Icons.share,
-                                              iconSize: 22,
-                                              onPressed: () {
-                                                share(
-                                                    context,
-                                                    snapshot.data[swipeKey
-                                                        .currentState
-                                                        .currentIndex]);
-                                              },
-                                            ),
-                                          ],
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: border == false
+                                              ? [
+                                                  RoundIconButton.small(
+                                                    icon: Icons.clear,
+                                                    iconSize: 22,
+                                                    onPressed: () {
+                                                      swipeKey.currentState
+                                                          .swipeLeft();
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon:
+                                                        Icons.lightbulb_outline,
+                                                    onPressed: () {
+                                                      _showHintDialog(
+                                                          context: context,
+                                                          hint: snapshot
+                                                              .data[swipeKey
+                                                                  .currentState
+                                                                  .currentIndex]
+                                                              .hint,
+                                                          hintCounter:
+                                                              hintProvider);
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 28,
+                                                    icon: Icons.add,
+                                                    onPressed: () {
+                                                      _bringUpNotesSheet(
+                                                          context, darkTheme);
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon: Icons.bookmark_border,
+                                                    onPressed: () {
+                                                      swipeKey.currentState
+                                                          .swipeRight();
+                                                    },
+                                                  ),
+                                                  RoundIconButton.small(
+                                                    icon: Icons.share,
+                                                    iconSize: 22,
+                                                    onPressed: () {
+                                                      share(
+                                                          context,
+                                                          snapshot.data[swipeKey
+                                                              .currentState
+                                                              .currentIndex]);
+                                                    },
+                                                  ),
+                                                ]
+                                              : [
+                                                  RoundIconButton.small(
+                                                    icon: Icons.clear,
+                                                    iconSize: 22,
+                                                    onPressed: () {
+                                                      swipeKey.currentState
+                                                          .swipeLeft();
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon:
+                                                        Icons.lightbulb_outline,
+                                                    onPressed: () {
+                                                      _showHintDialog(
+                                                          context: context,
+                                                          hint: snapshot
+                                                              .data[swipeKey
+                                                                  .currentState
+                                                                  .currentIndex]
+                                                              .hint,
+                                                          hintCounter:
+                                                              hintProvider);
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 28,
+                                                    icon: Icons.add,
+                                                    onPressed: () {
+                                                      _bringUpNotesSheet(
+                                                          context, darkTheme);
+                                                    },
+                                                  ),
+                                                  RoundIconButton.large(
+                                                    iconSize: 26,
+                                                    icon: Icons.bookmark_border,
+                                                    onPressed: () {
+                                                      swipeKey.currentState
+                                                          .swipeRight();
+                                                    },
+                                                  ),
+                                                ],
                                         ),
                                       ),
                                     ),
@@ -302,7 +397,7 @@ class _CodeCardsState extends State<CodeCards> {
     );
   }
 
-  void _bringUpNotesSheet(BuildContext context) {
+  void _bringUpNotesSheet(BuildContext context, var darkTheme) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -312,10 +407,41 @@ class _CodeCardsState extends State<CodeCards> {
             return Container(
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
-                  color: Grey,
+                  color: darkTheme.getMode() == true ? Grey : White,
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(15))),
               child: Scaffold(
+                floatingActionButton: FloatingActionButton(
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(60),
+                      gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColorLight
+                          ],
+                          begin: FractionalOffset.topLeft,
+                          end: FractionalOffset.topRight,
+                          tileMode: TileMode.repeated),
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: White,
+                      size: 30,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => NoteView(
+                          noteMode: NoteModes.Adding,
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 body: Stack(
                   children: [
                     Container(
@@ -402,43 +528,6 @@ class _CodeCardsState extends State<CodeCards> {
                         ),
                       ],
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 10, bottom: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => NoteView(
-                                  noteMode: NoteModes.Adding,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(60),
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Theme.of(context).primaryColor,
-                                    Theme.of(context).primaryColorLight
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.topRight,
-                                  tileMode: TileMode.repeated),
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              color: White,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -471,6 +560,7 @@ class RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Container(
       width: size,
       height: size,
@@ -485,7 +575,10 @@ class RoundIconButton extends StatelessWidget {
               end: FractionalOffset.bottomRight,
               tileMode: TileMode.repeated),
           boxShadow: [
-            BoxShadow(color: Colors.white12, blurRadius: 5.0),
+            BoxShadow(
+                color:
+                    darkTheme.getMode() == true ? Colors.white12 : Colors.grey,
+                blurRadius: 7.0),
           ]),
       child: RawMaterialButton(
         shape: CircleBorder(),
@@ -500,4 +593,3 @@ class RoundIconButton extends StatelessWidget {
     );
   }
 }
-

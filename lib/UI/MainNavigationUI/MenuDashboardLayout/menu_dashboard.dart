@@ -1,13 +1,16 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
+import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
+import 'package:provider/provider.dart';
 import 'dashboard.dart';
 import 'menu.dart';
 import '../bookmarks.dart';
 import '../code_cards.dart';
 import '../community.dart';
-import '../developer_story.dart';
+import '../contributeAQuestion.dart';
 import '../rate_us.dart';
 
 final Color backGroundColor = Color(0xFF1c2129);
@@ -67,9 +70,9 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: darkTheme.getMode() == true ?Grey:Black,
       body: BlocProvider<NavigationBloc>(
         create: (context) => NavigationBloc(onMenuTap: onMenuTap),
         child: Stack(
@@ -117,7 +120,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
       return 2;
     } else if (navigationStates is RateUs) {
       return 3;
-    } else if (navigationStates is DeveloperStory) {
+    } else if (navigationStates is ContributeQuestion) {
       return 4;
     } else {
       return 0;

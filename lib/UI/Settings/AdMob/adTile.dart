@@ -1,4 +1,5 @@
 import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:provider/provider.dart';
@@ -67,12 +68,13 @@ class _AdTileState extends State<AdTile> {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     HintCounter hintProvider = Provider.of<HintCounter>(context);
     var width = MediaQuery.of(context).size.width;
     return Container(
       height: 220,
       width: width,
-      color: Grey,
+      color: darkTheme.getMode() == true ?Grey:White,
       child: Padding(
         padding: const EdgeInsets.only(top: 15),
         child: Column(
@@ -81,7 +83,7 @@ class _AdTileState extends State<AdTile> {
           children: [
             Text(
               'WATCH AN AD TO USE A\nHINT',
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: darkTheme.getMode() == true ?White:Grey, fontSize: 18),
               textAlign: TextAlign.center,
             ),
             SizedBox(
@@ -94,7 +96,7 @@ class _AdTileState extends State<AdTile> {
                   children: [
                     Text(
                       'Hints\nYou Have:',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: darkTheme.getMode() == true ?White:Grey, fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
@@ -103,7 +105,7 @@ class _AdTileState extends State<AdTile> {
                     Text(
                       hintProvider.getHint().toString(),
                       style: TextStyle(
-                          color: Colors.white,
+                          color: darkTheme.getMode() == true ?White:Grey,
                           fontSize: 40,
                           fontWeight: FontWeight.w700),
                     ),

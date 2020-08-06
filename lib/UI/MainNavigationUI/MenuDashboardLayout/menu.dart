@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:dough/dough.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,9 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
@@ -54,13 +58,13 @@ class _MenuState extends State<Menu> {
         position: widget.slideAnimation,
         child: ScaleTransition(
           scale: widget.menuScaleAnimation,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Stack(
-                children: [
-                  Container(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Container(
                     height: MediaQuery.of(context).size.height,
                     width: size.width / 1.75,
                     child: Column(
@@ -108,10 +112,10 @@ class _MenuState extends State<Menu> {
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
-                          title: "Settings",
+                          title: "Contribute",
                           itemNumber: 4,
                           navigateTo: NavigationEvents.DeveloperStoryClickEvent,
-                          icon: Icons.settings,
+                          icon: Icons.send,
                         ),
                         SizedBox(
                           height: 10.0,
@@ -120,10 +124,10 @@ class _MenuState extends State<Menu> {
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
-                          title: "Support",
+                          title: "CodeCards+",
                           itemNumber: 5,
                           navigateTo: NavigationEvents.DeveloperStoryClickEvent,
-                          icon: Icons.headset_mic,
+                          icon: Icons.compare_arrows,
                         ),
                         Divider(
                           height: 40,
@@ -132,71 +136,71 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                   ),
-                  Positioned(
-                    bottom: 30,
-                    left: 0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        PressableDough(
-                          child: Container(
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      _userProvider.getUserAvatar() ??
-                                          'assets/images/code.png',
-                                    ),
-                                    fit: BoxFit.fill),
-                                border: Border.all(
-                                    color: Theme.of(context)
-                                        .primaryColorLight
-                                        .withOpacity(0.6))),
-                          ),
+                ),
+                Positioned(
+                  bottom: 30,
+                  left: 15,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      PressableDough(
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    _userProvider.getUserAvatar() ??
+                                        'assets/images/code.png',
+                                  ),
+                                  fit: BoxFit.fill),
+                              border: Border.all(
+                                  color: Theme.of(context)
+                                      .primaryColorLight
+                                      .withOpacity(0.6))),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        GestureDetector(
-                          onTap: widget.isCollapsed
-                              ? null
-                              : () async {
-                                  if (await Vibration.hasVibrator()) {
-                                    Vibration.vibrate(duration: 5);
-                                  }
-                                  _userProvider.userLogout();
-                                  Navigator.pushNamed(context, '/');
-                                },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Transform.rotate(
-                                angle: math.pi,
-                                child: Icon(
-                                  Icons.exit_to_app,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        onTap: widget.isCollapsed
+                            ? null
+                            : () async {
+                                if (await Vibration.hasVibrator()) {
+                                  Vibration.vibrate(duration: 5);
+                                }
+                                _userProvider.userLogout();
+                                Navigator.pushNamed(context, '/');
+                              },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Transform.rotate(
+                              angle: math.pi,
+                              child: Icon(
+                                Icons.exit_to_app,
+                                color: Theme.of(context).primaryColorLight,
+                                size: 20,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Logout",
+                              style: TextStyle(
                                   color: Theme.of(context).primaryColorLight,
-                                  size: 20,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Logout",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColorLight,
-                                    fontSize: 18),
-                              ),
-                            ],
-                          ),
+                                  fontSize: 18),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),

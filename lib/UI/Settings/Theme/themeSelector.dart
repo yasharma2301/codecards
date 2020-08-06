@@ -19,101 +19,104 @@ class _ThemeSelectorState extends State<ThemeSelector> {
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: ClipPath(
-              clipper: LeftClipper(),
-              child: Material(
-                child: InkWell(
-                  splashColor: Theme.of(context).primaryColorLight,
-                  onTap: () {
-                    darkTheme.changeToDark();
-                  },
-                  child: Ink(
-                    padding: EdgeInsets.only(left: 10),
-                    height: 80,
-                    width: width / 2 + 20,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        topLeft: Radius.circular(8),
+      child: Material(
+        elevation: 25,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ClipPath(
+                clipper: LeftClipper(),
+                child: Material(
+                  child: InkWell(
+                    splashColor: Theme.of(context).primaryColorLight,
+                    onTap: () {
+                      darkTheme.changeToDark();
+                    },
+                    child: Ink(
+                      padding: EdgeInsets.only(left: 10),
+                      height: 80,
+                      width: width / 2 + 20,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8),
+                          topLeft: Radius.circular(8),
+                        ),
+                        border: darkTheme.getMode()==true
+                            ? Border.all(color: White, width: 3)
+                            : null,
                       ),
-                      border: darkTheme.getMode()==true
-                          ? Border.all(color: White, width: 3)
-                          : null,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.brightness_4,
-                          size: 30,
-                          color: Grey,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "DARK\nTHEME",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: White),
-                        )
-                      ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.brightness_4,
+                            size: 30,
+                            color: Grey,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "DARK\nTHEME",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16, color: White),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ClipPath(
-              clipper: RightClipper(),
-              child: Material(
-                child: InkWell(
-                  splashColor: Theme.of(context).primaryColor,
-                  onTap: () {
-                    darkTheme.changeToLight();
-                  },
-                  child: Ink(
-                    padding: EdgeInsets.only(right: 10),
-                    height: 80,
-                    width: width / 2 + 20,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColorLight,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(8),
-                        topRight: Radius.circular(8),
+            Align(
+              alignment: Alignment.centerRight,
+              child: ClipPath(
+                clipper: RightClipper(),
+                child: Material(
+                  child: InkWell(
+                    splashColor: Theme.of(context).primaryColor,
+                    onTap: () {
+                      darkTheme.changeToLight();
+                    },
+                    child: Ink(
+                      padding: EdgeInsets.only(right: 10),
+                      height: 80,
+                      width: width / 2 + 20,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColorLight,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                        border: darkTheme.getMode()==true
+                            ? null
+                            : Border.all(color: White, width: 3),
                       ),
-                      border: darkTheme.getMode()==true
-                          ? null
-                          : Border.all(color: White, width: 3),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "LIGHT\nTHEME",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: White),
-                        ),
-                        SizedBox(width: 20),
-                        Icon(
-                          Icons.brightness_7,
-                          size: 30,
-                          color: White,
-                        ),
-                      ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "LIGHT\nTHEME",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16, color: White),
+                          ),
+                          SizedBox(width: 20),
+                          Icon(
+                            Icons.brightness_7,
+                            size: 30,
+                            color: White,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:codecards/Shared/Colors.dart';
+import 'package:provider/provider.dart';
 
 class Settings2Tile extends StatelessWidget {
   final IconData iconData;
@@ -18,21 +20,23 @@ class Settings2Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           Material(
+            elevation: 20,
             child: InkWell(
-              highlightColor: Grey,
-              splashColor: Grey,
+              highlightColor: darkTheme.getMode() == true ?Grey:White,
+              splashColor: darkTheme.getMode() == true ?Grey:White,
               borderRadius: BorderRadius.circular(8),
               onTap: onTap,
               child: Ink(
                 height: 80,
                 width: width,
                 decoration: BoxDecoration(
-                    color: Grey, borderRadius: BorderRadius.circular(8)),
+                    color: darkTheme.getMode() == true ?Grey:White, borderRadius: BorderRadius.circular(8)),
                 child: Stack(fit: StackFit.expand, children: [
                   Positioned(
                     right: 0,
@@ -62,7 +66,7 @@ class Settings2Tile extends StatelessWidget {
                         child: Text(
                           title,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: White,
                             fontSize: 16,
                           ),
                           textAlign: TextAlign.center,

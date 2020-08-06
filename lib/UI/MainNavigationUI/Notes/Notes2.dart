@@ -1,6 +1,8 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 class Notes2 extends StatefulWidget {
   createState() => Notes2State();
@@ -32,6 +34,7 @@ class Notes2State extends State<Notes2> {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,

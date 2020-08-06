@@ -1,4 +1,5 @@
 import 'package:codecards/Services/Themes/accentColorProvider.dart';
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,7 @@ class _AccentColorPickerState extends State<AccentColorPicker> {
   @override
   Widget build(BuildContext context) {
     ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);
-
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     ThemeData _mainTheme = themeChanger.getTheme();
     List<ThemeData> _gradients = [];
 
@@ -33,7 +34,6 @@ class _AccentColorPickerState extends State<AccentColorPicker> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           title: Text("Change Accent Color"),
-          // backgroundColor: _mainTheme,
           centerTitle: true,
           elevation: 0,
         ),
@@ -72,8 +72,6 @@ class _AccentColorPickerState extends State<AccentColorPicker> {
                                 // color: _gradients[index],
                               ),
                             ),
-                            // shape: RoundedRectangleBorder(
-                            // borderRadius: BorderRadius.circular(100)),
                             onTap: () {
                               setState(() {
                                 _mainTheme = _gradients[index];

@@ -1,3 +1,4 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:codecards/Services/notesServices/noteAPIService.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _NoteTileState extends State<NoteTile> {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     UserRepository userRepository =
         Provider.of<UserRepository>(context, listen: false);
     return Consumer<NoteData>(
@@ -48,7 +50,7 @@ class _NoteTileState extends State<NoteTile> {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8),
                       topLeft: Radius.circular(8)),
-                  color: LightGrey.withOpacity((0.8)),
+                  color: darkTheme.getMode() == true ?LightGrey.withOpacity((0.8)):Colors.blueGrey.withOpacity(0.8),
                 ),
                 child: ListTile(
                   onTap: () {

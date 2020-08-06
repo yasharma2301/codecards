@@ -1,8 +1,9 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/delayed_animation.dart';
+import 'package:provider/provider.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'Bloc/navigation_bloc.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
@@ -16,6 +17,7 @@ class Community extends StatelessWidget with NavigationStates {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return WillPopScope(
       onWillPop: () {
         return Navigator.of(context).pushReplacement(
@@ -45,78 +47,85 @@ class Community extends StatelessWidget with NavigationStates {
                         spreadRadius: 1)
                   ],
                   borderRadius: border
-                      ? BorderRadius.circular(40)
+                      ? BorderRadius.circular(30)
                       : BorderRadius.circular(0),
-                  color: Grey),
+                  color: darkTheme.getMode() == true ?Grey:White),
               child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 8, right: 12, top: 30),
-                      child: Stack(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                splashColor: LightPopBlue.withOpacity(0.8),
-                                hoverColor: LightPopBlue,
-                                icon: Icon(
-                                  Icons.menu,
-                                  color: Colors.white,
-                                  size: 30,
+                child: Padding(
+                  padding: border == true
+                      ? EdgeInsets.only(top: 20)
+                      : EdgeInsets.only(top: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: border == true
+                            ? EdgeInsets.only(left: 10)
+                            : EdgeInsets.only(left: 5),
+                        child: Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  splashColor: LightPopBlue.withOpacity(0.8),
+                                  hoverColor: LightPopBlue,
+                                  icon: Icon(
+                                    Icons.menu,
+                                    color: darkTheme.getMode() == true ?White:Grey,
+                                    size: 30,
+                                  ),
+                                  onPressed: onMenuTap,
                                 ),
-                                onPressed: onMenuTap,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text(
-                                'COMMUNITY',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 23,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600
-                                ),
-                              ),
+                                SizedBox(
+                                  height: 10,
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height - 130,
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 15,
-                                child: Card1(),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Text(
+                                  'Community',
+                                  style: TextStyle(
+                                    color: darkTheme.getMode() == true ?White:Grey,
+                                    fontSize: 23,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),
                               ),
-                              Positioned(right: 10, top: 255, child: Card2()),
-                              Positioned(
-                                left: 0,
-                                top: 440,
-                                child: Card3(),
-                              ),
-                            ],
-                          ),
+                            )
+                          ],
                         ),
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height - 130,
+                          width: MediaQuery.of(context).size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 15,
+                                  child: Card1(),
+                                ),
+                                Positioned(right: 10, top: 255, child: Card2()),
+                                Positioned(
+                                  left: 0,
+                                  top: 440,
+                                  child: Card3(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -130,13 +139,14 @@ class Community extends StatelessWidget with NavigationStates {
 class Card1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return DelayedAnimation(
       delay: 50,
       child: Container(
         height: MediaQuery.of(context).size.height / 2.4,
         width: MediaQuery.of(context).size.width - 15,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: darkTheme.getMode() == true ?Colors.white:Colors.grey[300],
           boxShadow: [
             BoxShadow(
                 color: Colors.white30,
@@ -218,6 +228,7 @@ class Card1 extends StatelessWidget {
 class Card2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return DelayedAnimation(
       delay: 350,
       child: Container(
@@ -234,7 +245,7 @@ class Card2 extends StatelessWidget {
             ],
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-                color: Colors.white, width: 3, style: BorderStyle.solid)),
+                color:  Colors.white, width: 3, style: BorderStyle.solid)),
         child: Container(
           height: 220,
           width: 220,

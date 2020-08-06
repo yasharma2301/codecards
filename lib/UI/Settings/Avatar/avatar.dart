@@ -1,3 +1,4 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,9 +29,9 @@ class _AvatarState extends State<Avatar> {
   Widget build(BuildContext context) {
     UserRepository _userProvider = Provider.of<UserRepository>(context);
     String _selected = _userProvider.getUserAvatar();
-
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Scaffold(
-      backgroundColor: Grey,
+      backgroundColor: darkTheme.getMode() == true ? Grey : White,
       body: SafeArea(
         child: Stack(
           children: [
@@ -60,8 +61,12 @@ class _AvatarState extends State<Avatar> {
                               gradient: LinearGradient(
                                   begin: Alignment.bottomRight,
                                   colors: [
-                                    Colors.black.withOpacity(.5),
-                                    Colors.black.withOpacity(.1),
+                                    darkTheme.getMode() == true
+                                        ? Colors.black.withOpacity(.5)
+                                        : White.withOpacity(0.1),
+                                    darkTheme.getMode() == true
+                                        ? Colors.black.withOpacity(.1)
+                                        : Black.withOpacity(0.01),
                                   ])),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -71,6 +76,13 @@ class _AvatarState extends State<Avatar> {
                                 child: Text(
                                   "Select an Avatar",
                                   style: TextStyle(
+                                      shadows: [
+                                        Shadow(
+                                          offset: Offset(1.0, 1.5),
+                                          blurRadius: 5.0,
+                                          color: Color.fromARGB(255, 0, 0, 0),
+                                        ),
+                                      ],
                                       color: Colors.white,
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold),
@@ -86,7 +98,7 @@ class _AvatarState extends State<Avatar> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Expanded(
                     child: Padding(
@@ -146,7 +158,7 @@ class _AvatarState extends State<Avatar> {
                     ),
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 2.0,
                   ),
                   Material(
                     child: InkWell(
@@ -183,34 +195,40 @@ class _AvatarState extends State<Avatar> {
                 ],
               ),
             ),
-            Positioned(
-              left: 0,
-              top: 15,
-              child: DelayedAnimation(
-                delay: 10,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50),
-                        bottomRight: Radius.circular(10)),
-                    color: Grey,
-                  ),
+            Material(
+              elevation: 30,
+              child: Positioned(
+                left: 0,
+                top: 15,
+                child: DelayedAnimation(
+                  delay: 40,
                   child: Container(
-                    height: 40,
-                    width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(50),
                           bottomRight: Radius.circular(10)),
-                      color: LightGrey.withOpacity(0.55),
+                      color: darkTheme.getMode() == true ? Grey : White,
                     ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.keyboard_backspace,
-                        color: Colors.white,
+                    child: Container(
+                      height: 40,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            bottomRight: Radius.circular(10)),
+                        color: darkTheme.getMode() == true
+                            ? LightGrey.withOpacity(0.55)
+                            : White,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.keyboard_backspace,
+                          color:
+                              darkTheme.getMode() == true ? Colors.white : Grey,
+                        ),
                       ),
                     ),
                   ),

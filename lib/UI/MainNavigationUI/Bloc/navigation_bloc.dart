@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import '../bookmarks.dart';
 import '../code_cards.dart';
 import '../community.dart';
-import '../developer_story.dart';
+import '../contributeAQuestion.dart';
 import '../rate_us.dart';
 
 enum NavigationEvents {
@@ -41,7 +41,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         yield RateUs(onMenuTap: onMenuTap);
         break;
       case NavigationEvents.DeveloperStoryClickEvent:
-        yield DeveloperStory(onMenuTap: onMenuTap);
+        yield ContributeQuestion(onMenuTap: onMenuTap);
         break;
       // case NavigationEvents.SettingsClickEvent:
       //   yield Settings();

@@ -23,8 +23,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  String currentTheme = "dark";
-
   @override
   Widget build(BuildContext context) {
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
@@ -95,7 +93,7 @@ class _SettingsState extends State<Settings> {
                       Text(
                         "Settings".toUpperCase(),
                         style: TextStyle(
-                            color: darkTheme.getMode() == true ?White:Grey,
+                            color: darkTheme.getMode() == true ?White:LightGrey,
                             fontSize: 30,
                             letterSpacing: 2,
                             fontWeight: FontWeight.w600,
@@ -118,7 +116,7 @@ class _SettingsState extends State<Settings> {
                                 height: height / 5,
                                 width: width / 2.5,
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color:Colors.white,
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                         color: Colors.white70, width: 2)),
@@ -139,11 +137,13 @@ class _SettingsState extends State<Settings> {
                               child: Container(
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                    color: Grey,
+                                    color:  darkTheme.getMode() == true
+                                        ? Grey:White,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Icon(
                                   Icons.edit,
-                                  color: White,
+                                  color:  darkTheme.getMode() == true
+                                      ? White:Grey,
                                 ),
                               ),
                             ),
@@ -156,7 +156,6 @@ class _SettingsState extends State<Settings> {
                 SizedBox(
                   height: 10,
                 ),
-                // SetUsername(width:width,height: height,),
                 UserInfo(
                   width: width,
                   settingsContext: context,
@@ -179,7 +178,7 @@ class _SettingsState extends State<Settings> {
                   child: Settings2Tile(
                       iconData: Icons.call,
                       title: 'SUPPORT',
-                      onTap: () => _goToContactUs(context)),
+                      onTap: () => _goToContactUs(context,_userProvider)),
                 ),
                 Settings2Tile(
                   iconData: Icons.star,
@@ -202,27 +201,29 @@ class _SettingsState extends State<Settings> {
           Positioned(
             left: 0,
             top: 50,
-            child: Container(
-              height: 40,
-              width: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(50),
-                    bottomRight: Radius.circular(10)),
-                color: Grey,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.keyboard_backspace,
-                  color: Colors.white,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Material(
+                elevation: 30,
+                child: Container(
+                  height: 40,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                        bottomRight: Radius.circular(10)),
+                    color: darkTheme.getMode() == true ?Grey:White,
+                  ),
+                  child: Icon(
+                    Icons.keyboard_backspace,
+                    color: darkTheme.getMode() == true ?Colors.white:Grey,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ),],
       ),
     );
   }
@@ -269,9 +270,9 @@ class _SettingsState extends State<Settings> {
         });
   }
 
-  void _goToContactUs(BuildContext context) async {
+  void _goToContactUs(BuildContext context,UserRepository userRepository) async {
     dynamic instance = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ContactUs()));
+        .push(MaterialPageRoute(builder: (context) => ContactUs(userRepository: userRepository,)));
     FlushBar flushBar = FlushBar(context: context);
 
     if (instance != null) {
