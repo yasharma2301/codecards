@@ -118,7 +118,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
       return 1;
     } else if (navigationStates is Community) {
       return 2;
-    } else if (navigationStates is RateUs) {
+    } else if (navigationStates is Premium) {
       return 3;
     } else if (navigationStates is ContributeQuestion) {
       return 4;

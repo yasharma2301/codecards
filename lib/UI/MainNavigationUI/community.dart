@@ -17,6 +17,8 @@ class Community extends StatelessWidget with NavigationStates {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return WillPopScope(
       onWillPop: () {
@@ -38,61 +40,134 @@ class Community extends StatelessWidget with NavigationStates {
             swipeConfiguration: SwipeConfiguration(
                 horizontalSwipeMinDisplacement: 30
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: PopBlue.withOpacity(0.5),
-                        blurRadius: 8,
-                        spreadRadius: 1)
-                  ],
-                  borderRadius: border
-                      ? BorderRadius.circular(30)
-                      : BorderRadius.circular(0),
-                  color: darkTheme.getMode() == true ?Grey:White),
+            child: ClipRRect(
+              borderRadius:
+              border ? BorderRadius.circular(30) : BorderRadius.circular(0),
               child: Container(
-                child: Padding(
-                  padding: border == true
-                      ? EdgeInsets.only(top: 20)
-                      : EdgeInsets.only(top: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: PopBlue.withOpacity(0.5),
+                          blurRadius: 8,
+                          spreadRadius: 1)
+                    ],
+                    borderRadius: border
+                        ? BorderRadius.circular(30)
+                        : BorderRadius.circular(0),
+                    color: darkTheme.getMode() == true ?Grey:White),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: -(height / 2 - width / 2),
+                      top: -height * 0.13,
+                      child: Container(
+                        height: height,
+                        width: height,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: darkTheme.getMode() == true
+                                ? LightGrey.withOpacity(0.15)
+                                : Colors.grey.withOpacity(0.3)),
+                      ),
+                    ),
+                    Positioned(
+                      left: width * 0.15,
+                      top: -width * 0.5,
+                      child: Container(
+                        height: width * 1.6,
+                        width: width * 1.6,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: darkTheme.getMode() == true
+                              ? LightGrey.withOpacity(0.1)
+                              : Colors.grey.withOpacity(0.1),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: -width * 0.2,
+                      top: -50,
+                      child: Container(
+                        height: width * 0.6,
+                        width: width * 0.6,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: darkTheme.getMode() == true
+                              ? LightGrey.withOpacity(0.1)
+                              : Colors.grey.withOpacity(0.1),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
                         padding: border == true
-                            ? EdgeInsets.only(left: 10)
-                            : EdgeInsets.only(left: 5),
-                        child: Stack(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                  splashColor: LightPopBlue.withOpacity(0.8),
-                                  hoverColor: LightPopBlue,
-                                  icon: Icon(
-                                    Icons.menu,
-                                    color: darkTheme.getMode() == true ?White:Grey,
-                                    size: 30,
+                            ? EdgeInsets.only(top: 20)
+                            : EdgeInsets.only(top: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: border == true
+                                  ? EdgeInsets.only(left: 10)
+                                  : EdgeInsets.only(left: 5),
+                              child: Stack(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      IconButton(
+                                        splashColor: LightPopBlue.withOpacity(0.8),
+                                        hoverColor: LightPopBlue,
+                                        icon: Icon(
+                                          Icons.menu,
+                                          color: darkTheme.getMode() == true ?White:Grey,
+                                          size: 30,
+                                        ),
+                                        onPressed: onMenuTap,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      )
+                                    ],
                                   ),
-                                  onPressed: onMenuTap,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                )
-                              ],
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Text(
+                                        'Community',
+                                        style: TextStyle(
+                                          color: darkTheme.getMode() == true ?White:Grey,
+                                          fontSize: 23,
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.w600
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Text(
-                                  'Community',
-                                  style: TextStyle(
-                                    color: darkTheme.getMode() == true ?White:Grey,
-                                    fontSize: 23,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w600
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height - 130,
+                                width: MediaQuery.of(context).size.width,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        left: 15,
+                                        child: Card1(),
+                                      ),
+                                      Positioned(right: 10, top: 255, child: Card2()),
+                                      Positioned(
+                                        left: 0,
+                                        top: 440,
+                                        child: Card3(),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -100,32 +175,8 @@ class Community extends StatelessWidget with NavigationStates {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height - 130,
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 15,
-                                  child: Card1(),
-                                ),
-                                Positioned(right: 10, top: 255, child: Card2()),
-                                Positioned(
-                                  left: 0,
-                                  top: 440,
-                                  child: Card3(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -146,7 +197,7 @@ class Card1 extends StatelessWidget {
         height: MediaQuery.of(context).size.height / 2.4,
         width: MediaQuery.of(context).size.width - 15,
         decoration: BoxDecoration(
-          color: darkTheme.getMode() == true ?Colors.white:Colors.grey[300],
+          color: White,
           boxShadow: [
             BoxShadow(
                 color: Colors.white30,

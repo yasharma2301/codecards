@@ -35,6 +35,8 @@ class _CodeCardsState extends State<CodeCards> {
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     final bloc = Provider.of<CardsBloc>(context);
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     final HintCounter hintProvider = Provider.of<HintCounter>(context);
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -57,312 +59,362 @@ class _CodeCardsState extends State<CodeCards> {
               borderRadius:
                   border ? BorderRadius.circular(30) : BorderRadius.circular(0),
               color: darkTheme.getMode() == true ? Grey : White),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: border == true
-                  ? EdgeInsets.only(top: 20)
-                  : EdgeInsets.only(top: 30),
-              child: Scaffold(
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: border == true
-                              ? EdgeInsets.only(left: 25)
-                              : EdgeInsets.only(left: 15),
-                          child: GestureDetector(
-                            onTap: widget.onMenuTap,
-                            child: Icon(
-                              Icons.menu,
-                              color: darkTheme.getMode() == true
-                                  ? Colors.white
-                                  : Grey,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'CodeCards',
-                            style: TextStyle(
-                                color:
-                                    darkTheme.getMode() == true ? White : Grey,
-                                fontSize: 23,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: IconButton(
-                              splashColor: LightPopBlue.withOpacity(0.5),
-                              hoverColor: LightPopBlue,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.settings,
-                                color: darkTheme.getMode() == true
-                                    ? Colors.white
-                                    : Grey,
-                                size: 25,
-                              ),
-                              onPressed: () {
-                                Navigator.push(context,
-                                    SlideFromRightPageRoute(page: Settings()));
-                              }),
-                        )
-                      ],
+          child: ClipRRect(
+            borderRadius:
+            border ? BorderRadius.circular(30) : BorderRadius.circular(0),
+            child: Stack(
+              overflow: Overflow.clip,
+              children: [
+                Positioned(
+                  left: -(height / 2 - width / 2),
+                  top: -height * 0.13,
+                  child: Container(
+                    height: height,
+                    width: height,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: darkTheme.getMode() == true
+                            ? LightGrey.withOpacity(0.15)
+                            : Colors.grey.withOpacity(0.3)),
+                  ),
+                ),
+                Positioned(
+                  left: width * 0.15,
+                  top: -width * 0.5,
+                  child: Container(
+                    height: width * 1.6,
+                    width: width * 1.6,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: darkTheme.getMode() == true
+                          ? LightGrey.withOpacity(0.1)
+                          : Colors.grey.withOpacity(0.1),
                     ),
-                    Expanded(
-                      child: StreamBuilder<List<CardsResults>>(
-                          stream: bloc.stream,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List<CardsResults>> snapshot) {
-                            if (!snapshot.hasData ||
-                                connectionStatus ==
-                                    ConnectivityStatus.Offline) {
-                              return Container(
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 15),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: border == false
-                                              ? [
-                                                  RoundIconButton.small(
-                                                    icon: Icons.clear,
-                                                    iconSize: 22,
-                                                    onPressed: () {},
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon:
-                                                        Icons.lightbulb_outline,
-                                                    onPressed: () {},
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 28,
-                                                    icon: Icons.add,
-                                                    onPressed: () {
-                                                      _bringUpNotesSheet(
-                                                          context, darkTheme);
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon: Icons.bookmark_border,
-                                                    onPressed: () {},
-                                                  ),
-                                                  RoundIconButton.small(
-                                                    icon: Icons.share,
-                                                    iconSize: 22,
-                                                    onPressed: () {},
-                                                  ),
-                                                ]
-                                              : [
-                                                  RoundIconButton.small(
-                                                    icon: Icons.clear,
-                                                    iconSize: 22,
-                                                    onPressed: () {},
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon:
-                                                        Icons.lightbulb_outline,
-                                                    onPressed: () {},
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 28,
-                                                    icon: Icons.add,
-                                                    onPressed: () {
-                                                      _bringUpNotesSheet(
-                                                          context, darkTheme);
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon: Icons.bookmark_border,
-                                                    onPressed: () {},
-                                                  ),
-                                                ],
-                                        ),
-                                      ),
+                  ),
+                ),
+                Positioned(
+                  right: -width * 0.2,
+                  top: -50,
+                  child: Container(
+                    height: width * 0.6,
+                    width: width * 0.6,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: darkTheme.getMode() == true
+                          ? LightGrey.withOpacity(0.1)
+                          : Colors.grey.withOpacity(0.1),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: border == true
+                        ? EdgeInsets.only(top: 20)
+                        : EdgeInsets.only(top: 30),
+                    child: Scaffold(
+                      body: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: border == true
+                                    ? EdgeInsets.only(left: 25)
+                                    : EdgeInsets.only(left: 15),
+                                child: GestureDetector(
+                                  onTap: widget.onMenuTap,
+                                  child: Icon(
+                                    Icons.menu,
+                                    color: darkTheme.getMode() == true
+                                        ? Colors.white
+                                        : Grey,
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'CodeCards',
+                                  style: TextStyle(
+                                      color:
+                                          darkTheme.getMode() == true ? White : Grey,
+                                      fontSize: 23,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: IconButton(
+                                    splashColor: LightPopBlue.withOpacity(0.5),
+                                    hoverColor: LightPopBlue,
+                                    highlightColor: Colors.transparent,
+                                    icon: Icon(
+                                      Icons.settings,
+                                      color: darkTheme.getMode() == true
+                                          ? Colors.white
+                                          : Grey,
+                                      size: 25,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 10),
-                                      child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.75,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Center(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: LightGrey, width: 1),
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 1,
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          SlideFromRightPageRoute(page: Settings()));
+                                    }),
+                              )
+                            ],
+                          ),
+                          Expanded(
+                            child: StreamBuilder<List<CardsResults>>(
+                                stream: bloc.stream,
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<List<CardsResults>> snapshot) {
+                                  if (!snapshot.hasData ||
+                                      connectionStatus ==
+                                          ConnectivityStatus.Offline) {
+                                    return Container(
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 15, vertical: 15),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceEvenly,
+                                                children: border == false
+                                                    ? [
+                                                        RoundIconButton.small(
+                                                          icon: Icons.clear,
+                                                          iconSize: 22,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon:
+                                                              Icons.lightbulb_outline,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 28,
+                                                          icon: Icons.add,
+                                                          onPressed: () {
+                                                            _bringUpNotesSheet(
+                                                                context, darkTheme);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon: Icons.bookmark_border,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.small(
+                                                          icon: Icons.share,
+                                                          iconSize: 22,
+                                                          onPressed: () {},
+                                                        ),
+                                                      ]
+                                                    : [
+                                                        RoundIconButton.small(
+                                                          icon: Icons.clear,
+                                                          iconSize: 22,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon:
+                                                              Icons.lightbulb_outline,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 28,
+                                                          icon: Icons.add,
+                                                          onPressed: () {
+                                                            _bringUpNotesSheet(
+                                                                context, darkTheme);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon: Icons.bookmark_border,
+                                                          onPressed: () {},
+                                                        ),
+                                                      ],
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 10),
+                                            child: Container(
+                                              height:
+                                                  MediaQuery.of(context).size.height *
+                                                      0.75,
+                                              width:
+                                                  MediaQuery.of(context).size.width,
+                                              child: Center(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: LightGrey, width: 1),
+                                                      borderRadius:
+                                                          BorderRadius.circular(8)),
+                                                  child: Center(
+                                                    child: CircularProgressIndicator(
+                                                      strokeWidth: 1,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  return Container(
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(bottom: 0),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 13, vertical: 15),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceEvenly,
+                                                children: border == false
+                                                    ? [
+                                                        RoundIconButton.small(
+                                                          icon: Icons.clear,
+                                                          iconSize: 22,
+                                                          onPressed: () {
+                                                            swipeKey.currentState
+                                                                .swipeLeft();
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon:
+                                                              Icons.lightbulb_outline,
+                                                          onPressed: () {
+                                                            _showHintDialog(
+                                                                context: context,
+                                                                hint: snapshot
+                                                                    .data[swipeKey
+                                                                        .currentState
+                                                                        .currentIndex]
+                                                                    .hint,
+                                                                hintCounter:
+                                                                    hintProvider);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 28,
+                                                          icon: Icons.add,
+                                                          onPressed: () {
+                                                            _bringUpNotesSheet(
+                                                                context, darkTheme);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon: Icons.bookmark_border,
+                                                          onPressed: () {
+                                                            swipeKey.currentState
+                                                                .swipeRight();
+                                                          },
+                                                        ),
+                                                        RoundIconButton.small(
+                                                          icon: Icons.share,
+                                                          iconSize: 22,
+                                                          onPressed: () {
+                                                            share(
+                                                                context,
+                                                                snapshot.data[swipeKey
+                                                                    .currentState
+                                                                    .currentIndex]);
+                                                          },
+                                                        ),
+                                                      ]
+                                                    : [
+                                                        RoundIconButton.small(
+                                                          icon: Icons.clear,
+                                                          iconSize: 22,
+                                                          onPressed: () {
+                                                            swipeKey.currentState
+                                                                .swipeLeft();
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon:
+                                                              Icons.lightbulb_outline,
+                                                          onPressed: () {
+                                                            _showHintDialog(
+                                                                context: context,
+                                                                hint: snapshot
+                                                                    .data[swipeKey
+                                                                        .currentState
+                                                                        .currentIndex]
+                                                                    .hint,
+                                                                hintCounter:
+                                                                    hintProvider);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 28,
+                                                          icon: Icons.add,
+                                                          onPressed: () {
+                                                            _bringUpNotesSheet(
+                                                                context, darkTheme);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon: Icons.bookmark_border,
+                                                          onPressed: () {
+                                                            swipeKey.currentState
+                                                                .swipeRight();
+                                                          },
+                                                        ),
+                                                      ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                            return Container(
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(bottom: 0),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 13, vertical: 15),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: border == false
-                                              ? [
-                                                  RoundIconButton.small(
-                                                    icon: Icons.clear,
-                                                    iconSize: 22,
-                                                    onPressed: () {
-                                                      swipeKey.currentState
-                                                          .swipeLeft();
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon:
-                                                        Icons.lightbulb_outline,
-                                                    onPressed: () {
-                                                      _showHintDialog(
-                                                          context: context,
-                                                          hint: snapshot
-                                                              .data[swipeKey
-                                                                  .currentState
-                                                                  .currentIndex]
-                                                              .hint,
-                                                          hintCounter:
-                                                              hintProvider);
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 28,
-                                                    icon: Icons.add,
-                                                    onPressed: () {
-                                                      _bringUpNotesSheet(
-                                                          context, darkTheme);
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon: Icons.bookmark_border,
-                                                    onPressed: () {
-                                                      swipeKey.currentState
-                                                          .swipeRight();
-                                                    },
-                                                  ),
-                                                  RoundIconButton.small(
-                                                    icon: Icons.share,
-                                                    iconSize: 22,
-                                                    onPressed: () {
-                                                      share(
-                                                          context,
-                                                          snapshot.data[swipeKey
-                                                              .currentState
-                                                              .currentIndex]);
-                                                    },
-                                                  ),
-                                                ]
-                                              : [
-                                                  RoundIconButton.small(
-                                                    icon: Icons.clear,
-                                                    iconSize: 22,
-                                                    onPressed: () {
-                                                      swipeKey.currentState
-                                                          .swipeLeft();
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon:
-                                                        Icons.lightbulb_outline,
-                                                    onPressed: () {
-                                                      _showHintDialog(
-                                                          context: context,
-                                                          hint: snapshot
-                                                              .data[swipeKey
-                                                                  .currentState
-                                                                  .currentIndex]
-                                                              .hint,
-                                                          hintCounter:
-                                                              hintProvider);
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 28,
-                                                    icon: Icons.add,
-                                                    onPressed: () {
-                                                      _bringUpNotesSheet(
-                                                          context, darkTheme);
-                                                    },
-                                                  ),
-                                                  RoundIconButton.large(
-                                                    iconSize: 26,
-                                                    icon: Icons.bookmark_border,
-                                                    onPressed: () {
-                                                      swipeKey.currentState
-                                                          .swipeRight();
-                                                    },
-                                                  ),
-                                                ],
+                                        IgnorePointer(
+                                          ignoring: border == true ? true : false,
+                                          child: Container(
+                                            height:
+                                                MediaQuery.of(context).size.height *
+                                                    0.8,
+                                            padding:
+                                                EdgeInsets.only(bottom: 0, top: 10),
+                                            child: CardsStack(
+                                              snapshot: snapshot,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ),
-                                  IgnorePointer(
-                                    ignoring: border == true ? true : false,
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.8,
-                                      padding:
-                                          EdgeInsets.only(bottom: 0, top: 10),
-                                      child: CardsStack(
-                                        snapshot: snapshot,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                    )
-                  ],
+                                  );
+                                }),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         );

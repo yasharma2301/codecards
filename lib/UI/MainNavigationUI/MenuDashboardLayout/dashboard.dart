@@ -39,7 +39,7 @@ class Dashboard extends StatelessWidget {
           animationDuration: duration,
           borderRadius: isCollapsed
               ? BorderRadius.circular(0)
-              : BorderRadius.circular(40),
+              : BorderRadius.circular(30),
           elevation: 10.0,
           child: child,
         ),

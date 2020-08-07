@@ -9,9 +9,8 @@ enum NavigationEvents {
   CodeCardsClickEvent,
   BookmarksClickEvent,
   CommunityClickEvent,
-  RateUsClickEvent,
-  DeveloperStoryClickEvent,
-  // SettingsClickEvent
+  PremiumClickEvent,
+  ContributeClickEvent,
 }
 
 abstract class NavigationStates {}
@@ -37,15 +36,12 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.CommunityClickEvent:
         yield Community(onMenuTap: onMenuTap);
         break;
-      case NavigationEvents.RateUsClickEvent:
-        yield RateUs(onMenuTap: onMenuTap);
+      case NavigationEvents.PremiumClickEvent:
+        yield Premium(onMenuTap: onMenuTap);
         break;
-      case NavigationEvents.DeveloperStoryClickEvent:
+      case NavigationEvents.ContributeClickEvent:
         yield ContributeQuestion(onMenuTap: onMenuTap);
         break;
-      // case NavigationEvents.SettingsClickEvent:
-      //   yield Settings();
-      //   break;
     }
   }
 }

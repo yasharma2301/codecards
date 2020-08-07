@@ -1,11 +1,8 @@
 import 'dart:math' as math;
-
 import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:dough/dough.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
-
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/UI/MainNavigationUI/Bloc/navigation_bloc.dart';
@@ -45,10 +42,19 @@ class _MenuState extends State<Menu> {
     }
   }
 
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
+  }
+
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     final UserRepository _userProvider = Provider.of<UserRepository>(context);
     Size size = MediaQuery.of(context).size;
@@ -62,13 +68,25 @@ class _MenuState extends State<Menu> {
             alignment: Alignment.centerLeft,
             child: Stack(
               children: [
+                Positioned(
+                  top: 70,
+                  left: 15,
+                  child: Text(
+                    'Good ${greeting()}!\n${_userProvider.getUserName()}',
+                    style: TextStyle(
+                      color: darkTheme.getMode() == true ? White : Black,
+                      fontSize: 20,
+                      letterSpacing: 1.3,
+                      fontWeight: FontWeight.w300
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Container(
                     height: MediaQuery.of(context).size.height,
-                    width: size.width / 1.75,
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -114,7 +132,7 @@ class _MenuState extends State<Menu> {
                           isSelected: widget.isSelected,
                           title: "Contribute",
                           itemNumber: 4,
-                          navigateTo: NavigationEvents.DeveloperStoryClickEvent,
+                          navigateTo: NavigationEvents.ContributeClickEvent,
                           icon: Icons.send,
                         ),
                         SizedBox(
@@ -125,14 +143,18 @@ class _MenuState extends State<Menu> {
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
                           title: "CodeCards+",
-                          itemNumber: 5,
-                          navigateTo: NavigationEvents.DeveloperStoryClickEvent,
+                          itemNumber: 3,
+                          navigateTo: NavigationEvents.PremiumClickEvent,
                           icon: Icons.compare_arrows,
                         ),
-                        Divider(
-                          height: 40,
-                          color:darkTheme.getMode()==true? White.withOpacity(0.35):Colors.grey[600],
-                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 15),
+                          height: 0.5,
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          color: darkTheme.getMode() == true
+                              ? White.withOpacity(0.35)
+                              : Colors.grey[600],
+                        )
                       ],
                     ),
                   ),
@@ -143,23 +165,21 @@ class _MenuState extends State<Menu> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      PressableDough(
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                    _userProvider.getUserAvatar() ??
-                                        'assets/images/code.png',
-                                  ),
-                                  fit: BoxFit.fill),
-                              border: Border.all(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.6))),
-                        ),
+                      Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  _userProvider.getUserAvatar() ??
+                                      'assets/images/code.png',
+                                ),
+                                fit: BoxFit.fill),
+                            border: Border.all(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.6))),
                       ),
                       SizedBox(
                         height: 15,
@@ -191,6 +211,7 @@ class _MenuState extends State<Menu> {
                             Text(
                               "Logout",
                               style: TextStyle(
+                                fontWeight: FontWeight.w500,
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 19),
                             ),
