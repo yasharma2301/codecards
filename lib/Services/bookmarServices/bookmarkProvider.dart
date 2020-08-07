@@ -15,7 +15,7 @@ class BookmarkProvider with ChangeNotifier {
 
   getBookmarks() async {
     //final String url = 'http://192.168.0.105:8000/bookmarks/';
-    final String url = 'http://192.168.0.7:8000/bookmarks/';
+    final String url = 'http://192.168.0.105:8000/bookmarks/';
     var response = await http.get(
       url,
       headers: {
@@ -36,7 +36,7 @@ class BookmarkProvider with ChangeNotifier {
   }
 
   Future<List> deleteBookmark(int bookmarkId, var bookmark) async {
-    final String url = 'http://192.168.0.7:8000/bookmarks/';
+    final String url = 'http://192.168.0.105:8000/bookmarks/';
     var response = await http.delete(
       url,
       headers: {

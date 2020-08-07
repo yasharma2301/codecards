@@ -91,9 +91,10 @@ class _ContactUsState extends State<ContactUs>
         });
       }
     }
+
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: darkTheme.getMode() == true ?Grey:White,
+      backgroundColor: darkTheme.getMode() == true ? Grey : White,
       body: Stack(
         children: [
           Container(
@@ -107,7 +108,9 @@ class _ContactUsState extends State<ContactUs>
               width: height,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.43):Colors.grey.withOpacity(0.3),
+                color: darkTheme.getMode() == true
+                    ? LightGrey.withOpacity(0.43)
+                    : Colors.grey.withOpacity(0.3),
               ),
             ),
           ),
@@ -119,7 +122,9 @@ class _ContactUsState extends State<ContactUs>
               width: width * 1.6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.2):Colors.grey.withOpacity(0.23),
+                color: darkTheme.getMode() == true
+                    ? LightGrey.withOpacity(0.2)
+                    : Colors.grey.withOpacity(0.23),
               ),
             ),
           ),
@@ -131,7 +136,9 @@ class _ContactUsState extends State<ContactUs>
               width: width * 0.6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.3):Colors.grey.withOpacity(0.2),
+                color: darkTheme.getMode() == true
+                    ? LightGrey.withOpacity(0.3)
+                    : Colors.grey.withOpacity(0.2),
               ),
             ),
           ),
@@ -157,7 +164,9 @@ class _ContactUsState extends State<ContactUs>
                             child: Text(
                               "Support".toUpperCase(),
                               style: TextStyle(
-                                  color: darkTheme.getMode() == true ?White:LightGrey,
+                                  color: darkTheme.getMode() == true
+                                      ? White
+                                      : LightGrey,
                                   fontSize: 35,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat'),
@@ -181,26 +190,32 @@ class _ContactUsState extends State<ContactUs>
                           width: width - 50,
                           padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                              color: darkTheme.getMode() == true ?Grey:White,
+                              color: darkTheme.getMode() == true ? Grey : White,
                               borderRadius: BorderRadius.circular(6)),
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
-                              color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
+                              color: darkTheme.getMode() == true
+                                  ? LightGrey.withOpacity(0.7)
+                                  : Colors.grey.withOpacity(0.3),
                             ),
                             child: TextFormField(
                               controller: nameController,
                               cursorColor: Theme.of(context).primaryColorLight,
                               style: TextStyle(
-                                color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,
+                                color: darkTheme.getMode() == true
+                                    ? White.withOpacity(0.9)
+                                    : Grey,
                                 fontSize: 18,
                               ),
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   labelText: "Enter your name",
                                   labelStyle: TextStyle(
-                                      color: darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8),
+                                      color: darkTheme.getMode() == true
+                                          ? Theme.of(context).primaryColor
+                                          : Grey.withOpacity(0.8),
                                       fontSize: 16)),
                             ),
                           ),
@@ -217,20 +232,26 @@ class _ContactUsState extends State<ContactUs>
                             width: width - 50,
                             padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                                color: darkTheme.getMode() == true ?Grey:White,
+                                color:
+                                    darkTheme.getMode() == true ? Grey : White,
                                 borderRadius: BorderRadius.circular(6)),
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
-                                color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
+                                color: darkTheme.getMode() == true
+                                    ? LightGrey.withOpacity(0.7)
+                                    : Colors.grey.withOpacity(0.3),
                               ),
                               child: TextFormField(
                                 keyboardType: TextInputType.emailAddress,
                                 controller: emailController,
-                                cursorColor: Theme.of(context).primaryColorLight,
+                                cursorColor:
+                                    Theme.of(context).primaryColorLight,
                                 style: TextStyle(
-                                  color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,
+                                  color: darkTheme.getMode() == true
+                                      ? White.withOpacity(0.9)
+                                      : Grey,
                                   fontSize: 18,
                                 ),
                                 validator: (value) {
@@ -244,8 +265,9 @@ class _ContactUsState extends State<ContactUs>
                                     border: InputBorder.none,
                                     labelText: "Email Address",
                                     labelStyle: TextStyle(
-                                        color:
-                                        darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8),
+                                        color: darkTheme.getMode() == true
+                                            ? Theme.of(context).primaryColor
+                                            : Grey.withOpacity(0.8),
                                         fontSize: 16,
                                         height: 1)),
                               ),
@@ -262,27 +284,35 @@ class _ContactUsState extends State<ContactUs>
                           width: width - 50,
                           padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                              color: darkTheme.getMode() == true ?Grey:White,
+                              color: darkTheme.getMode() == true ? Grey : White,
                               borderRadius: BorderRadius.circular(6)),
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
-                              color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.7):Colors.grey.withOpacity(0.3),
+                              color: darkTheme.getMode() == true
+                                  ? LightGrey.withOpacity(0.7)
+                                  : Colors.grey.withOpacity(0.3),
                             ),
                             child: TextFormField(
                               controller: descriptionController,
                               maxLines: 8,
                               cursorColor: Theme.of(context).primaryColorLight,
                               style: TextStyle(
-                                  fontSize: 18, color: darkTheme.getMode() == true ?White.withOpacity(0.9):Grey,),
+                                fontSize: 18,
+                                color: darkTheme.getMode() == true
+                                    ? White.withOpacity(0.9)
+                                    : Grey,
+                              ),
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Describe your problem/suggestion",
                                   hintStyle: TextStyle(
                                       fontSize: 16,
                                       height: 0.5,
-                                      color:darkTheme.getMode() == true ?Theme.of(context).primaryColor:Grey.withOpacity(0.8))),
+                                      color: darkTheme.getMode() == true
+                                          ? Theme.of(context).primaryColor
+                                          : Grey.withOpacity(0.8))),
                               textCapitalization: TextCapitalization.sentences,
                             ),
                           ),
@@ -297,13 +327,13 @@ class _ContactUsState extends State<ContactUs>
                     children: [
                       Divider(
                         height: 50,
-                        color: darkTheme.getMode() == true ?White:Grey,
+                        color: darkTheme.getMode() == true ? White : Grey,
                         thickness: 0.4,
                       ),
                       Text(
                         "Add a screenshot (optional) :",
                         style: TextStyle(
-                            color: darkTheme.getMode() == true ?White:Grey,
+                            color: darkTheme.getMode() == true ? White : Grey,
                             fontSize: 18,
                             fontWeight: FontWeight.w300),
                       ),
@@ -321,13 +351,15 @@ class _ContactUsState extends State<ContactUs>
                                 height: 180,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                    color: darkTheme.getMode() == true ?LightGrey.withOpacity(0.5):Colors.grey.withOpacity(0.6),
+                                    color: darkTheme.getMode() == true
+                                        ? LightGrey.withOpacity(0.5)
+                                        : Colors.grey.withOpacity(0.6),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: _image == null
                                     ? Icon(
                                         Icons.add,
                                         color: Theme.of(context).primaryColor,
-                                  size: 35,
+                                        size: 35,
                                       )
                                     : Image.file(_image),
                               ),
@@ -358,11 +390,11 @@ class _ContactUsState extends State<ContactUs>
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(50),
                         bottomRight: Radius.circular(10)),
-                    color: darkTheme.getMode() == true ?Grey:White,
+                    color: darkTheme.getMode() == true ? Grey : White,
                   ),
                   child: Icon(
                     Icons.keyboard_backspace,
-                    color: darkTheme.getMode() == true ?Colors.white:Grey,
+                    color: darkTheme.getMode() == true ? Colors.white : Grey,
                   ),
                 ),
               ),
@@ -480,7 +512,7 @@ class _ContactUsState extends State<ContactUs>
 
   Future<Map> _sendQuery() async {
     // String url = 'http://192.168.0.105:8000/contact-us/';
-    String url = 'http://192.168.0.7:8000/contact-us/';
+    String url = 'http://192.168.0.105:8000/contact-us/';
 
     var request = http.MultipartRequest('POST', Uri.parse(url))
       ..fields['name'] = nameController.text

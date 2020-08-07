@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 import 'cardResponseModel.dart';
 
 class CardsApiCall {
-  final String getUrl = 'http://192.168.0.7:8000/cards/list?page=';
+  final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
   //final String getUrl = 'http://192.168.0.105:8000/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page, int start, int end) async {
@@ -25,6 +25,11 @@ class CardsApiCall {
       List<CardsResults> revResults = cardResult.reversed.toList();
       return revResults.sublist(start, end);
     } else {
+      print({
+        'code': response.statusCode,
+        'response': response.body,
+        'page': page,
+      });
       throw Exception('Some error occurred. Could\'nt get cards.');
     }
   }
@@ -67,7 +72,7 @@ class CardsBloc {
 
   Future<void> addBookmark(int cardID, String userToken) async {
     print([cardID, userToken]);
-    final String bookmarkURL = 'http://192.168.0.7:8000/bookmarks/';
+    final String bookmarkURL = 'http://192.168.0.105:8000/bookmarks/';
     //final String bookmarkURL = 'http://192.168.0.105:8000/bookmarks/';
     var body = {
       'cardID': cardID.toString(),

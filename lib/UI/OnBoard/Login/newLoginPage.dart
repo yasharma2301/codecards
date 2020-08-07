@@ -166,8 +166,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           'Forgot password?',
                           textAlign: TextAlign.end,
                           style: TextStyle(
-                              color: Colors.blueAccent[100].withOpacity(0.9),
-                              fontSize: 17),
+                            color: Colors.blueAccent[100].withOpacity(0.9),
+                            fontSize: 17,
+                          ),
                         ),
                       ),
                     ),
