@@ -37,9 +37,12 @@ class Settings2Tile extends StatelessWidget {
                 width: width,
                 decoration: BoxDecoration(
                     color: darkTheme.getMode() == true ?Grey:White, borderRadius: BorderRadius.circular(8)),
-                child: Stack(fit: StackFit.expand, children: [
+                child: Stack(
+                    fit: StackFit.expand,
+                    children: [
                   Positioned(
                     right: 0,
+                    left: 70,
                     top: 0,
                     child: Ink(
                       decoration: BoxDecoration(
@@ -47,10 +50,6 @@ class Settings2Tile extends StatelessWidget {
                               colors: [
                                 Theme.of(context).primaryColor,
                                 Theme.of(context).primaryColorLight
-                              ],
-                              stops: [
-                                0.3,
-                                0.95
                               ],
                               begin: FractionalOffset.topLeft,
                               end: FractionalOffset.topRight,

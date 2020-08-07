@@ -3,7 +3,7 @@ import '../bookmarks.dart';
 import '../code_cards.dart';
 import '../community.dart';
 import '../contributeAQuestion.dart';
-import '../rate_us.dart';
+import '../leftPanelSettings.dart';
 
 enum NavigationEvents {
   CodeCardsClickEvent,
@@ -37,7 +37,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         yield Community(onMenuTap: onMenuTap);
         break;
       case NavigationEvents.PremiumClickEvent:
-        yield Premium(onMenuTap: onMenuTap);
+        yield LeftPanelSettings(onMenuTap: onMenuTap);
         break;
       case NavigationEvents.ContributeClickEvent:
         yield ContributeQuestion(onMenuTap: onMenuTap);

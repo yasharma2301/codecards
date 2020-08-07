@@ -69,13 +69,13 @@ class _MenuState extends State<Menu> {
             child: Stack(
               children: [
                 Positioned(
-                  top: 70,
+                  top: 60,
                   left: 15,
                   child: Text(
                     'Good ${greeting()}!\n${_userProvider.getUserName()}',
                     style: TextStyle(
                       color: darkTheme.getMode() == true ? White : Black,
-                      fontSize: 20,
+                      fontSize: 22,
                       letterSpacing: 1.3,
                       fontWeight: FontWeight.w300
                     ),
@@ -142,10 +142,10 @@ class _MenuState extends State<Menu> {
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
-                          title: "CodeCards+",
+                          title: "Settings",
                           itemNumber: 3,
                           navigateTo: NavigationEvents.PremiumClickEvent,
-                          icon: Icons.compare_arrows,
+                          icon: Icons.settings,
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 15),

@@ -52,7 +52,7 @@ class _CodeCardsState extends State<CodeCards> {
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                    color: PopBlue.withOpacity(0.4),
+                    color: PopBlue.withOpacity(0.5),
                     blurRadius: 8,
                     spreadRadius: 1)
               ],

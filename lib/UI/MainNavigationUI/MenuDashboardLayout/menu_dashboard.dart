@@ -11,7 +11,7 @@ import '../bookmarks.dart';
 import '../code_cards.dart';
 import '../community.dart';
 import '../contributeAQuestion.dart';
-import '../rate_us.dart';
+import '../leftPanelSettings.dart';
 
 final Color backGroundColor = Color(0xFF1c2129);
 
@@ -118,7 +118,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
       return 1;
     } else if (navigationStates is Community) {
       return 2;
-    } else if (navigationStates is Premium) {
+    } else if (navigationStates is LeftPanelSettings) {
       return 3;
     } else if (navigationStates is ContributeQuestion) {
       return 4;
