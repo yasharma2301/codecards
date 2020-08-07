@@ -72,7 +72,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
     screenWidth = MediaQuery.of(context).size.width;
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Scaffold(
-      backgroundColor: darkTheme.getMode() == true ?Grey:Black,
+      backgroundColor: darkTheme.getMode() == true ?Color(0xFF151920):Colors.grey[300],
       body: BlocProvider<NavigationBloc>(
         create: (context) => NavigationBloc(onMenuTap: onMenuTap),
         child: Stack(

@@ -1,3 +1,4 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:codecards/Services/conectivityProvider/conectivityService.dart';
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/UI/MainNavigationUI/CardsLogic/cachedCards.dart';
@@ -24,6 +25,7 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<CardsBloc>(context);
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     final _userProvider = Provider.of<UserRepository>(context);
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
     return connectionStatus == ConnectivityStatus.Online
@@ -39,7 +41,9 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: darkTheme.getMode() == true
+                                  ? Color(0xFF2f394b)
+                                  : Colors.grey[200],
                               border: Border.all(
                                   width: 2,
                                   color: Colors.blueGrey.withOpacity(0.3)),
@@ -49,7 +53,7 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                             child: Stack(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(top: 15),
+                                  padding: EdgeInsets.only(top: 10),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -61,7 +65,9 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                         child: Text(
                                           'Question Card: ${cardsResult.id}',
                                           style: TextStyle(
-                                            color: Grey,
+                                            color: darkTheme.getMode() == true
+                                                ? White
+                                                : Grey,
                                             fontSize: 25,
                                             fontFamily: 'Nunito Black',
                                           ),
@@ -86,7 +92,9 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                           padding: EdgeInsets.symmetric(
                                               vertical: 20, horizontal: 10),
                                           decoration: BoxDecoration(
-                                              color: Grey.withOpacity(0.9),
+                                              color: darkTheme.getMode() == true
+                                                  ? Grey.withOpacity(0.9)
+                                                  : White,
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: SingleChildScrollView(
@@ -94,7 +102,11 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                               child: Text(
                                                 cardsResult.question,
                                                 style: TextStyle(
-                                                    color: Colors.white,
+                                                    color:
+                                                        darkTheme.getMode() ==
+                                                                true
+                                                            ? White
+                                                            : Grey,
                                                     fontSize: 18),
                                                 textAlign: TextAlign.justify,
                                               ),
@@ -112,7 +124,13 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                     alignment: Alignment.bottomCenter,
                                     child: Text(
                                       'This question was asked by ${cardsResult.company}',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        height: 0.9,
+                                        color: darkTheme.getMode() == true
+                                            ? White
+                                            : Grey,
+                                      ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),

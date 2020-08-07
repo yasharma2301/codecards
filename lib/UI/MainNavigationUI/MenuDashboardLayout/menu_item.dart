@@ -1,3 +1,4 @@
+import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +35,7 @@ class Menuitem extends StatefulWidget {
 class _MenuitemState extends State<Menuitem> {
   @override
   Widget build(BuildContext context) {
+    final darkTheme = Provider.of<LightOrDarkTheme>(context);
     BookmarkProvider bookmarkProvider = Provider.of<BookmarkProvider>(context);
 
     return GestureDetector(
@@ -57,8 +59,10 @@ class _MenuitemState extends State<Menuitem> {
               widget.icon != null
                   ? Icon(widget.icon,
                       color: widget.isSelected == widget.itemNumber
-                          ? Theme.of(context).primaryColorLight
-                          : White.withOpacity(0.8))
+                          ? Theme.of(context).primaryColor
+                          : darkTheme.getMode() == true
+                              ? White.withOpacity(0.8)
+                              : Colors.grey[800])
                   : Container(),
               widget.icon != null
                   ? SizedBox(
@@ -69,16 +73,28 @@ class _MenuitemState extends State<Menuitem> {
                 widget.title,
                 style: TextStyle(
                   color: widget.isSelected == widget.itemNumber
-                      ? Theme.of(context).primaryColorLight
-                      : White.withOpacity(0.8),
-                  fontSize: widget.isSelected == widget.itemNumber ? 22 : 19,
+                      ? Theme.of(context).primaryColor
+                      : darkTheme.getMode() == true
+                          ? White.withOpacity(0.8)
+                          : Colors.grey[800],
+                  shadows: widget.isSelected == widget.itemNumber
+                      ? [
+                          Shadow(
+                            offset: Offset(2.0, 1.5),
+                            blurRadius: 1.0,
+                            color: Colors.black12,
+                          ),
+                        ]
+                      : [],
+                  fontSize: widget.isSelected == widget.itemNumber ? 24 : 19,
                   fontWeight: widget.isSelected == widget.itemNumber
-                      ? FontWeight.w700
-                      : FontWeight.w300,
+                      ? FontWeight.w800
+                      : FontWeight.w400,
                 ),
               ),
             ],
           ),
-        ));
+        ),
+    );
   }
 }

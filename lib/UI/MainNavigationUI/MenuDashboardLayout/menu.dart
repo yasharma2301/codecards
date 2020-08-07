@@ -131,7 +131,7 @@ class _MenuState extends State<Menu> {
                         ),
                         Divider(
                           height: 40,
-                          color: White.withOpacity(0.35),
+                          color:darkTheme.getMode()==true? White.withOpacity(0.35):Colors.grey[600],
                         ),
                       ],
                     ),
@@ -157,7 +157,7 @@ class _MenuState extends State<Menu> {
                                   fit: BoxFit.fill),
                               border: Border.all(
                                   color: Theme.of(context)
-                                      .primaryColorLight
+                                      .primaryColor
                                       .withOpacity(0.6))),
                         ),
                       ),
@@ -181,8 +181,8 @@ class _MenuState extends State<Menu> {
                               angle: math.pi,
                               child: Icon(
                                 Icons.exit_to_app,
-                                color: Theme.of(context).primaryColorLight,
-                                size: 20,
+                                color: Theme.of(context).primaryColor,
+                                size: 21,
                               ),
                             ),
                             SizedBox(
@@ -191,8 +191,8 @@ class _MenuState extends State<Menu> {
                             Text(
                               "Logout",
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontSize: 18),
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 19),
                             ),
                           ],
                         ),
