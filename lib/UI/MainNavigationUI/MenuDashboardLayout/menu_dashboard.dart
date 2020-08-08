@@ -72,22 +72,12 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
     screenWidth = MediaQuery.of(context).size.width;
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return Scaffold(
-      backgroundColor: darkTheme.getMode() == true ?Color(0xFF151920):Colors.grey[300],
+      backgroundColor:
+          darkTheme.getMode() == true ? Color(0xFF151920) : Colors.grey[300],
       body: BlocProvider<NavigationBloc>(
         create: (context) => NavigationBloc(onMenuTap: onMenuTap),
         child: Stack(
           children: <Widget>[
-            BlocBuilder<NavigationBloc, NavigationStates>(
-                builder: (context, NavigationStates navigationStates) {
-              return Menu(
-                onMenuTap: onMenuTap,
-                isCollapsed: isCollapsed,
-                slideAnimation: _slideAnimation,
-                menuScaleAnimation: _menuScaleAnimation,
-                onMenuItemClicked: onMenuItemClicked,
-                isSelected: findSelected(navigationStates),
-              );
-            }),
             Dashboard(
               duration: duration,
               anim: _controller,
@@ -105,6 +95,28 @@ class _MenuDashboardPageState extends State<MenuDashboardPage>
                 },
               ),
             ),
+            GestureDetector(
+              onHorizontalDragEnd: (drag) {
+                onMenuTap();
+              },
+              // onTap: onMenuTap,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: 20,
+                color: Colors.transparent,
+              ),
+            ),
+            BlocBuilder<NavigationBloc, NavigationStates>(
+                builder: (context, NavigationStates navigationStates) {
+              return Menu(
+                onMenuTap: onMenuTap,
+                isCollapsed: isCollapsed,
+                slideAnimation: _slideAnimation,
+                menuScaleAnimation: _menuScaleAnimation,
+                onMenuItemClicked: onMenuItemClicked,
+                isSelected: findSelected(navigationStates),
+              );
+            }),
           ],
         ),
       ),

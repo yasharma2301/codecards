@@ -1,4 +1,5 @@
 import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
+import 'package:codecards/Services/conectivityProvider/conectivityService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Bloc/navigation_bloc.dart';
@@ -9,14 +10,23 @@ import 'MenuDashboardLayout/menu_dashboard.dart';
 
 final Color backGroundColor = Color(0xFF1c2129);
 
-class BookMarks extends StatelessWidget with NavigationStates {
+class BookMarks extends StatefulWidget with NavigationStates {
   final Function onMenuTap;
 
-  const BookMarks({Key key, this.onMenuTap}) : super(key: key);
+  BookMarks({Key key, this.onMenuTap}) : super(key: key);
+
+  @override
+  _BookMarksState createState() => _BookMarksState();
+}
+
+class _BookMarksState extends State<BookMarks> {
+  bool connectionWarningDismissed = false;
 
   @override
   Widget build(BuildContext context) {
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
+    var connectionStatus = Provider.of<ConnectivityStatus>(context);
+
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return WillPopScope(
@@ -36,16 +46,16 @@ class BookMarks extends StatelessWidget with NavigationStates {
           }
           return Container(
             decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: PopBlue.withOpacity(0.5),
-                      blurRadius: 8,
-                      spreadRadius: 1)
-                ],
-                borderRadius: border
-                    ? BorderRadius.circular(30)
-                    : BorderRadius.circular(0),
-                color: darkTheme.getMode() == true ? Grey : White),
+              boxShadow: [
+                BoxShadow(
+                    color: PopBlue.withOpacity(0.5),
+                    blurRadius: 8,
+                    spreadRadius: 1)
+              ],
+              borderRadius:
+                  border ? BorderRadius.circular(30) : BorderRadius.circular(0),
+              color: darkTheme.getMode() == true ? Grey : White,
+            ),
             child: ClipRRect(
               borderRadius:
                   border ? BorderRadius.circular(30) : BorderRadius.circular(0),
@@ -133,7 +143,7 @@ class BookMarks extends StatelessWidget with NavigationStates {
                                             : Grey,
                                         size: 30,
                                       ),
-                                      onPressed: onMenuTap,
+                                      onPressed: widget.onMenuTap,
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -171,6 +181,46 @@ class BookMarks extends StatelessWidget with NavigationStates {
                       ),
                     ),
                   ),
+                  connectionStatus == ConnectivityStatus.Offline &&
+                          !connectionWarningDismissed
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Dismissible(
+                            key: Key("network"),
+                            direction: DismissDirection.down,
+                            onDismissed: (direction) {
+                              setState(() {
+                                connectionWarningDismissed = true;
+                              });
+                            },
+                            child: Container(
+                              height: 50.0,
+                              color: Colors.blueGrey[900],
+                              padding: EdgeInsets.only(
+                                left: 20.0,
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.warning,
+                                    color: Colors.amber[600],
+                                  ),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Text(
+                                    "Please check your network connection!",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: Colors.amber[600],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),
