@@ -5,7 +5,6 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codecards/Shared/Colors.dart';
-import 'package:vibration/vibration.dart';
 
 SharedPreferences preferences;
 
@@ -37,7 +36,7 @@ class _AdTileState extends State<AdTile> {
         if (event == AdmobAdEvent.loaded) {
           _admobReward.show();
         }
-        if(event == AdmobAdEvent.completed){
+        if (event == AdmobAdEvent.completed) {
           setState(() {
             loading = false;
           });
@@ -74,7 +73,7 @@ class _AdTileState extends State<AdTile> {
     return Container(
       height: 220,
       width: width,
-      color: darkTheme.getMode() == true ?Grey:White,
+      color: darkTheme.getMode() == true ? Grey : White,
       child: Padding(
         padding: const EdgeInsets.only(top: 15),
         child: Column(
@@ -83,7 +82,9 @@ class _AdTileState extends State<AdTile> {
           children: [
             Text(
               'WATCH AN AD TO USE A\nHINT',
-              style: TextStyle(color: darkTheme.getMode() == true ?White:Grey, fontSize: 18),
+              style: TextStyle(
+                  color: darkTheme.getMode() == true ? White : Grey,
+                  fontSize: 18),
               textAlign: TextAlign.center,
             ),
             SizedBox(
@@ -96,7 +97,9 @@ class _AdTileState extends State<AdTile> {
                   children: [
                     Text(
                       'Hints\nYou Have:',
-                      style: TextStyle(color: darkTheme.getMode() == true ?White:Grey, fontSize: 16),
+                      style: TextStyle(
+                          color: darkTheme.getMode() == true ? White : Grey,
+                          fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
@@ -105,7 +108,7 @@ class _AdTileState extends State<AdTile> {
                     Text(
                       hintProvider.getHint().toString(),
                       style: TextStyle(
-                          color: darkTheme.getMode() == true ?White:Grey,
+                          color: darkTheme.getMode() == true ? White : Grey,
                           fontSize: 40,
                           fontWeight: FontWeight.w700),
                     ),

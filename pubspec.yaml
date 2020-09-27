@@ -53,7 +53,6 @@ dependency_overrides:
 flutter:
   uses-material-design: true
 
-
   assets:
     - assets/
     - assets/images/
@@ -61,11 +60,11 @@ flutter:
     - family: Nunito Black
       fonts:
         - asset: fonts/Nunito-Black.ttf
-    -  family: Montserrat
-       fonts:
-         - asset: fonts/Montserrat-Regular.ttf
-         - asset: fonts/Montserrat-Bold.ttf
-           weight: 700
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
     - family: Odin Rounded
       fonts:
         - asset: fonts/OdinRounded-Regular.otf
