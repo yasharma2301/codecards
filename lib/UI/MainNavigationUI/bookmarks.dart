@@ -7,7 +7,6 @@ import 'package:codecards/Shared/Colors.dart';
 import 'Bookmarks/BookmarksListing.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
 
-final Color backGroundColor = Color(0xFF1c2129);
 
 class BookMarks extends StatelessWidget with NavigationStates {
   final Function onMenuTap;
@@ -19,6 +18,7 @@ class BookMarks extends StatelessWidget with NavigationStates {
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var padding = MediaQuery.of(context).padding;
     return WillPopScope(
       onWillPop: () {
         return Navigator.of(context).pushReplacement(
@@ -94,9 +94,7 @@ class BookMarks extends StatelessWidget with NavigationStates {
                     ),
                     Container(
                       child: Padding(
-                        padding: border == true
-                            ? EdgeInsets.only(top: 20)
-                            : EdgeInsets.only(top: 30),
+                        padding: EdgeInsets.only(top: padding.top-5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[

@@ -23,6 +23,7 @@ class GithubLogin {
   static void _checkDeepLink(String link) {
     if (link != null) {
       String code = link.substring(link.indexOf(RegExp('code=')) + 5);
+      print('$code ye le code to');
       loginWithGitHub(code).then((email) {
         print("Logged in as: " + email.toString());
       }).catchError((e) {

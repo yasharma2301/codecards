@@ -19,6 +19,7 @@ class Community extends StatelessWidget with NavigationStates {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var padding = MediaQuery.of(context).padding;
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
     return WillPopScope(
       onWillPop: () {
@@ -100,9 +101,7 @@ class Community extends StatelessWidget with NavigationStates {
                     ),
                     Container(
                       child: Padding(
-                        padding: border == true
-                            ? EdgeInsets.only(top: 20)
-                            : EdgeInsets.only(top: 30),
+                        padding: EdgeInsets.only(top: padding.top-5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[

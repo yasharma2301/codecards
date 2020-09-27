@@ -90,16 +90,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       child: TextFormField(
                         controller: _emailController,
                         style: TextStyle(
-                          color: White.withOpacity(0.7),
-                          fontSize: 18,
+                          color: White.withOpacity(0.8),
+                          fontSize: 17,
                         ),
                         decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.mail_outline,
-                              color: Grey,
-                            ),
                             border: InputBorder.none,
-                            hintText: "Enter Email",
+                            hintText: "Enter Email.",
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.6),
                                 fontSize: 16)),

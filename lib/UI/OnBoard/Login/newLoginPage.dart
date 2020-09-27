@@ -1,13 +1,11 @@
+import 'package:codecards/Shared/delayed_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import 'package:codecards/Services/signupSignin/userRepository.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:codecards/Shared/FlushBar.dart';
 import 'package:codecards/UI/OnBoard/Login/ForgotPassword.dart';
 import 'package:codecards/UI/OnBoard/Login/newSignUp.dart';
-import 'package:codecards/UI/OnBoard/Login/newSocialButton.dart';
 import 'package:codecards/UI/MainNavigationUI/MenuDashboardLayout/menu_dashboard.dart';
 import 'package:codecards/UI/OnBoard/onBoardNew.dart';
 
@@ -54,258 +52,224 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    AnimatedContainer(
-                      height: _sheetCollapsed ? _height / 5 : _height / 2,
-                      width: _width,
-                      duration: Duration(microseconds: 200000),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/codecards.png"))),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MenuDashboardPage()));
+                      },
+                      child: AnimatedContainer(
+                        height: _sheetCollapsed ? _height / 4 : _height,
+                        width: _width,
+                        duration: Duration(microseconds: 200000),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/codecards.png"))),
+                      ),
                     ),
-                    Text(
-                      'Login To Your Account',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 21,
-                          fontWeight: FontWeight.w400),
+                    DelayedAnimation(
+                      delay: 100,
+                      child: Text(
+                        'Hi There!\nWelcome to CodeCards',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 21,
+                            fontWeight: FontWeight.w300),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: LightGrey.withOpacity(0.7),
-                      ),
-                      child: TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: White.withOpacity(0.7),
-                          fontSize: 18,
-                        ),
-                        decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.mail_outline,
-                              color: Grey,
+                    DelayedAnimation(
+                      delay: 150,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: LightGrey.withOpacity(0.7),
                             ),
-                            border: InputBorder.none,
-                            hintText: "Enter Email",
-                            hintStyle: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
-                                fontSize: 16)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: _height / 45,
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: LightGrey.withOpacity(0.7),
-                      ),
-                      child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: passwordVisible,
-                        style: TextStyle(
-                          color: White.withOpacity(0.7),
-                          fontSize: 18,
-                        ),
-                        decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.vpn_key,
-                              color: Grey,
-                            ),
-                            suffixIcon: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                passwordVisible
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: passwordEmpty
-                                    ? Colors.transparent
-                                    : Colors.white.withOpacity(0.5),
+                            child: TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              style: TextStyle(
+                                color: White.withOpacity(0.7),
+                                fontSize: 18,
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
+                              decoration: InputDecoration(
+                                  icon: Icon(
+                                    Icons.mail_outline,
+                                    color: Grey,
+                                  ),
+                                  border: InputBorder.none,
+                                  hintText: "Enter Email",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.6),
+                                      fontSize: 16)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: _height / 45,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: LightGrey.withOpacity(0.7),
+                            ),
+                            child: TextFormField(
+                              controller: _passwordController,
+                              obscureText: passwordVisible,
+                              style: TextStyle(
+                                color: White.withOpacity(0.7),
+                                fontSize: 18,
+                              ),
+                              decoration: InputDecoration(
+                                  icon: Icon(
+                                    Icons.vpn_key,
+                                    color: Grey,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    icon: Icon(
+                                      passwordVisible
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: passwordEmpty
+                                          ? Colors.transparent
+                                          : Colors.white.withOpacity(0.5),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        passwordVisible = !passwordVisible;
+                                      });
+                                    },
+                                  ),
+                                  border: InputBorder.none,
+                                  hintText: "Enter Password",
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.6),
+                                      fontSize: 16)),
+                              onChanged: (value) {
+                                if (value.length > 0) {
+                                  setState(() {
+                                    passwordEmpty = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    passwordEmpty = true;
+                                  });
+                                }
                               },
                             ),
-                            border: InputBorder.none,
-                            hintText: "Enter Password",
-                            hintStyle: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
-                                fontSize: 16)),
-                        onChanged: (value) {
-                          if (value.length > 0) {
-                            setState(() {
-                              passwordEmpty = false;
-                            });
-                          } else {
-                            setState(() {
-                              passwordEmpty = true;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: _width,
-                      child: GestureDetector(
-                        onTap: () => _forgotPass(context),
-                        child: Text(
-                          'Forgot password?',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                              color: Colors.blueAccent[100].withOpacity(0.9),
-                              fontSize: 17),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ClipPath(
-                      clipper: LoginClipper(),
-                      child: GestureDetector(
-                        onTap: () =>
-                            _userProvider.isLoading() ? {} : _login(context),
-                        child: Container(
-                          width: _width / 1.7,
-                          height: _height / 12,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [
-                                  Theme.of(context).primaryColor,
-                                  Theme.of(context).primaryColorLight
-                                ],
-                                begin: FractionalOffset.topLeft,
-                                end: FractionalOffset.topRight,
-                                tileMode: TileMode.repeated),
                           ),
-                          child: _userProvider.isLoading()
-                              ? Center(
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 1,
-                                      valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              White)),
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Login",
-                                      style:
-                                          TextStyle(color: White, fontSize: 20),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Icon(Icons.arrow_forward, color: White)
-                                  ],
-                                ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                        width: _width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Don't have an Account? ",
-                              style: TextStyle(fontSize: 16, color: White),
-                            ),
-                            GestureDetector(
-                              onTap: () => _bringUpSignUp(context),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: _width,
+                            child: GestureDetector(
+                              onTap: () => _forgotPass(context),
                               child: Text(
-                                "Create one Now!",
+                                'Forgot password?',
+                                textAlign: TextAlign.end,
                                 style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.blueAccent[100]),
+                                    color:
+                                        Colors.blueAccent[100],
+                                    fontSize: 17),
                               ),
-                            )
-                          ],
-                        )),
-                    Container(
-                      height: _height / 15,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 1,
-                              color: White.withOpacity(0.4),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "OR",
-                            style: TextStyle(color: White, fontSize: 16),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Container(
-                              height: 1,
-                              color: White.withOpacity(0.4),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SocialButton2(
-                      width: _width,
-                      title: "Connect with Google",
-                      icon: FontAwesomeIcons.google,
-                      color: Color(0xFFF95A5F),
-                      function: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MenuDashboardPage()));
-                      },
-                    ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: _height / 45,
-                    ),
-                    SocialButton2(
-                      width: _width,
-                      title: "Connect with Facebook",
-                      icon: FontAwesomeIcons.facebook,
-                      color: Colors.blueAccent[200],
-                      function: () {},
-                    ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: _height / 45,
-                    ),
-                    SocialButton2(
-                      width: _width,
-                      title: "Connect with Github",
-                      icon: FontAwesomeIcons.github,
-                      color: Colors.blueGrey[600],
-                      function: () {
-                        _bringUpSignUp(context);
-                      },
-                    ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
+                    ),
+                    DelayedAnimation(
+                      delay: 200,
+                      child: Column(
+                        children: [
+                          ClipPath(
+                            clipper: LoginClipper(),
+                            child: GestureDetector(
+                              onTap: () => _userProvider.isLoading()
+                                  ? {}
+                                  : _login(context),
+                              child: Container(
+                                width: _width / 1.7,
+                                height: 65,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                        Theme.of(context).primaryColor,
+                                        Theme.of(context).primaryColorLight
+                                      ],
+                                      begin: FractionalOffset.topLeft,
+                                      end: FractionalOffset.topRight,
+                                      tileMode: TileMode.repeated),
+                                ),
+                                child: _userProvider.isLoading()
+                                    ? Center(
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 1,
+                                            valueColor:
+                                                new AlwaysStoppedAnimation<
+                                                    Color>(White)),
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Login",
+                                            style: TextStyle(
+                                                color: White, fontSize: 20),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Icon(Icons.arrow_forward,
+                                              color: White)
+                                        ],
+                                      ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: _width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an Account? ",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: White,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                GestureDetector(
+                                  onTap: () => _bringUpSignUp(context),
+                                  child: Text(
+                                    "Create one Now!",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.blueAccent[100]),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -339,9 +303,6 @@ class _RegisterPageState extends State<RegisterPage> {
           flushBar.showErrorFlushBar(response['responseMessage']);
           _userProvider.setLoading(false);
           print(_userProvider.isLoading());
-          //     .whenComplete(() {
-          //   _userProvider.setLoading(false);
-          // });
         }
       });
     } else {
@@ -358,7 +319,7 @@ class _RegisterPageState extends State<RegisterPage> {
         isScrollControlled: true,
         builder: (BuildContext bc) {
           return Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.85,
               decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(25))),
@@ -414,3 +375,4 @@ class LoginClipper extends CustomClipper<Path> {
     return true;
   }
 }
+
