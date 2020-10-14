@@ -259,17 +259,6 @@ class LeftPanelSettings extends StatelessWidget with NavigationStates {
       ),
     );
   }
-//  TimeOfDay time = TimeOfDay(hour: 19, minute: 0);
-//
-//  Future<void> _showTimePicker(BuildContext context) async {
-//    final TimeOfDay pickedTime =
-//    await showTimePicker(context: context, initialTime: time);
-//    if (pickedTime != null && pickedTime != time) {
-//      setState(() {
-//        time = pickedTime;
-//      });
-//    }
-//  }
 
   // Color Picker
 

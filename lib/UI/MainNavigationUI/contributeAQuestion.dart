@@ -4,10 +4,13 @@ import 'package:codecards/Shared/Colors.dart';
 import 'package:provider/provider.dart';
 import 'Bloc/navigation_bloc.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
+import 'contestUi/contestTile.dart';
 
 class ContributeQuestion extends StatelessWidget with NavigationStates {
   final Function onMenuTap;
+
   const ContributeQuestion({Key key, this.onMenuTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final darkTheme = Provider.of<LightOrDarkTheme>(context);
@@ -40,10 +43,10 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                 borderRadius: border
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(0),
-                color: darkTheme.getMode() == true ?Grey:White),
+                color: darkTheme.getMode() == true ? Grey : White),
             child: ClipRRect(
               borderRadius:
-              border ? BorderRadius.circular(30) : BorderRadius.circular(0),
+                  border ? BorderRadius.circular(30) : BorderRadius.circular(0),
               child: Stack(
                 children: [
                   Positioned(
@@ -89,7 +92,7 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                   ),
                   Container(
                     child: Padding(
-                      padding: EdgeInsets.only(top: padding.top-5),
+                      padding: EdgeInsets.only(top: padding.top - 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
@@ -99,51 +102,72 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                                 : EdgeInsets.only(left: 5),
                             child: Stack(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      splashColor: LightPopBlue.withOpacity(0.8),
-                                      hoverColor: LightPopBlue,
-                                      icon: Icon(
-                                        Icons.menu,
-                                        color: darkTheme.getMode() == true ?White:Grey,
-                                        size: 30,
-                                      ),
-                                      onPressed: onMenuTap,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    )
-                                  ],
-                                ),
                                 Align(
                                   alignment: Alignment.center,
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 10),
                                     child: Text(
-                                      'Contribute',
+                                      'Contests',
                                       style: TextStyle(
-                                          color: darkTheme.getMode() == true ?White:Grey,
+                                          color: darkTheme.getMode() == true
+                                              ? White
+                                              : Grey,
                                           fontSize: 23,
                                           fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.w600
-                                      ),
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 )
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
+                          Expanded(
                             child: Container(
-                              height: MediaQuery.of(context).size.height - 130,
-                              width: MediaQuery.of(context).size.width,
-                              child: Container(),
+                              width: width,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: [
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           )
                         ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: padding.top+5,
+                    child: GestureDetector(
+                      onTap: onMenuTap,
+                      child: Material(
+                        elevation: 30,
+                        child: Container(
+                          height: 40,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(50),
+                                bottomRight: Radius.circular(10)),
+                            color: darkTheme.getMode() == true ?Grey:White,
+                          ),
+                          child: Icon(
+                            Icons.menu,
+                            color: darkTheme.getMode() == true ?Colors.white:Grey,
+                          ),
+                        ),
                       ),
                     ),
                   ),
