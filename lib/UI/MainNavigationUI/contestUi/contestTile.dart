@@ -2,19 +2,21 @@ import 'package:codecards/UI/MainNavigationUI/contestUi/contestDetail.dart';
 import 'package:flutter/material.dart';
 
 class ContestTile extends StatelessWidget {
-  final width, darkTheme, border;
+  final width, darkTheme, border, contestObject;
 
-  const ContestTile({Key key, this.width, this.darkTheme, this.border})
+  const ContestTile({Key key, this.width, this.darkTheme, this.border,this.contestObject})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String date = contestObject.start.split('T')[0];
+    String time = contestObject.start.split('T')[1].replaceAll('Z','');
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 18, vertical:8),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ContestDetail()),
+            MaterialPageRoute(builder: (context) => ContestDetail(contestsAPIModel: contestObject,)),
           );
         },
         child: Stack(
@@ -45,7 +47,7 @@ class ContestTile extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(bottom: 8, left: 10, right: 10),
                   child: Text(
-                    'codechef.com',
+                    contestObject.name,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -117,7 +119,7 @@ class ContestTile extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'October Long Challenge',
+                                      contestObject.event,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w800,
                                           fontSize: 16),
@@ -125,7 +127,7 @@ class ContestTile extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5,),
                                     Text(
-                                      'Start: 2020-12-12 12:00 hrs',
+                                      'Start: $date\n$time',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w800,
                                           fontSize: 14),

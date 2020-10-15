@@ -130,7 +130,7 @@ class _MenuState extends State<Menu> {
                           isCollapsed: widget.isCollapsed,
                           onMenuItemClicked: widget.onMenuItemClicked,
                           isSelected: widget.isSelected,
-                          title: "Contribute",
+                          title: "Contests",
                           itemNumber: 4,
                           navigateTo: NavigationEvents.ContributeClickEvent,
                           icon: Icons.send,

@@ -1,6 +1,8 @@
 import 'package:codecards/Services/Themes/lightDarkThemeProvider.dart';
+import 'package:codecards/UI/MainNavigationUI/contestUi/contestList.dart';
 import 'package:flutter/material.dart';
 import 'package:codecards/Shared/Colors.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'Bloc/navigation_bloc.dart';
 import 'MenuDashboardLayout/menu_dashboard.dart';
@@ -122,25 +124,86 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              width: width,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Column(
-                                    children: [
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                      ContestTile(darkTheme: darkTheme,width: width,border: border,),
-                                    ],
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 45),
+                                  child: Container(
+                                    width: width,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: border ? 10 : 0),
+                                      child: ContestList(),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    height: 45,
+                                    width: width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border(top: BorderSide(width: 1,color: Colors.grey))
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        InkWell(
+                                          child: Container(
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'SORT',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 18),
+                                                ),
+                                                SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Icon(
+                                                  Icons.sort,
+                                                  size: 24,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 1,
+                                          height: 30,
+                                          color: Colors.grey,
+                                        ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'FILTER',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 18),
+                                                ),
+                                                SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Icon(
+                                                  FontAwesomeIcons.filter,
+                                                  size: 16,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           )
                         ],
@@ -149,7 +212,7 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                   ),
                   Positioned(
                     left: 0,
-                    top: padding.top+5,
+                    top: padding.top + 5,
                     child: GestureDetector(
                       onTap: onMenuTap,
                       child: Material(
@@ -161,11 +224,13 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(50),
                                 bottomRight: Radius.circular(10)),
-                            color: darkTheme.getMode() == true ?Grey:White,
+                            color: darkTheme.getMode() == true ? Grey : White,
                           ),
                           child: Icon(
                             Icons.menu,
-                            color: darkTheme.getMode() == true ?Colors.white:Grey,
+                            color: darkTheme.getMode() == true
+                                ? Colors.white
+                                : Grey,
                           ),
                         ),
                       ),

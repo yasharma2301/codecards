@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:codecards/MyHomePage.dart';
 import 'package:codecards/Shared/themesEnum.dart';
 import 'package:codecards/Services/AdProvider/adProvider.dart';
+import 'Services/ContestsServices/contestBloc.dart';
 import 'Services/Themes/accentColorProvider.dart';
 import 'Services/Themes/lightDarkThemeProvider.dart';
 import 'Services/bookmarServices/bookmarkProvider.dart';
@@ -34,6 +35,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<ContestBloc>(
+          dispose: (context, bloc) => bloc.dispose(),
+          create: (BuildContext context) => ContestBloc(),
+        ),
         Provider<CardsBloc>(
           dispose: (context, bloc) => bloc.dispose(),
           create: (BuildContext context) => CardsBloc(),

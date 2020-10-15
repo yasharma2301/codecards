@@ -40,7 +40,7 @@ dependencies:
   connectivity: ^0.4.9
   swipedetector: ^1.2.0
   share: ^0.6.4+3
-
+  flutter_keyboard_visibility: ^3.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

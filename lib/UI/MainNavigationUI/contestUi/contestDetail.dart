@@ -1,10 +1,15 @@
 import 'dart:math';
 
+import 'package:codecards/Services/ContestsServices/contestModel.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ContestDetail extends StatefulWidget {
+  final ContestsAPIModel contestsAPIModel;
+
+  const ContestDetail({Key key, this.contestsAPIModel}) : super(key: key);
+
   @override
   _ContestDetailState createState() => _ContestDetailState();
 }
@@ -37,6 +42,22 @@ class _ContestDetailState extends State<ContestDetail>
 
   @override
   Widget build(BuildContext context) {
+    String startDate = widget.contestsAPIModel.start.split('T')[0];
+    String startTime =
+        widget.contestsAPIModel.start.split('T')[1].replaceAll('Z', '');
+
+    String endDate = widget.contestsAPIModel.end.split('T')[0];
+    String endTime =
+        widget.contestsAPIModel.end.split('T')[1].replaceAll('Z', '');
+
+    String duration =
+        (widget.contestsAPIModel.duration.toInt() / 3600).toStringAsFixed(1);
+
+    String host =
+        widget.contestsAPIModel.name != 'codingcompetitions.withgoogle.com'
+            ? widget.contestsAPIModel.name
+            : 'google.com';
+
     _scale = 1 - _controller.value;
     var height = MediaQuery.of(context).size.height;
     var padding = MediaQuery.of(context).padding;
@@ -57,25 +78,29 @@ class _ContestDetailState extends State<ContestDetail>
               child: Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: padding.top,horizontal: 5),
+                    padding: EdgeInsets.symmetric(
+                        vertical: padding.top, horizontal: 5),
                     child: Align(
-                      alignment: Alignment.topLeft,
+                        alignment: Alignment.topLeft,
                         child: IconButton(
                           icon: Icon(
                             Icons.arrow_back_ios,
                             size: 20,
                             color: White,
-                          ), onPressed: () { Navigator.of(context).pop(); },
-                        )
-                    ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )),
                   ),
                   Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Icons.code,
-                        size: 300,
-                        color: White.withOpacity(0.02),
-                      )),
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.code,
+                      size: 300,
+                      color: White.withOpacity(0.05),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: padding.top + 20,
@@ -87,7 +112,7 @@ class _ContestDetailState extends State<ContestDetail>
                         child: Column(
                           children: [
                             Text(
-                              'October Long Challenge',
+                              widget.contestsAPIModel.event,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 28,
@@ -120,9 +145,11 @@ class _ContestDetailState extends State<ContestDetail>
                               height: 50,
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +164,7 @@ class _ContestDetailState extends State<ContestDetail>
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        '2020-10-16',
+                                        startDate,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -146,7 +173,7 @@ class _ContestDetailState extends State<ContestDetail>
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        '21:30:00',
+                                        startTime,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -169,7 +196,7 @@ class _ContestDetailState extends State<ContestDetail>
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        '2020-10-16',
+                                        endDate,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -178,7 +205,7 @@ class _ContestDetailState extends State<ContestDetail>
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        '21:30:00',
+                                        endTime,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -195,7 +222,7 @@ class _ContestDetailState extends State<ContestDetail>
                               height: 20,
                             ),
                             Text(
-                              'Duration: 3 hours',
+                              'Duration: $duration hours',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 22,
@@ -207,7 +234,7 @@ class _ContestDetailState extends State<ContestDetail>
                               height: 40,
                             ),
                             Text(
-                              'Host: codechef.com',
+                              'Host: $host',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 24,
@@ -223,7 +250,7 @@ class _ContestDetailState extends State<ContestDetail>
                                   'Link to contest',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       color: Colors.blueAccent[100],
                                       fontFamily: 'Montserrat'),
                                   textAlign: TextAlign.center,
