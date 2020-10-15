@@ -125,7 +125,7 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                             child: Container(
                               width: width,
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 15),
+                                padding: const EdgeInsets.only(top: 20),
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.vertical,
                                   child: Column(
