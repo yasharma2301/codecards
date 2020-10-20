@@ -28,7 +28,7 @@ class MyHomePage extends StatelessWidget {
     // Parallel computation using isolates will be better but can't do in current case
     // compute(syncServerAndHiveNotes,List<dynamic>[noteData,userRepository]);
 
-    syncServerAndHiveNotes(noteData, userRepository);
+    // syncServerAndHiveNotes(noteData, userRepository);
 
     // Ye kyun hai yahan
     Future.delayed(Duration(milliseconds: 1400));

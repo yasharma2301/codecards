@@ -4,19 +4,25 @@ import 'package:flutter/material.dart';
 class ContestTile extends StatelessWidget {
   final width, darkTheme, border, contestObject;
 
-  const ContestTile({Key key, this.width, this.darkTheme, this.border,this.contestObject})
+  const ContestTile(
+      {Key key, this.width, this.darkTheme, this.border, this.contestObject})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String date = contestObject.start.split('T')[0];
-    String time = contestObject.start.split('T')[1].replaceAll('Z','');
+    String time = contestObject.start.split('T')[1].replaceAll('Z', '');
+    String iconURL = "https://clist.by${contestObject.icon}";
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical:8),
+      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ContestDetail(contestsAPIModel: contestObject,)),
+            MaterialPageRoute(
+                builder: (context) => ContestDetail(
+                      contestsAPIModel: contestObject,
+                    )),
           );
         },
         child: Stack(
@@ -88,10 +94,13 @@ class ContestTile extends StatelessWidget {
                           height: 80,
                           width: 60,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10)),
-                              image: DecorationImage(
-                                  image: AssetImage('assets/codechef.jpg'))),
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(10)),
+                            image: DecorationImage(
+                              // image: AssetImage('assets/codechef.jpg'),
+                              image: NetworkImage(iconURL),
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
@@ -125,7 +134,9 @@ class ContestTile extends StatelessWidget {
                                           fontSize: 16),
                                       textAlign: TextAlign.center,
                                     ),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     Text(
                                       'Start: $date\n$time',
                                       style: TextStyle(

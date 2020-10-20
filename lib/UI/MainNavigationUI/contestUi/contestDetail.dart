@@ -46,6 +46,17 @@ class _ContestDetailState extends State<ContestDetail>
     String startTime =
         widget.contestsAPIModel.start.split('T')[1].replaceAll('Z', '');
 
+    String _printDuration(Duration duration) {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+      String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+      return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+    }
+
+    String timeUntilStart = _printDuration(
+        DateTime.parse(widget.contestsAPIModel.start)
+            .difference(DateTime.now()));
+
     String endDate = widget.contestsAPIModel.end.split('T')[0];
     String endTime =
         widget.contestsAPIModel.end.split('T')[1].replaceAll('Z', '');
@@ -133,7 +144,8 @@ class _ContestDetailState extends State<ContestDetail>
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              '30:25:12',
+                              // '30:25:12',
+                              timeUntilStart,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 44,
