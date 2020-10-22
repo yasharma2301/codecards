@@ -99,10 +99,15 @@
 
     <!-- For internet permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- For Scheduled Notifications -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+<<<<<<< HEAD
     <!-- For accessing device calendar -->
+=======
+    <!-- For Calendar Library-->
+>>>>>>> e03e61f4088e6a8145b07847864095c0c0c5521b
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 

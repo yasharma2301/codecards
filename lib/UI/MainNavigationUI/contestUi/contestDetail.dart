@@ -1,9 +1,9 @@
 import 'dart:math';
-
 import 'package:codecards/Services/ContestsServices/contestModel.dart';
 import 'package:codecards/Shared/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:device_calendar/device_calendar.dart';
 
 class ContestDetail extends StatefulWidget {
   final ContestsAPIModel contestsAPIModel;
@@ -18,7 +18,7 @@ class _ContestDetailState extends State<ContestDetail>
     with SingleTickerProviderStateMixin {
   double _scale;
   AnimationController _controller;
-
+  DeviceCalendarPlugin _deviceCalendarPlugin = new DeviceCalendarPlugin();
   @override
   void initState() {
     _controller = AnimationController(

@@ -41,8 +41,12 @@ dependencies:
   swipedetector: ^1.2.0
   share: ^0.6.4+3
   flutter_keyboard_visibility: ^3.2.2
+<<<<<<< HEAD
   # device_calendar: ^3.1.0
 
+=======
+  device_calendar: ^3.1.0
+>>>>>>> e03e61f4088e6a8145b07847864095c0c0c5521b
 
 dev_dependencies:
   flutter_test:
