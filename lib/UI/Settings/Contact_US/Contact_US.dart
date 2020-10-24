@@ -511,8 +511,8 @@ class _ContactUsState extends State<ContactUs>
   }
 
   Future<Map> _sendQuery() async {
-    // String url = 'http://f8e785b35188.ngrok.io/contact-us/';
-    String url = 'http://f8e785b35188.ngrok.io/contact-us/';
+    // String url = 'http://fb7b0a750ea4.ngrok.io/contact-us/';
+    String url = 'http://fb7b0a750ea4.ngrok.io/contact-us/';
 
     var request = http.MultipartRequest('POST', Uri.parse(url))
       ..fields['name'] = nameController.text

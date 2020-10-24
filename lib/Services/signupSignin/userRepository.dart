@@ -47,8 +47,8 @@ class UserRepository with ChangeNotifier {
     ];
     avatars.shuffle();
 
-    final String url = 'http://f8e785b35188.ngrok.io/register';
-    //final String url = 'http://f8e785b35188.ngrok.io/register';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/register';
+    //final String url = 'http://fb7b0a750ea4.ngrok.io/register';
     if (email == "" || username == "" || password == "" || password2 == "") {
       setResponse("Please Fill all the fields!", 400);
     } else {
@@ -84,8 +84,8 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<bool> loginUser(email, password) async {
-    final String url = 'http://f8e785b35188.ngrok.io/login';
-    //final String url = 'http://f8e785b35188.ngrok.io/login';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/login';
+    //final String url = 'http://fb7b0a750ea4.ngrok.io/login';
 
     if (email != "" || password != "") {
       // setResponse("Please Fill all the fields!", 400);
@@ -130,8 +130,8 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<Map<int, int>> getPageDetails() async {
-    final String url = 'http://f8e785b35188.ngrok.io/get-page/';
-    // final String url = 'http://f8e785b35188.ngrok.io/get-page/';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
+    // final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
 
     String token;
     getUserToken().then((value) {
@@ -207,8 +207,8 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-      final String url = 'http://f8e785b35188.ngrok.io/update-account/';
-      // final String url = 'http://f8e785b35188.ngrok.io/update-account/';
+      final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+      // final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
 
       var response = await http.put(url, body: {
         'username': username,
@@ -248,8 +248,8 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-      final String url = 'http://f8e785b35188.ngrok.io/update-account/';
-      // final String url = 'http://f8e785b35188.ngrok.io/update-account/';
+      final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+      // final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
       var response = await http.put(url, body: {
         'avatar': avatar,
         'token': userToken,
@@ -275,8 +275,8 @@ class UserRepository with ChangeNotifier {
 
 class PageInformation {
   Future<Map<String, dynamic>> getPageDetails() async {
-    final String url = 'http://f8e785b35188.ngrok.io/get-page/';
-    //final String url = 'http://f8e785b35188.ngrok.io/get-page/';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
+    //final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
     Map responseBody;
     var response;
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
@@ -291,8 +291,8 @@ class PageInformation {
   }
 
   Future<int> incrementPageDetails(int previousPage) async {
-    final String url = 'http://f8e785b35188.ngrok.io/update-account/';
-    //final String url = 'http://f8e785b35188.ngrok.io/update-account/';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+    //final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     String token = _sprefs.getString('userToken');
     int increment = previousPage + 1;
@@ -309,8 +309,8 @@ class PageInformation {
   }
 
   void incrementQuestionDetails(int index) async {
-    final String url = 'http://f8e785b35188.ngrok.io/update-account/';
-    // final String url = 'http://f8e785b35188.ngrok.io/update-account/';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+    // final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     String token = _sprefs.getString('userToken');
     var response = await http.put(url, body: {

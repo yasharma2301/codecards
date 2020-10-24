@@ -19,6 +19,8 @@ class _ContestDetailState extends State<ContestDetail>
   double _scale;
   AnimationController _controller;
   DeviceCalendarPlugin _deviceCalendarPlugin = new DeviceCalendarPlugin();
+  bool hasCalendarPermissions = false;
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -54,7 +56,7 @@ class _ContestDetailState extends State<ContestDetail>
     }
 
     String timeUntilStart = _printDuration(
-        DateTime.parse(widget.contestsAPIModel.start)
+        DateTime.parse(widget.contestsAPIModel.start.replaceAll('Z', ''))
             .difference(DateTime.now()));
 
     String endDate = widget.contestsAPIModel.end.split('T')[0];
@@ -294,7 +296,8 @@ class _ContestDetailState extends State<ContestDetail>
             left: width * 0.1,
             child: GestureDetector(
               onTap: () {
-                print('click');
+                // print('click');
+                addEventToCal(context);
               },
               onTapDown: _onTapDown,
               onTapUp: _onTapUp,
@@ -355,5 +358,103 @@ class _ContestDetailState extends State<ContestDetail>
 
   void _onTapUp(TapUpDetails details) {
     _controller.reverse();
+  }
+
+  void addEventToCal(BuildContext context) async {
+    if (!hasCalendarPermissions) {
+      await _deviceCalendarPlugin.requestPermissions();
+      bool newPermissions = (await _deviceCalendarPlugin.hasPermissions()).data;
+      setState(() {
+        hasCalendarPermissions = newPermissions;
+      });
+    }
+
+    if (!hasCalendarPermissions) {
+      return;
+    }
+
+    var retrievedCals = (await _deviceCalendarPlugin.retrieveCalendars()).data;
+    List<Map> calendars = [];
+    retrievedCals.forEach((cal) {
+      Map calObj = {
+        'id': cal.id,
+        'name': cal.name,
+        'account': cal.accountName,
+      };
+
+      if (cal.name == cal.accountName) {
+        calObj['name'] = "Default";
+      }
+
+      calendars.add(calObj);
+    });
+
+    var selectedCalendar = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.white,
+            ),
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width - 100,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: calendars
+                    .map((cal) => Material(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context, cal);
+                            },
+                            child: Ink(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 20.0,
+                                horizontal: 10.0,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    cal['name'],
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  Text(cal['account']),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedCalendar == null) {
+      return;
+    }
+
+    Event event = new Event(selectedCalendar['id']);
+    event.title = widget.contestsAPIModel.event;
+    event.start =
+        DateTime.parse(widget.contestsAPIModel.start.replaceAll('Z', ''));
+    event.end = DateTime.parse(widget.contestsAPIModel.end.replaceAll('Z', ''));
+    event.eventId = widget.contestsAPIModel.id.toString();
+    var newEvent = await _deviceCalendarPlugin.createOrUpdateEvent(event);
+    print({
+      newEvent.data,
+      newEvent.isSuccess,
+    });
   }
 }

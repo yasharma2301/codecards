@@ -142,8 +142,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
     FlushBar flushBar = FlushBar(context: context);
 
-    String url = 'http://f8e785b35188.ngrok.io/reset_password/';
-    // String url = 'http://f8e785b35188.ngrok.io/reset_password/';
+    String url = 'http://fb7b0a750ea4.ngrok.io/reset_password/';
+    // String url = 'http://fb7b0a750ea4.ngrok.io/reset_password/';
     String email = _emailController.text;
 
     Pattern pattern =

@@ -3,8 +3,8 @@ import 'noteModel.dart';
 import 'package:http/http.dart' as http;
 
 class NoteAPIServerClass {
-  final String url = 'http://f8e785b35188.ngrok.io/notes/';
-  //final String url = 'http://f8e785b35188.ngrok.io/notes/';
+  final String url = 'http://fb7b0a750ea4.ngrok.io/notes/';
+  //final String url = 'http://fb7b0a750ea4.ngrok.io/notes/';
 
   void postNoteToServer(NoteModel note, String userToken, int id) async {
     var body = {

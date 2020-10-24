@@ -20,8 +20,8 @@ class BookmarkProvider with ChangeNotifier {
     var dir = await getTemporaryDirectory();
     File bookmarksFile = File(dir.path + '/' + bookmarksFileName);
 
-    //final String url = 'http://f8e785b35188.ngrok.io/bookmarks/';
-    final String url = 'http://f8e785b35188.ngrok.io/bookmarks/';
+    //final String url = 'http://fb7b0a750ea4.ngrok.io/bookmarks/';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/bookmarks/';
     var response = await http.get(
       url,
       headers: {
@@ -67,7 +67,7 @@ class BookmarkProvider with ChangeNotifier {
   }
 
   Future<List> deleteBookmark(int bookmarkId, var bookmark) async {
-    final String url = 'http://f8e785b35188.ngrok.io/bookmarks/';
+    final String url = 'http://fb7b0a750ea4.ngrok.io/bookmarks/';
     var response = await http.delete(
       url,
       headers: {
