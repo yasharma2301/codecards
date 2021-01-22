@@ -18,7 +18,7 @@ CodeCards is a cross platform application for solving data structures and algori
   - Take some hints
   - Look for competitive coding contest details
   - Switch b/w dark and light themes
-  - Swich b/w different colorful themes
+  - Switch b/w different colorful themes
   - Change Avatars
   - Some other important and mandatory features
 
