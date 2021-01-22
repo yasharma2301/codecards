@@ -3,7 +3,7 @@ import 'noteModel.dart';
 import 'package:http/http.dart' as http;
 
 class NoteAPIServerClass {
-  final String url = 'http://fb7b0a750ea4.ngrok.io/notes/';
+  final String url = 'https://192.168.0.7:8000/notes/';
   //final String url = 'http://fb7b0a750ea4.ngrok.io/notes/';
 
   void postNoteToServer(NoteModel note, String userToken, int id) async {

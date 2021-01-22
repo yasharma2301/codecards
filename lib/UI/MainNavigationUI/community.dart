@@ -105,47 +105,52 @@ class Community extends StatelessWidget with NavigationStates {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: border == true
-                                  ? EdgeInsets.only(left: 10)
-                                  : EdgeInsets.only(left: 5),
-                              child: Stack(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      IconButton(
-                                        splashColor: LightPopBlue.withOpacity(0.8),
-                                        hoverColor: LightPopBlue,
-                                        icon: Icon(
-                                          Icons.menu,
-                                          color: darkTheme.getMode() == true ?White:Grey,
-                                          size: 30,
-                                        ),
-                                        onPressed: onMenuTap,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      )
-                                    ],
-                                  ),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Text(
-                                        'Community',
-                                        style: TextStyle(
-                                          color: darkTheme.getMode() == true ?White:Grey,
-                                          fontSize: 23,
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.w600
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: GestureDetector(
+                                      onTap: onMenuTap,
+                                      child: Material(
+                                        elevation: 30,
+                                        child: Container(
+                                          height: 40,
+                                          width: 60,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(50),
+                                                bottomRight: Radius.circular(10)),
+                                            color: darkTheme.getMode() == true ? LightGrey : White,
+                                          ),
+                                          child: Icon(
+                                            Icons.menu,
+                                            color: darkTheme.getMode() == true
+                                                ? Colors.white
+                                                : Grey,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Text(
+                                      'Community',
+                                      style: TextStyle(
+                                        color: darkTheme.getMode() == true ?White:Grey,
+                                        fontSize: 23,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w600
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 20),

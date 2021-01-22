@@ -47,8 +47,8 @@ class UserRepository with ChangeNotifier {
     ];
     avatars.shuffle();
 
-    final String url = 'http://fb7b0a750ea4.ngrok.io/register';
-    //final String url = 'http://fb7b0a750ea4.ngrok.io/register';
+//    final String url = 'http://fb7b0a750ea4.ngrok.io/register';
+    final String url = 'https://192.168.0.7:8000/register';
     if (email == "" || username == "" || password == "" || password2 == "") {
       setResponse("Please Fill all the fields!", 400);
     } else {
@@ -84,7 +84,7 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<bool> loginUser(email, password) async {
-    final String url = 'http://fb7b0a750ea4.ngrok.io/login';
+    final String url = 'https://192.168.0.7:8000/login';
     //final String url = 'http://fb7b0a750ea4.ngrok.io/login';
 
     if (email != "" || password != "") {
@@ -93,10 +93,10 @@ class UserRepository with ChangeNotifier {
       setLoading(true);
 
       var body = {
-        // 'email': email,
-        'email': "ishbeswal@gmail.com",
-        'password': "ScrewCse@12",
-        // 'password': password,
+         'email': email,
+//        'email': "ishbeswal@gmail.com",
+//        'password': "ScrewCse@12",
+         'password': password,
       };
 
       var result = await http.post(url, body: body);
@@ -130,7 +130,7 @@ class UserRepository with ChangeNotifier {
   }
 
   Future<Map<int, int>> getPageDetails() async {
-    final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
+    final String url = 'https://192.168.0.7:8000/get-page/';
     // final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
 
     String token;
@@ -207,7 +207,7 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-      final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+      final String url = 'https://192.168.0.7:8000/update-account/';
       // final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
 
       var response = await http.put(url, body: {
@@ -248,7 +248,7 @@ class UserRepository with ChangeNotifier {
       SharedPreferences _sprefs = await SharedPreferences.getInstance();
 
       setLoading(true);
-      final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+      final String url = 'https://192.168.0.7:8000/update-account/';
       // final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
       var response = await http.put(url, body: {
         'avatar': avatar,
@@ -275,7 +275,7 @@ class UserRepository with ChangeNotifier {
 
 class PageInformation {
   Future<Map<String, dynamic>> getPageDetails() async {
-    final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
+    final String url = 'https://192.168.0.7:8000/get-page/';
     //final String url = 'http://fb7b0a750ea4.ngrok.io/get-page/';
     Map responseBody;
     var response;
@@ -291,7 +291,7 @@ class PageInformation {
   }
 
   Future<int> incrementPageDetails(int previousPage) async {
-    final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+    final String url = 'https://192.168.0.7:8000/update-account/';
     //final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     String token = _sprefs.getString('userToken');
@@ -309,7 +309,7 @@ class PageInformation {
   }
 
   void incrementQuestionDetails(int index) async {
-    final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
+    final String url = 'https://192.168.0.7:8000/update-account/';
     // final String url = 'http://fb7b0a750ea4.ngrok.io/update-account/';
     SharedPreferences _sprefs = await SharedPreferences.getInstance();
     String token = _sprefs.getString('userToken');

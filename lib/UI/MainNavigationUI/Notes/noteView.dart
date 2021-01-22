@@ -32,6 +32,14 @@ class _NoteViewState extends State<NoteView> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+  }
+
   @override
   void initState() {
     if (widget.noteMode == NoteModes.Editing) {

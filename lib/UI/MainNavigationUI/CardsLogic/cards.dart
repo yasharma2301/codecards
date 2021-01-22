@@ -9,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:codecards/Services/cardsServices/cardResponseModel.dart';
 import 'package:codecards/Services/cardsServices/cardsProvider.dart';
 import 'package:codecards/Shared/Colors.dart';
-
 import 'TagPillList.dart';
 
 final GlobalKey<SwipeStackState> swipeKey = GlobalKey<SwipeStackState>();
@@ -62,16 +61,17 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
+                                        padding: const EdgeInsets.only(
+                                            left: 15,right: 15,bottom: 5),
                                         child: Text(
-                                          'Question Card: ${cardsResult.id}',
+                                          'Card: ${cardsResult.id}',
                                           style: TextStyle(
                                             color: darkTheme.getMode() == true
                                                 ? White
                                                 : Grey,
-                                            fontSize: 25,
-                                            fontFamily: 'Nunito Black',
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat',
                                           ),
                                         ),
                                       ),
@@ -85,14 +85,14 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 10, left: 10, right: 10),
+                                            top: 5, left: 10, right: 10),
                                         child: Container(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              0.56,
+                                              0.6,
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 20, horizontal: 10),
+                                              vertical: 10, horizontal: 10),
                                           decoration: BoxDecoration(
                                               color: darkTheme.getMode() == true
                                                   ? Grey.withOpacity(0.9)
@@ -100,43 +100,38 @@ class _CardsStackState extends State<CardsStack> with TickerProviderStateMixin {
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: SingleChildScrollView(
-                                            child: Center(
-                                              child: Text(
-                                                cardsResult.question,
-                                                style: TextStyle(
-                                                    color:
-                                                        darkTheme.getMode() ==
-                                                                true
-                                                            ? White
-                                                            : Grey,
-                                                    fontSize: 18),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Asked by: ${cardsResult.company}',
+                                                  style: TextStyle(
+                                                      color: Colors.redAccent[200],
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16),
+                                                ),
+                                                SizedBox(height: 5,),
+                                                Text(
+                                                  cardsResult.question,
+                                                  style: TextStyle(
+                                                      color:
+                                                      darkTheme.getMode() ==
+                                                          true
+                                                          ? White
+                                                          : Grey,
+                                                      fontSize: 17),
+                                                  textAlign: TextAlign.justify,
+                                                ),
+                                              ],
+                                            )
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Text(
-                                      'This question was asked by ${cardsResult.company}',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        height: 0.9,
-                                        color: darkTheme.getMode() == true
-                                            ? White
-                                            : Grey,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                )
+
                               ],
                             ),
                           ),

@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 import 'cardResponseModel.dart';
 
 class CardsApiCall {
-  final String getUrl = 'http://fb7b0a750ea4.ngrok.io/cards/list?page=';
+  final String getUrl = 'https://192.168.0.7:8000/cards/list?page=';
   //final String getUrl = 'http://fb7b0a750ea4.ngrok.io/cards/list?page=';
 
   Future<List<CardsResults>> getCards(int page, int start, int end) async {
@@ -72,7 +72,7 @@ class CardsBloc {
 
   Future<void> addBookmark(int cardID, String userToken) async {
     print([cardID, userToken]);
-    final String bookmarkURL = 'http://fb7b0a750ea4.ngrok.io/bookmarks/';
+    final String bookmarkURL = 'https://192.168.0.7:8000/bookmarks/';
     //final String bookmarkURL = 'http://fb7b0a750ea4.ngrok.io/bookmarks/';
     var body = {
       'cardID': cardID.toString(),

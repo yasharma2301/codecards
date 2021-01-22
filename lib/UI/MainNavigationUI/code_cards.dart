@@ -116,47 +116,52 @@ class _CodeCardsState extends State<CodeCards> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(top: padding.top-5),
-                          child: Padding(
-                            padding: border == true
-                                ? EdgeInsets.only(left: 10)
-                                : EdgeInsets.only(left: 5),
-                            child: Stack(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      splashColor: LightPopBlue.withOpacity(0.8),
-                                      hoverColor: LightPopBlue,
-                                      icon: Icon(
-                                        Icons.menu,
-                                        color: darkTheme.getMode() == true ?White:Grey,
-                                        size: 30,
-                                      ),
-                                      onPressed: widget.onMenuTap,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    )
-                                  ],
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: Text(
-                                      'CodeCards',
-                                      style: TextStyle(
-                                          color: darkTheme.getMode() == true ?White:Grey,
-                                          fontSize: 23,
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.w600
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: GestureDetector(
+                                    onTap: widget.onMenuTap,
+                                    child: Material(
+                                      elevation: 30,
+                                      child: Container(
+                                        height: 40,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(50),
+                                              bottomRight: Radius.circular(10)),
+                                          color: darkTheme.getMode() == true ? LightGrey : White,
+                                        ),
+                                        child: Icon(
+                                          Icons.menu,
+                                          color: darkTheme.getMode() == true
+                                              ? Colors.white
+                                              : Grey,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    'Codecards',
+                                    style: TextStyle(
+                                        color: darkTheme.getMode() == true ?White:Grey,
+                                        fontSize: 23,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         Expanded(
@@ -174,68 +179,45 @@ class _CodeCardsState extends State<CodeCards> {
                                           alignment: Alignment.bottomCenter,
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 15),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: border == false
-                                                  ? [
-                                                      RoundIconButton.small(
-                                                        icon: Icons.clear,
-                                                        iconSize: 22,
-                                                        onPressed: () {},
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon:
-                                                            Icons.lightbulb_outline,
-                                                        onPressed: () {},
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 28,
-                                                        icon: Icons.add,
-                                                        onPressed: () {
-                                                          _bringUpNotesSheet(
-                                                              context, darkTheme);
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon: Icons.bookmark_border,
-                                                        onPressed: () {},
-                                                      ),
-                                                      RoundIconButton.small(
-                                                        icon: Icons.share,
-                                                        iconSize: 22,
-                                                        onPressed: () {},
-                                                      ),
-                                                    ]
-                                                  : [
-                                                      RoundIconButton.small(
-                                                        icon: Icons.clear,
-                                                        iconSize: 22,
-                                                        onPressed: () {},
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon:
-                                                            Icons.lightbulb_outline,
-                                                        onPressed: () {},
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 28,
-                                                        icon: Icons.add,
-                                                        onPressed: () {
-                                                          _bringUpNotesSheet(
-                                                              context, darkTheme);
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon: Icons.bookmark_border,
-                                                        onPressed: () {},
-                                                      ),
-                                                    ],
+                                                horizontal: 10, vertical: 15),
+                                            child: SingleChildScrollView(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceEvenly,
+                                                children:
+                                                    [
+                                                        RoundIconButton.small(
+                                                          icon: Icons.clear,
+                                                          iconSize: 22,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon:
+                                                              Icons.lightbulb_outline,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 28,
+                                                          icon: Icons.add,
+                                                          onPressed: () {
+                                                            _bringUpNotesSheet(
+                                                                context, darkTheme);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon: Icons.bookmark_border,
+                                                          onPressed: () {},
+                                                        ),
+                                                        RoundIconButton.small(
+                                                          icon: Icons.share,
+                                                          iconSize: 22,
+                                                          onPressed: () {},
+                                                        ),
+                                                      ]
+
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -268,106 +250,65 @@ class _CodeCardsState extends State<CodeCards> {
                                           padding: EdgeInsets.only(bottom: 0),
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 13, vertical: 15),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: border == false
-                                                  ? [
-                                                      RoundIconButton.small(
-                                                        icon: Icons.clear,
-                                                        iconSize: 22,
-                                                        onPressed: () {
-                                                          swipeKey.currentState
-                                                              .swipeLeft();
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon:
-                                                            Icons.lightbulb_outline,
-                                                        onPressed: () {
-                                                          _showHintDialog(
-                                                              context: context,
-                                                              hint: snapshot
-                                                                  .data[swipeKey
-                                                                      .currentState
-                                                                      .currentIndex]
-                                                                  .hint,
-                                                              hintCounter:
-                                                                  hintProvider);
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 28,
-                                                        icon: Icons.add,
-                                                        onPressed: () {
-                                                          _bringUpNotesSheet(
-                                                              context, darkTheme);
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon: Icons.bookmark_border,
-                                                        onPressed: () {
-                                                          swipeKey.currentState
-                                                              .swipeRight();
-                                                        },
-                                                      ),
-                                                      RoundIconButton.small(
-                                                        icon: Icons.share,
-                                                        iconSize: 22,
-                                                        onPressed: () {
-                                                          share(
-                                                              context,
-                                                              snapshot.data[swipeKey
-                                                                  .currentState
-                                                                  .currentIndex]);
-                                                        },
-                                                      ),
-                                                    ]
-                                                  : [
-                                                      RoundIconButton.small(
-                                                        icon: Icons.clear,
-                                                        iconSize: 22,
-                                                        onPressed: () {
-                                                          swipeKey.currentState
-                                                              .swipeLeft();
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon:
-                                                            Icons.lightbulb_outline,
-                                                        onPressed: () {
-                                                          _showHintDialog(
-                                                              context: context,
-                                                              hint: snapshot
-                                                                  .data[swipeKey
-                                                                      .currentState
-                                                                      .currentIndex]
-                                                                  .hint,
-                                                              hintCounter:
-                                                                  hintProvider);
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 28,
-                                                        icon: Icons.add,
-                                                        onPressed: () {
-                                                          _bringUpNotesSheet(
-                                                              context, darkTheme);
-                                                        },
-                                                      ),
-                                                      RoundIconButton.large(
-                                                        iconSize: 26,
-                                                        icon: Icons.bookmark_border,
-                                                        onPressed: () {
-                                                          swipeKey.currentState
-                                                              .swipeRight();
-                                                        },
-                                                      ),
-                                                    ],
+                                                horizontal: 10, vertical: 15),
+                                            child: SingleChildScrollView(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceEvenly,
+                                                children: [
+                                                        RoundIconButton.small(
+                                                          icon: Icons.clear,
+                                                          iconSize: 22,
+                                                          onPressed: () {
+                                                            swipeKey.currentState
+                                                                .swipeLeft();
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon:
+                                                              Icons.lightbulb_outline,
+                                                          onPressed: () {
+                                                            _showHintDialog(
+                                                                context: context,
+                                                                hint: snapshot
+                                                                    .data[swipeKey
+                                                                        .currentState
+                                                                        .currentIndex]
+                                                                    .hint,
+                                                                hintCounter:
+                                                                    hintProvider);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 28,
+                                                          icon: Icons.add,
+                                                          onPressed: () {
+                                                            _bringUpNotesSheet(
+                                                                context, darkTheme);
+                                                          },
+                                                        ),
+                                                        RoundIconButton.large(
+                                                          iconSize: 26,
+                                                          icon: Icons.bookmark_border,
+                                                          onPressed: () {
+                                                            swipeKey.currentState
+                                                                .swipeRight();
+                                                          },
+                                                        ),
+                                                        RoundIconButton.small(
+                                                          icon: Icons.share,
+                                                          iconSize: 22,
+                                                          onPressed: () {
+                                                            share(
+                                                                context,
+                                                                snapshot.data[swipeKey
+                                                                    .currentState
+                                                                    .currentIndex]);
+                                                          },
+                                                        ),
+                                                      ]
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -388,7 +329,8 @@ class _CodeCardsState extends State<CodeCards> {
                                     ],
                                   ),
                                 );
-                              }),
+                              },
+                          ),
                         )
                       ],
                     ),
@@ -610,7 +552,7 @@ class RoundIconButton extends StatelessWidget {
             BoxShadow(
                 color:
                     darkTheme.getMode() == true ? Colors.white12 : Colors.grey,
-                blurRadius: 7.0),
+                blurRadius: 2.0),
           ]),
       child: RawMaterialButton(
         shape: CircleBorder(),

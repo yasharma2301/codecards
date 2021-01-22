@@ -224,7 +224,7 @@ class ContributeQuestion extends StatelessWidget with NavigationStates {
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(50),
                                 bottomRight: Radius.circular(10)),
-                            color: darkTheme.getMode() == true ? Grey : White,
+                            color: darkTheme.getMode() == true ? LightGrey : White,
                           ),
                           child: Icon(
                             Icons.menu,

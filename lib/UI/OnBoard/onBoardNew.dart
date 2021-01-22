@@ -1,244 +1,197 @@
-import 'dart:io';
-
+import 'dart:async';
+import 'package:codecards/UI/OnBoard/slideItems.dart';
+import 'package:codecards/UI/OnBoard/slide_details.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'package:codecards/Shared/Colors.dart';
-import 'package:codecards/Shared/delayed_animation.dart';
-import 'package:codecards/Shared/fade_animation.dart';
 import 'package:codecards/UI/OnBoard/Login/newLoginPage.dart';
+import 'dots.dart';
 
 class OnBoardNew extends StatefulWidget {
   @override
   _OnBoardNewState createState() => _OnBoardNewState();
 }
 
-class _OnBoardNewState extends State<OnBoardNew> with TickerProviderStateMixin {
-  AnimationController _scaleController;
-  AnimationController _scale2Controller;
-  AnimationController _widthController;
-  AnimationController _positionController;
-  Animation<double> _scaleAnimation;
-  Animation<double> _scale2Animation;
-  Animation<double> _widthAnimation;
-  Animation<double> _positionAnimation;
-  bool hideIcon = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _scaleController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-
-    _scaleAnimation =
-        Tween<double>(begin: 1.0, end: 0.8).animate(_scaleController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _widthController.forward();
-            }
-          });
-
-    _widthController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-
-    _widthAnimation =
-        Tween<double>(begin: 80.0, end: 300.0).animate(_widthController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _positionController.forward();
-            }
-          });
-
-    _positionController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-
-    _positionAnimation =
-        Tween<double>(begin: 0.0, end: 215.0).animate(_positionController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              setState(() {
-                hideIcon = true;
-              });
-              _scale2Controller.forward();
-            }
-          });
-
-    _scale2Controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 220));
-
-    _scale2Animation =
-        Tween<double>(begin: 1.0, end: 32.0).animate(_scale2Controller)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.fade, child: RegisterPage()));
-            }
-          });
+class _OnBoardNewState extends State<OnBoardNew> with  SingleTickerProviderStateMixin {
+double _scale;
+AnimationController _controller;
+int _currentPage = 0;
+final PageController _pageController = PageController(initialPage: 0);
+@override
+void initState() {
+  _controller = AnimationController(
+    vsync: this,
+    duration: Duration(
+      milliseconds: 200,
+    ),
+    lowerBound: 0.0,
+    upperBound: 0.1,
+  )..addListener(() {
+    setState(() {});
+  });
+  Timer.periodic(Duration(seconds: 5), (Timer timer) {
+    if (_currentPage < 2) {
+      _currentPage++;
+    } else {
+      _currentPage = 0;
+    }
+  });
+  if (_pageController.hasClients) {
+    _pageController.animateToPage(_currentPage,
+        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
   }
+  super.initState();
+}
+
+@override
+void dispose() {
+  super.dispose();
+  _pageController.dispose();
+  _controller.dispose();
+}
+_onPageChanged(int index) {
+  setState(() {
+    _currentPage = index;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
+    _scale = 1 - _controller.value;
 
-    return WillPopScope(
-      onWillPop: () {
-        SystemNavigator.pop();
-        exit(0);
-        return;
-      },
-      child: Scaffold(
-        backgroundColor: Color.fromRGBO(9, 14, 23, 1),
-        body: Container(
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: -50,
-                left: 0,
-                child: FadeAnimation(
-                  1,
-                  Container(
-                    width: width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/background.png'),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: -100,
-                left: 0,
-                child: FadeAnimation(
-                  1.3,
-                  Container(
-                    width: width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/background.png'),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: -150,
-                left: 0,
-                child: FadeAnimation(
-                  1.6,
-                  Container(
-                    width: width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/background.png'),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(20.0),
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    final padding = MediaQuery.of(context).padding;
+    return Scaffold(
+      backgroundColor: Grey,
+      body: Stack(
+        children: [
+          Container(
+            color: Colors.white,
+          ),
+          Container(
+            height: height * 0.9,
+            width: width,
+            decoration: BoxDecoration(
+              color: Grey,
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(top: padding.top+60,bottom: 80),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    FadeAnimation(
-                      1,
-                      Text(
-                        "Welcome",
-                        style: TextStyle(color: Colors.white, fontSize: 50),
-                      ),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "CODECARDS",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          color: Colors.white,
+                          fontFamily: 'Montserrat'),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    FadeAnimation(
-                        1.3,
-                        Text(
-                          "We are happy to see you here!\nJust a few steps and we'll get into the server.",
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(.7),
-                              height: 1.4,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300),
-                        )),
-                    SizedBox(
-                      height: 180,
-                    ),
-                    DelayedAnimation(
-                      delay: 550,
-                      child: AnimatedBuilder(
-                        animation: _scaleController,
-                        builder: (context, child) => Transform.scale(
-                          scale: _scaleAnimation.value,
-                          child: Center(
-                            child: AnimatedBuilder(
-                              animation: _widthController,
-                              builder: (context, child) => Container(
-                                width: _widthAnimation.value,
-                                height: 80,
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: LightGrey.withOpacity(0.8)),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _scaleController.forward();
-                                  },
-                                  child: Stack(
-                                    children: <Widget>[
-                                      AnimatedBuilder(
-                                        animation: _positionController,
-                                        builder: (context, child) => Positioned(
-                                          left: _positionAnimation.value,
-                                          child: AnimatedBuilder(
-                                            animation: _scale2Controller,
-                                            builder: (context, child) =>
-                                                Transform.scale(
-                                              scale: _scale2Animation.value,
-                                              child: Container(
-                                                width: 60,
-                                                height: 60,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Grey),
-                                                child: hideIcon == false
-                                                    ? Icon(
-                                                        Icons.arrow_forward,
-                                                        color: Colors.white,
-                                                      )
-                                                    : Container(),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                    SizedBox(height: 20,),
+                    Container(
+                      width: width,
+                      height: height*0.6,
+                      child:Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        children: [
+                          PageView.builder(
+                            onPageChanged: _onPageChanged,
+                            controller: _pageController,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: SlideList.length,
+                            itemBuilder: (context, index) => Items(index),
                           ),
-                        ),
+                          Container(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                for (int i = 0; i < SlideList.length; i++)
+                                  if (i == _currentPage)
+                                    SlideDots(true)
+                                  else
+                                    SlideDots(false)
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                    ),
+                    )
                   ],
                 ),
-              )
-            ],
+              ),
+            ),
           ),
-        ),
-      ),
+          Positioned(
+            top: height * 0.85,
+            left: width * 0.1,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade, child: RegisterPage()));
+              },
+              onTapDown: _onTapDown,
+              onTapUp: _onTapUp,
+              child: Transform.scale(
+                scale: _scale,
+                child: Container(
+                  height: 60,
+                  width: width - width * 0.2,
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Grey.withOpacity(0.5),
+                          blurRadius: 10.0,
+                          offset: Offset(0.0, 5))
+                    ],
+                    borderRadius: BorderRadius.circular(50),
+                    gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).primaryColorLight
+                        ],
+                        begin: FractionalOffset.topLeft,
+                        end: FractionalOffset.topRight,
+                        tileMode: TileMode.repeated),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Let\'s start!',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                'We are happy to see you here!\n Hope you like the journey with us.',
+                style: TextStyle(color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        ],
+      )
     );
+  }
+  void _onTapDown(TapDownDetails details) {
+    _controller.forward();
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    _controller.reverse();
   }
 }

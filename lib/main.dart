@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:hive/hive.dart';
@@ -5,6 +7,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:codecards/MyApp.dart';
 import 'package:codecards/Services/notesServices/noteModel.dart';
+import 'package:http/http.dart';
+
+// For development certificates
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 
 SharedPreferences prefs;
 const String hintKey = 'hint';
@@ -13,6 +25,8 @@ const darkModeBox = 'darkModeTutorial';
 const mode = 'mode';
 
 void main() async {
+  HttpOverrides.global = new MyHttpOverrides();
+
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
@@ -44,3 +58,5 @@ Future<bool> _checkInitialRoute() async {
   SharedPreferences _sprefs = await SharedPreferences.getInstance();
   return _sprefs.containsKey('userToken');
 }
+
+
